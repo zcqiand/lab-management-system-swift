@@ -13,3 +13,6 @@
 xcuserdata/
 DerivedData/
 Package.resolved
+
+# python 包装脚本运行残渣
+scripts/__pycache__/

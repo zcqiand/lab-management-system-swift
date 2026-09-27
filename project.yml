@@ -22,6 +22,15 @@ settings:
     # → 产物名解析空 → 多 target 产物撞同一条 .framework 路径（Multiple commands
     # produce）。显式钉死。
     PRODUCT_NAME: "$(TARGET_NAME)"
+    # Intel Mac（x86_64）：Xcode 16 给模拟器目标默认掺 arm64，SPM 依赖只编出
+    # x86_64 模块 →「could not find module for arm64-apple-ios-simulator」。
+    # 只豁免模拟器侧 arm64，真机 arm64 不动。
+    EXCLUDED_ARCHS[sdk=iphonesimulator*]: arm64
+  configs:
+    # @testable import 需要 -enable-testing；Xcode GUI 模板默认给 Debug 写
+    # ENABLE_TESTABILITY=YES，XcodeGen 裸生成不带，必须显式补。
+    Debug:
+      ENABLE_TESTABILITY: YES
 targets:
   LabSharedGenerated:
     type: framework

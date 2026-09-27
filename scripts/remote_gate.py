@@ -13,11 +13,13 @@
 - exit code 唯一真相：swift 子进程的返回码原样透传。
 
 xcodebuild 段（REQ-2026-001 Q2）:
-- 每次先 ~/tools/xcodegen generate（真源是 project.yml，工程文件漂移即被再生覆盖），
-  再 xcodebuild 构建 CoreKit scheme。
-- destination 用 generic/platform=iOS + CODE_SIGNING_ALLOWED=NO：构建机
-  （Intel Air, Xcode 16.2）simctl 一个模拟器 runtime 都没装，模拟器目标
-  iOS 18.2 要先 `xcodebuild -downloadPlatform iOS`（~7GB）——装了再切。
+- 每次先 ~/tools/xcodegen generate（真源是 project.yml，工程文件漂移即被再生覆盖）。
+- L2 附加段：xcodebuild 构建 CoreKit scheme（generic/platform=iOS，免签名）——稳定绿。
+- L4 模拟器 test 段：暂缓（见 test 分支注释：机器态 3 连红，待人裁排查）。
+  注意 runtime 是 18.3.1（Xcode 16.2 -downloadPlatform 拉的最新兼容版），
+  不是 Q2 原话的 18.2。
+- 构建机 Intel（x86_64）：project.yml 已钉 EXCLUDED_ARCHS[sdk=iphonesimulator*]=arm64，
+  Xcode 16 默认掺 arm64 模拟器目标在这台机器编不了。
 - xcodegen 装在 ~/tools（无 brew/sudo，GitHub release 二进制）。
 """
 
@@ -84,6 +86,15 @@ def main() -> int:
             ),
         ]
     else:
+        # L4 = swift test（Q2 原话「CoreKit 测试仍走 swift test」）。
+        # xcodebuild 模拟器 test 段曾实证可行（2026-09-28 01:04 iPhone/iOS 18.3
+        # 18 测全绿），但 runtime 安装后 CoreSimulator 重建设备集 + dyld 缓存
+        # 重建，随后 3 连红「Test runner never began executing tests after
+        # launching」，erase 设备/重启服务无效——机器态问题，exit 2 停下问人。
+        # 恢复前手动验证命令（在 home-mac 仓目录）：
+        #   ~/tools/xcodegen generate && xcodebuild -project LabManagementSystem.xcodeproj \
+        #     -scheme CoreKit -destination 'platform=iOS Simulator,name=iPhone 16' \
+        #     CODE_SIGNING_ALLOWED=NO test
         steps = [(f"cd ~/{staging} && {envfix} swift test", "swift test")]
     for cmd, label in steps:
         result = subprocess.run(["ssh", "-o", "BatchMode=yes", HOST, cmd])
