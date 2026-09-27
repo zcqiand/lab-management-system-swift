@@ -4,10 +4,127 @@
   "functions": {
     "modules": 1,
     "features": 8,
-    "items": 0
+    "items": 9
   },
   "warnings_total": 0,
   "warnings": {},
   "unreachable_shipped": [],
-  "function_map": {}
+  "function_map": {
+    "M03.F01.I01": {
+      "name": "接样单列表（三态过滤）",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [
+        "output\\lab-management-system-contract-test\\tests\\receipts-lastsubmit.test.ts:1037 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\sample-receipts.test.ts:5189 (annot)"
+      ],
+      "entry": []
+    },
+    "M03.F01.I02": {
+      "name": "新建/编辑接样单",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M03.F01.I03": {
+      "name": "删除接样单",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M03.F01.I04": {
+      "name": "提交接样单（receiving → task_assignment）",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M03.F01.I06": {
+      "name": "接样单流程历史",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [
+        "output\\lab-management-system-contract-test\\tests\\receipts-act-history.test.ts:1487 (annot)"
+      ],
+      "entry": []
+    },
+    "M03.F01.I07": {
+      "name": "接样单 ext 字段补录",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [
+        "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3603 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3650 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3849 (annot)"
+      ],
+      "entry": []
+    },
+    "M03.F01.I08": {
+      "name": "接样-提交（act 三动作）",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [
+        "output\\lab-management-system-contract-test\\tests\\receipts-act-history.test.ts:1501 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\receipts-lastsubmit.test.ts:1023 (annot)"
+      ],
+      "entry": []
+    },
+    "M03.F01.I09": {
+      "name": "接样-退回",
+      "status": "已废弃",
+      "type": null,
+      "requirements": [],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M03.F01.I10": {
+      "name": "接样-撤回",
+      "status": "已废弃",
+      "type": null,
+      "requirements": [],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    }
+  }
 }
