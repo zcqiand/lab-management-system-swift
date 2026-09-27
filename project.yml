@@ -54,6 +54,20 @@ targets:
       - Tests/CoreKitTests
     dependencies:
       - target: CoreKit
+  LabManagement:
+    type: application
+    platform: iOS
+    sources:
+      - Sources/App
+    dependencies:
+      - target: CoreKit
+    info:
+      path: Sources/App/Info.plist
+      properties:
+        UILaunchScreen: {}
+        CFBundleDisplayName: 实验室管理
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
 schemes:
   CoreKit:
     build:
@@ -62,3 +76,7 @@ schemes:
     test:
       targets:
         - CoreKitTests
+  LabManagement:
+    build:
+      targets:
+        LabManagement: all

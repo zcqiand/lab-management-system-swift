@@ -77,12 +77,13 @@ def main() -> int:
     if mode == "build":
         steps = [
             (f"cd ~/{staging} && {envfix} swift build", "swift build"),
+            # LabManagement scheme = App target（连带 CoreKit/LabSharedGenerated 全量编译）。
             (
                 f"cd ~/{staging} && ~/tools/xcodegen generate && "
                 f"{envfix} xcodebuild -project LabManagementSystem.xcodeproj "
-                f"-scheme CoreKit -destination 'generic/platform=iOS' "
+                f"-scheme LabManagement -destination 'generic/platform=iOS' "
                 f"CODE_SIGNING_ALLOWED=NO build",
-                "xcodebuild build（generic iOS）",
+                "xcodebuild build（generic iOS，含 App target）",
             ),
         ]
     else:

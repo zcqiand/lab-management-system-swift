@@ -1,8 +1,11 @@
+import Combine
 import Foundation
 import LabSharedGenerated
 
 // REQ-2026-001 T-4：接样管理 CoreKit ViewModel（纯 Swift，禁 SwiftUI/UIKit）。
-// 网络缝 = 注入 async 闭包，单测不发真网络；UI 壳（后续需求）注入生成层调用。
+// 网络缝 = 注入 async 闭包，单测不发真网络；UI 壳注入生成层调用（REQ-2026-002）。
+// 列表/详情 VM 实现 ObservableObject（Combine，非 UI 框架）供 SwiftUI @StateObject
+// 订阅；变更点显式 objectWillChange.send()，不用 @Published 以保持「公开只读」。
 
 /// 列表 filter 三态。SSOT：shared tsp routes/sample-receipts.tsp listReceipts 注释
 /// （不传=全部 / not_yet=停在本环节待提交 / submitted=已提交至下一环节，
@@ -40,7 +43,10 @@ public struct ReceiptListQuery: Equatable {
 }
 
 /// 接样单列表 VM：分页装载 + act 结果回填。
-public final class ReceiptListViewModel {
+public final class ReceiptListViewModel: ObservableObject {
+
+    public let objectWillChange = ObservableObjectPublisher()
+    private func notify() { objectWillChange.send() }
 
     public private(set) var items: [SampleReceipt] = []
     public private(set) var isLoading = false
@@ -67,12 +73,17 @@ public final class ReceiptListViewModel {
     }
 
     private func fetch(reset: Bool) async {
+        notify()
         isLoading = true
         errorMessage = nil
-        defer { isLoading = false }
+        defer {
+            notify()
+            isLoading = false
+        }
         let requestedPage = query.page
         do {
             let fetched = try await provider(query)
+            notify()
             if reset {
                 items = fetched
             } else if fetched.isEmpty {
@@ -84,6 +95,7 @@ public final class ReceiptListViewModel {
             }
             hasMore = fetched.count >= query.pageSize
         } catch {
+            notify()
             errorMessage = String(describing: error)
             if !reset { query.page = max(1, requestedPage - 1) }
         }
@@ -92,6 +104,7 @@ public final class ReceiptListViewModel {
     /// act 结果回填：按 id 更新 flowStatus，未涉及单保持原状。
     public func apply(_ results: [FlowActionResult]) {
         guard !results.isEmpty else { return }
+        notify()
         let byId = Dictionary(
             results.map { ($0.id, $0) },
             uniquingKeysWith: { _, latter in latter }
@@ -272,7 +285,10 @@ public final class ReceiptFormViewModel {
 }
 
 /// 接样单详情 VM（AC-6）：一次 load 同时取接样信息与流程历史。
-public final class ReceiptDetailViewModel {
+public final class ReceiptDetailViewModel: ObservableObject {
+
+    public let objectWillChange = ObservableObjectPublisher()
+    private func notify() { objectWillChange.send() }
 
     public private(set) var receipt: SampleReceipt?
     public private(set) var history: [FlowHistoryEntry] = []
@@ -289,12 +305,20 @@ public final class ReceiptDetailViewModel {
     }
 
     public func load(id: String) async {
+        notify()
         isLoading = true
         errorMessage = nil
-        defer { isLoading = false }
+        defer {
+            notify()
+            isLoading = false
+        }
         do {
-            (receipt, history) = try await fetch(id)
+            let (fetchedReceipt, fetchedHistory) = try await fetch(id)
+            notify()
+            receipt = fetchedReceipt
+            history = fetchedHistory
         } catch {
+            notify()
             errorMessage = String(describing: error)
             receipt = nil
             history = []
