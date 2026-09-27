@@ -18,6 +18,10 @@ settings:
   base:
     SWIFT_VERSION: "5.0"
     CODE_SIGNING_ALLOWED: "NO"
+    # XcodeGen 不写 PRODUCT_NAME，Xcode 16.2 下 $(TARGET_NAME) 默认链没兜住
+    # → 产物名解析空 → 多 target 产物撞同一条 .framework 路径（Multiple commands
+    # produce）。显式钉死。
+    PRODUCT_NAME: "$(TARGET_NAME)"
 targets:
   LabSharedGenerated:
     type: framework
