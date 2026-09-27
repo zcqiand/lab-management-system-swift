@@ -6,17 +6,17 @@
   "passed": true,
   "partial": true,
   "ran": [
-    "L5"
+    "L2"
   ],
-  "checked_at": "2026-09-27T22:54:30+0800",
+  "checked_at": "2026-09-27T23:21:47+0800",
   "gates": [
     {
-      "level": "L5",
-      "name": "引用完整性",
+      "level": "L2",
+      "name": "构建（home-mac 远程）",
       "passed": true,
       "returncode": 0,
-      "duration_s": 0.125,
-      "output": "18 个功能条目，引用完整。软告警 0 条（见 .state/alignment.json）"
+      "duration_s": 53.125,
+      "output": "[0/1] Planning build\nBuilding for debugging...\n[0/2] Write sources\n[1/2] Write swift-version--58304C5D6DBC2206.txt\n[3/148] Emitting module LabSharedGenerated\n/Users/qiandao/swift-builds/lab-management-system-swift/Generated/Sources/Extensions.swift:110:1: warning: extension declares a conformance of imported type 'String' to imported protocol 'CodingKey'; this will not behave correctly if the owners of 'Swift' introduce this conformance in the future\n108 | }\n109 | \n110 | extension String: CodingKey {\n    | |- warning: extension declares a conformance of imported type 'String' to imported protocol 'CodingKey'; this will not behave correctly if the owners of 'Swift' introduce this conformance in the future\n    | `- note: add '@retroactive' to silence this warning\n111 | \n112 |     public var stringValue: String {\n\n/Users/qiandao/swift-builds/lab-management-system-swift/Generated/Sources/OpenISO8601DateFormatter.swift:11:14: warning: class 'OpenISO8601DateFormatter' must restate inherited '@unchecked Sendable' conformance\n 9 | \n10 | // https://stackoverflow.com/a/50281094/976628\n11 | public class OpenISO8601DateFormatter: DateFormatter {\n   |              `- warning: class 'OpenISO8601DateFormatter' must restate inherited '@unchecked Sendable' conformance\n12 |     static let withoutSeconds: DateFormatter = {\n13 |         let formatter = DateFormatter()\n[4/148] Compiling LabSharedGenerated AssignTaskRequest.swift\n[5/148] Compiling LabSharedGenerated AuthContext.swift\n[6/148] Compiling LabSharedGenerated AuthHeaderKind.swift\n[7/148] Compiling LabSharedGenerated AuthLogoutRequest.swift\n[8/148] Compiling LabSharedGenerated AuthState.swift\n[9/148] Compiling LabSharedGenerated AuthStateAnonymous.swift\n[10/148] Compiling LabSharedGenerated AuthStateAnonymousValue.swift\n[11/148] Compiling LabSharedGenerated AuthStateAuthenticated.swift\n[12/148] Compiling LabSharedGenerated AuthStateAuthenticatedValue.swift\n[13/148] Compiling LabSharedGenerated AuthStateAwaitingTenant.swift\n[14/148] Compiling LabSharedGenerated AuthStateAwaitingTenantValue.swift\n[15/148] Compiling LabSharedGenerated AuthStateIdle.swift\n[16/148] Compiling LabSharedGenerated AuthStateIdleValue.swift\n[17/148] Compiling LabSharedGenerated BackendConfig.swift\n[18/148] Compiling LabSharedGenerated BackendFeatures.swift\n[19/148] Compiling LabSharedGenerated BackendId.swift\n[20/148] Compiling LabSharedGenerated BackendRegistry.swift\n[21/148] Compiling LabSharedGenerated CalculationAlgorithmType.swift\n[22/148] Compiling LabSharedGenerated CalculationMethod.swift\n[23/148] Compiling LabSharedGenerated CatalogListBrands200Response.swift\n[24/148] Compiling LabSharedGenerated CatalogListGrades200Response.swift\n[25/148] Compiling LabSharedGenerated InspectionDictionaryListStandards200Response.swift\n[26/148] Compiling LabSharedGenerated InspectionDictionaryUnlinkObjectParameterRequest.swift\n[27/148] Compiling LabSharedGenerated InspectionDictionaryUnlinkObjectStandardRequest.swift\n[28/148] Compiling LabSharedGenerated InspectionGrade.swift\n[29/148] Compiling LabSharedGenerated InspectionModel.swift\n[30/148] Compiling LabSharedGenerated InspectionObject.swift\n[31/148] Compiling LabSharedGenerated InspectionParameter.swift\n[32/148] Compiling LabSharedGenerated InspectionParameterSourceType.swift\n[33/148] Compiling LabSharedGenerated InspectionReportName.swift\n[34/148] Compiling LabSharedGenerated InspectionSpec.swift\n[35/148] Compiling LabSharedGenerated InspectionSpecialty.swift\n[36/148] Compiling LabSharedGenerated InspectionStandard.swift\n[37/148] Compiling LabSharedGenerated InspectionStandardRole.swift\n[38/148] Compiling LabSharedGenerated InspectionStandardStatus.swift\n[39/148] Compiling LabSharedGenerated LoginRequest.swift\n[40/148] Compiling LabSharedGenerated LoginResponse.swift\n[41/148] Compiling LabSharedGenerated MaterialQualifiedRate.swift\n[42/148] Compiling LabSharedGenerated MenuNode.swift\n[43/148] Compiling LabSharedGenerated ModelErrorResponse.swift\n[44/148] Compiling LabSh"
     }
   ]
 }

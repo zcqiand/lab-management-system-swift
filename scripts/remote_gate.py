@@ -59,8 +59,17 @@ def main() -> int:
     staging = f"{STAGING_ROOT}/{root.name}"
 
     _sync(root, staging)
+    # GIT_CONFIG_GLOBAL=/dev/null：构建机 git 全局配置挂了本地代理（127.0.0.1:1088，
+    # 不常开），SPM 拉依赖时 clone 直接 128。用环境变量作用域屏蔽全局配置，
+    # 不动用户 git config；只影响本命令及其子进程。
     result = subprocess.run(
-        ["ssh", "-o", "BatchMode=yes", HOST, f"cd ~/{staging} && swift {mode}"]
+        [
+            "ssh",
+            "-o",
+            "BatchMode=yes",
+            HOST,
+            f"cd ~/{staging} && GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_SYSTEM=/dev/null swift {mode}",
+        ]
     )
     return result.returncode
 

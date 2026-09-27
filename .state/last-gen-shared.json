@@ -1,0 +1,7 @@
+{
+  "api_synced_sha": "67291bf3d880ae37ecaf0380c2499ab24b6de165",
+  "api_synced_at": "2026-09-27T15:14:21.338109+00:00",
+  "api_synced_cmd": "gen-shared.sh",
+  "shared_sha": "67291bf3d880ae37ecaf0380c2499ab24b6de165",
+  "consumer_repo": "lab-management-system-swift"
+}
