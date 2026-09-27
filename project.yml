@@ -1,6 +1,7 @@
 # XcodeGen 工程定义（REQ-2026-001 Q2 结论：连带建 Xcode 工程）。
-# .xcodeproj 由 home-mac 上 ~/tools/xcodegen 生成后入仓（构建机无 brew/sudo，
-# xcodegen 装在 ~/tools，Windows 侧不产工程）。
+# 真源 = 本文件；.xcodeproj 不入仓（.gitignore *.xcodeproj），远程门 L2 每次
+# `~/tools/xcodegen generate` 再生（构建机无 brew/sudo，xcodegen 装在 ~/tools），
+# Mac 侧 IDE 打开前也跑同命令。
 # SWIFT_VERSION 5.0 = SPM 侧 .swiftLanguageMode(.v5) 的 xcodebuild 等价物，
 # 原因同 Package.swift 注释：生成层 + bootstrap 读写 static var 的 Swift 5 并发模式。
 name: LabManagementSystem
