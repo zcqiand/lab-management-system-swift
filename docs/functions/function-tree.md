@@ -1,8 +1,8 @@
 # lab-management-system-swift 功能树
 
-> 建筑工程实验室管理系统 — SwiftUI iOS 前端。consumes `lab-management-system-shared` TypeSpec SSOT。
+> 建筑工程实验室管理系统 — SwiftUI iOS 前端。consumes `lab-management-system-shared` TypeSpec SSOT（需求与 API 基线；API 只用 shared 生成物）。
 > **范围裁剪（2026-09-27 人决策）**：本仓只做 **M03 实验过程管理**。react 仓的 M00/M01/M02/M04/M05/M06
-> 不在本仓范围（编号仍以 react 仓为上游双账本，本仓不占不弃——将来扩范围时按 react 仓编号对齐，不另起编号）。
+> 不在本仓范围（M/F 编号沿用 react 仓功能树 = shared BASE 双账本，本仓不占不弃——将来扩范围时按该编号对齐，不另起编号）。
 > **前端 only 仓**：不实现任何后端；后端可在 `lab-management-system-nextjs` / `-springboot` / `-aspnetcore` 之间切换（同契约异实现）。
 > 状态推进路径：规划 → 开发中 → 已上线。子项级（I 级）等第一个需求落地时再拆，不预拆。
 
