@@ -144,3 +144,184 @@ public final class ReceivingFlowViewModel {
         return FlowActionRequest(ids: ids, action: action, operator: operatorName, reason: reason)
     }
 }
+
+// MARK: - REQ-2026-002 T-2：表单（I02）/ 详情（I06）/ 删除（I03）
+
+/// 接样单表单字段 = CreateSampleReceiptRequest 必填集（shared tsp models/sample-receipt.tsp）。
+/// 可选字段本需求 UI 不做，后续需求扩列时保持 Equatable 语义（PATCH diff 依赖它）。
+public struct ReceiptFormFields: Equatable {
+    public var contractId: String
+    public var commissionCode: String
+    public var commissionDate: String
+    public var categoryCode: String
+    public var receivedBy: String
+    public var sampleSource: String
+    public var testCategory: String
+
+    public init(
+        contractId: String = "", commissionCode: String = "", commissionDate: String = "",
+        categoryCode: String = "", receivedBy: String = "", sampleSource: String = "",
+        testCategory: String = ""
+    ) {
+        self.contractId = contractId
+        self.commissionCode = commissionCode
+        self.commissionDate = commissionDate
+        self.categoryCode = categoryCode
+        self.receivedBy = receivedBy
+        self.sampleSource = sampleSource
+        self.testCategory = testCategory
+    }
+
+    /// 必填集字段名 → 值（validate 与 PATCH diff 共用一份遍历，防两处漂移）。
+    var entries: [(String, String)] {
+        [
+            ("contractId", contractId), ("commissionCode", commissionCode),
+            ("commissionDate", commissionDate), ("categoryCode", categoryCode),
+            ("receivedBy", receivedBy), ("sampleSource", sampleSource),
+            ("testCategory", testCategory),
+        ]
+    }
+}
+
+/// 表单错误：必填集不齐 fail-fast，不打端点（§1 禁兜底同源）。
+public enum ReceiptFormError: Error, Equatable {
+    case invalidFields
+}
+
+/// 接样单表单 VM：必填校验 + 请求构造（新建/PATCH 更新）+ 持久化路由。
+public final class ReceiptFormViewModel {
+
+    public var fields: ReceiptFormFields
+    public private(set) var validationErrors: [String] = []
+
+    /// 网络缝：id=nil → create；id≠nil → update。二选一非 nil，由 save 保证。
+    private let persist: (
+        _ id: String?, _ create: CreateSampleReceiptRequest?, _ update: UpdateSampleReceiptRequest?
+    ) async throws -> SampleReceipt
+
+    public init(
+        fields: ReceiptFormFields = ReceiptFormFields(),
+        persist: @escaping (
+            _ id: String?, _ create: CreateSampleReceiptRequest?, _ update: UpdateSampleReceiptRequest?
+        ) async throws -> SampleReceipt = ReceiptFormViewModel.notWired
+    ) {
+        self.fields = fields
+        self.persist = persist
+    }
+
+    /// 缺省 persist：只做校验/请求构造的用法必须显式接线才能 save，
+    /// 未接线就 save 是显式报错，不静默成功。（public：public init 的默认参数值
+    /// 只能引用 public 成员。）
+    public static func notWired(
+        _ id: String?, _ create: CreateSampleReceiptRequest?, _ update: UpdateSampleReceiptRequest?
+    ) async throws -> SampleReceipt {
+        struct PersistNotWired: Error {}
+        throw PersistNotWired()
+    }
+
+    /// 必填集校验：trim 后非空才算有值；缺项逐条进 validationErrors（UI 逐项标错）。
+    @discardableResult
+    public func validate() -> Bool {
+        validationErrors = fields.entries
+            .filter { $0.1.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            .map { $0.0 }
+        return validationErrors.isEmpty
+    }
+
+    /// AC-3：新建请求 = 必填集全量。
+    public func makeCreateRequest() throws -> CreateSampleReceiptRequest {
+        guard validate() else { throw ReceiptFormError.invalidFields }
+        return CreateSampleReceiptRequest(
+            contractId: fields.contractId,
+            commissionCode: fields.commissionCode,
+            commissionDate: fields.commissionDate,
+            categoryCode: fields.categoryCode,
+            receivedBy: fields.receivedBy,
+            sampleSource: fields.sampleSource,
+            testCategory: fields.testCategory
+        )
+    }
+
+    /// AC-4 PATCH 语义：只携带与 original 不同的字段；清空（含空白归一后）也是变更。
+    public func makeUpdateRequest(original: ReceiptFormFields) throws -> UpdateSampleReceiptRequest {
+        guard validate() else { throw ReceiptFormError.invalidFields }
+        func changed(_ now: String, _ before: String) -> String? {
+            now == before ? nil : now
+        }
+        return UpdateSampleReceiptRequest(
+            contractId: changed(fields.contractId, original.contractId),
+            commissionCode: changed(fields.commissionCode, original.commissionCode),
+            commissionDate: changed(fields.commissionDate, original.commissionDate),
+            categoryCode: changed(fields.categoryCode, original.categoryCode),
+            receivedBy: changed(fields.receivedBy, original.receivedBy),
+            sampleSource: changed(fields.sampleSource, original.sampleSource),
+            testCategory: changed(fields.testCategory, original.testCategory)
+        )
+    }
+
+    /// 持久化路由：id 缺 → create；id 有 → update（PATCH，diff 基准 = original）。
+    @discardableResult
+    public func save(id: String?, original: ReceiptFormFields?) async throws -> SampleReceipt {
+        if let id {
+            let update = try makeUpdateRequest(original: original ?? ReceiptFormFields())
+            return try await persist(id, nil, update)
+        }
+        let create = try makeCreateRequest()
+        return try await persist(nil, create, nil)
+    }
+}
+
+/// 接样单详情 VM（AC-6）：一次 load 同时取接样信息与流程历史。
+public final class ReceiptDetailViewModel {
+
+    public private(set) var receipt: SampleReceipt?
+    public private(set) var history: [FlowHistoryEntry] = []
+    public private(set) var isLoading = false
+    public private(set) var errorMessage: String?
+
+    /// 网络缝：返回 (接样单, 流程历史)；真实现由 UI 壳用 async let 并发取生成层两接口。
+    private let fetch: (String) async throws -> (SampleReceipt, [FlowHistoryEntry])
+
+    public init(
+        fetch: @escaping (String) async throws -> (SampleReceipt, [FlowHistoryEntry])
+    ) {
+        self.fetch = fetch
+    }
+
+    public func load(id: String) async {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+        do {
+            (receipt, history) = try await fetch(id)
+        } catch {
+            errorMessage = String(describing: error)
+            receipt = nil
+            history = []
+        }
+    }
+}
+
+/// 接样单删除 VM（AC-5）：确认后单条删除；失败以 errorMessage 呈现不崩。
+public final class ReceiptDeleteViewModel {
+
+    public private(set) var isDeleting = false
+    public private(set) var errorMessage: String?
+
+    private let delete: (String) async throws -> Void
+
+    public init(delete: @escaping (String) async throws -> Void) {
+        self.delete = delete
+    }
+
+    public func delete(id: String) async {
+        isDeleting = true
+        errorMessage = nil
+        defer { isDeleting = false }
+        do {
+            try await delete(id)
+        } catch {
+            errorMessage = String(describing: error)
+        }
+    }
+}
