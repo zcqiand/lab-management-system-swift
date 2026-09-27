@@ -15,11 +15,21 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
       ],
       "flows": [],
-      "designs": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
       "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testListRequestCarriesPaginationAndThreeStateFilter",
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testListRequestWithoutFilterOmitsFilterParam",
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testSampleReceiptFixtureDecodes",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testFilterThreeStatesMapToQueryValues",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testLoadErrorSurfacesMessageAndResetsLoading",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testLoadNextPageAppendsAndStopsAtShortPage",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testLoadResetsToPage1AndReplacesItems",
         "output\\lab-management-system-contract-test\\tests\\receipts-lastsubmit.test.ts:1037 (annot)",
         "output\\lab-management-system-contract-test\\tests\\sample-receipts.test.ts:5189 (annot)"
       ],
@@ -30,11 +40,21 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testCreateReceiptBodyEncodesRequiredSet",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testMakeCreateRequestCarriesRequiredSet",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testMakeUpdateRequestCarriesOnlyChangedFields",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testSaveRoutesCreateOrUpdateByPresenceOfID",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testUpdateWithClearedRequiredFieldFailsValidation",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testValidationRequiresFullRequiredSet"
+      ],
       "entry": []
     },
     "M03.F01.I03": {
@@ -42,11 +62,17 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDeleteCallsEndpointWithConfirmedID",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDeleteFailureSurfacesMessageWithoutThrow"
+      ],
       "entry": []
     },
     "M03.F01.I04": {
@@ -54,11 +80,16 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActSendsOperatorAndAppliesResultStatus"
+      ],
       "entry": []
     },
     "M03.F01.I06": {
@@ -66,11 +97,17 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
       ],
       "flows": [],
-      "designs": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
       "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testHistoryFixtureDecodes",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDetailLoadErrorSurfacesMessage",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDetailLoadFetchesReceiptAndHistory",
         "output\\lab-management-system-contract-test\\tests\\receipts-act-history.test.ts:1487 (annot)"
       ],
       "entry": []
@@ -83,7 +120,9 @@
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
       ],
       "flows": [],
-      "designs": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
       "tests": [
         "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3603 (annot)",
         "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3650 (annot)",
@@ -96,11 +135,18 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
       ],
       "flows": [],
-      "designs": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
       "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testActRequestEncodesThreeActions",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActFailureResultCarriesMessageNotThrow",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActSendsOperatorAndAppliesResultStatus",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActWithEmptySelectionFailsFastWithoutCallingEndpoint",
         "output\\lab-management-system-contract-test\\tests\\receipts-act-history.test.ts:1501 (annot)",
         "output\\lab-management-system-contract-test\\tests\\receipts-lastsubmit.test.ts:1023 (annot)"
       ],

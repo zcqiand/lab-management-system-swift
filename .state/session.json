@@ -1,32 +1,30 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-001 M03.F01 接样管理：T-1..T-6 全部落地，收口完成（L4 模拟器段撤出门禁待人裁）",
+  "current_task": "REQ-2026-002 M03.F01 UI 壳：T-1..T-4 全部落地（trace 挂 ID / SessionStore+表单详情删除 VM / App target+SwiftUI 页面全套 / 全门绿收口）",
   "done": [
-    "T-1 codegen 链（gen-shared.sh + openapitools.json 7.24.0 + 产物 committed，远程 build 绿）",
-    "T-2 APIClient.bootstrap 显式注入 fail-fast（Q1 结论，零 env 兜底）",
-    "T-3 生成层请求构造/解析测试 10 测（red-first 实证）",
-    "T-4 ReceiptFlow.swift ViewModel（filter 三态/分页/act 选区 fail-fast/结果回填）7 测",
-    "T-5 project.yml（XcodeGen）+ remote_gate.py L2 扩 xcodebuild（generic iOS，稳定绿）；xcodegen 2.46.0 装在 home-mac ~/tools",
-    "T-6 收口：L4 定格 swift test（Q2 原话）；模拟器 test 段实证可行一次（2026-09-28 01:04 iPhone/iOS 18.3.1 18 测 7.8s 全绿）后因机器态 3 连红撤出",
-    "project.yml 三坑修复：PRODUCT_NAME=$(TARGET_NAME) / EXCLUDED_ARCHS[sdk=iphonesimulator*]=arm64（Intel）/ Debug ENABLE_TESTABILITY=YES（@testable）",
-    "suite: check_codegen_idempotent 识别 swift 栈；profiles/codegen.md 候选→已验证收口",
-    "REQ-2026-001 文档 + function-tree I 行拆分 + 状态推进（I01-I04/I06/I08 开发中，I07 规划）",
-    "home-mac iOS runtime 18.3.1 (22D8075) 安装完成（非 Q2 原话 18.2，Xcode 16.2 拉最新兼容版）；dyld 模拟器共享缓存已建（一次性半小时+）"
+    "T-1 trace_cmd：扫 Tests/ // fn: 字面 → trace.json（禁手写由全量重写保证）；stack.json trace_cmd 接线；既有测试补挂 ID",
+    "T-2 SessionStore（首启配置页状态机，Q1 人裁）+ ReceiptFormViewModel（必填校验/PATCH diff/save 路由）+ ReceiptDetailViewModel + ReceiptDeleteViewModel（33 测全过）",
+    "T-3 App target + SwiftUI 页面全套：ConfigView/ReceiptListView/ReceiptFormView/ReceiptDetailView/ActConfirmSheet + APIGlue async 桥；L2 切 LabManagement scheme（含 App 编译）",
+    "T-4 全门绿（exit 0）；design-function-map 开发中行补齐",
+    "遗留收口：REQ-2026-001 模拟器 test 段撤出维持不变（机器态未修）"
   ],
   "next": [
-    "人裁：L4 模拟器 test 段何时恢复进门禁（手动验证命令在 remote_gate.py test 分支注释）",
-    "UI 壳（SwiftUI 列表/表单/详情）与 trace_cmd 挂 ID 留待下一需求",
-    "saas-identity-platform-swift 首需求落地时照抄 gen-shared.sh/remote_gate.py/project.yml（两仓同构）"
+    "登录 UI 需求（会话获取从手动配置页升级；act 操作人从显式输入升级为登录身份）",
+    "I07 ext 字段补录（REQ-2026-001 Q3 延后，依赖 inspection-catalog 只读依赖评估）",
+    "saas-identity-platform-swift 首需求照抄：gen-shared.sh/remote_gate.py/project.yml/trace_cmd.py 四件套",
+    "模拟器 xcodebuild test 机器态修复后人裁是否回门禁（手动验证命令在 remote_gate.py 注释）"
   ],
   "open_questions": [
-    "模拟器 xcodebuild test 在这台 Intel Air 上 3 连红「Test runner never began executing tests after launching」，erase 设备/重启 CoreSimulator 服务均无效——机器态问题，何时修、是否修，待人裁"
+    "模拟器 xcodebuild test「Test runner never began executing tests after launching」3 连红未修（REQ-2026-001 遗留），UI 层验收现为 L2 编译 + L4 swift test，XCUITest 未进",
+    "act 操作人当前为用户逐次显式输入（禁兜底），登录需求落地后接真身份"
   ],
   "dont": [
-    "不要改 .harness/stack.json 让门变松",
-    "不要给 skip 的测试挂功能 ID",
-    "不要手写 trace.json（trace_cmd 空缺暂缺，挂 ID 留待 UI 层需求）",
-    "不要把模拟器 test 段塞回 L4 门禁（机器态未修，红了就是 exit 2 白等 18 分钟）"
+    "不要改 .harness/stack.json 让门变松（trace_cmd 接线是收紧）",
+    "不要手写 trace.json（重跑 trace_cmd 即覆盖）",
+    "不要给 skip 的测试挂 // fn: ID（假绿物理禁止）",
+    "不要把模拟器 test 段塞回 L4（机器态未修，一红就是 18 分钟 exit 2）",
+    "不要在 act/表单做业务身份兜底字面量（ADR-0019）"
   ],
   "last_gate_passed_at": "2026-09-28T00:00:00+08:00"
 }
