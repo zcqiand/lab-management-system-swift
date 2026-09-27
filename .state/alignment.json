@@ -12,7 +12,7 @@
   "function_map": {
     "M03.F01.I01": {
       "name": "接样单列表（三态过滤）",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
@@ -27,7 +27,7 @@
     },
     "M03.F01.I02": {
       "name": "新建/编辑接样单",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
@@ -39,7 +39,7 @@
     },
     "M03.F01.I03": {
       "name": "删除接样单",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
@@ -51,7 +51,7 @@
     },
     "M03.F01.I04": {
       "name": "提交接样单（receiving → task_assignment）",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
@@ -63,7 +63,7 @@
     },
     "M03.F01.I06": {
       "name": "接样单流程历史",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
@@ -93,7 +93,7 @@
     },
     "M03.F01.I08": {
       "name": "接样-提交（act 三动作）",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
