@@ -1,0 +1,50 @@
+# XcodeGen 工程定义（REQ-2026-001 Q2 结论：连带建 Xcode 工程）。
+# .xcodeproj 由 home-mac 上 ~/tools/xcodegen 生成后入仓（构建机无 brew/sudo，
+# xcodegen 装在 ~/tools，Windows 侧不产工程）。
+# SWIFT_VERSION 5.0 = SPM 侧 .swiftLanguageMode(.v5) 的 xcodebuild 等价物，
+# 原因同 Package.swift 注释：生成层 + bootstrap 读写 static var 的 Swift 5 并发模式。
+name: LabManagementSystem
+options:
+  bundleIdPrefix: com.zcqiand
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+packages:
+  AnyCodable:
+    url: https://github.com/Flight-School/AnyCodable
+    exactVersion: 0.6.7
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGNING_ALLOWED: "NO"
+targets:
+  LabSharedGenerated:
+    type: framework
+    platform: iOS
+    sources:
+      - Generated/Sources
+    dependencies:
+      - package: AnyCodable
+  CoreKit:
+    type: framework
+    platform: iOS
+    sources:
+      - Sources/CoreKit
+    dependencies:
+      - target: LabSharedGenerated
+      - package: AnyCodable
+  CoreKitTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - Tests/CoreKitTests
+    dependencies:
+      - target: CoreKit
+schemes:
+  CoreKit:
+    build:
+      targets:
+        CoreKit: all
+    test:
+      targets:
+        - CoreKitTests

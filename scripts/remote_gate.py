@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""远程门禁：把本仓工作树同步到构建机 home-mac 的 staging 目录，再跑 swift build / swift test。
+"""远程门禁：把本仓工作树同步到构建机 home-mac 的 staging 目录，再跑 swift build / swift test / xcodebuild。
 
 用法（.harness/stack.json L2/L4 调用）:
-    python scripts/remote_gate.py build   # L2：远程 swift build
+    python scripts/remote_gate.py build   # L2：远程 swift build + xcodebuild（generic iOS）
     python scripts/remote_gate.py test    # L4：远程 swift test
 
 设计约束（suite 铁律）:
@@ -11,6 +11,14 @@
   不测构建机上可能陈旧的克隆。
 - ssh 一律 BatchMode：key 认证失败立刻红，绝不挂住门禁等密码。
 - exit code 唯一真相：swift 子进程的返回码原样透传。
+
+xcodebuild 段（REQ-2026-001 Q2）:
+- 每次先 ~/tools/xcodegen generate（真源是 project.yml，工程文件漂移即被再生覆盖），
+  再 xcodebuild 构建 CoreKit scheme。
+- destination 用 generic/platform=iOS + CODE_SIGNING_ALLOWED=NO：构建机
+  （Intel Air, Xcode 16.2）simctl 一个模拟器 runtime 都没装，模拟器目标
+  iOS 18.2 要先 `xcodebuild -downloadPlatform iOS`（~7GB）——装了再切。
+- xcodegen 装在 ~/tools（无 brew/sudo，GitHub release 二进制）。
 """
 
 import subprocess
@@ -61,17 +69,28 @@ def main() -> int:
     _sync(root, staging)
     # GIT_CONFIG_GLOBAL=/dev/null：构建机 git 全局配置挂了本地代理（127.0.0.1:1088，
     # 不常开），SPM 拉依赖时 clone 直接 128。用环境变量作用域屏蔽全局配置，
-    # 不动用户 git config；只影响本命令及其子进程。
-    result = subprocess.run(
-        [
-            "ssh",
-            "-o",
-            "BatchMode=yes",
-            HOST,
-            f"cd ~/{staging} && GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_SYSTEM=/dev/null swift {mode}",
+    # 不动用户 git config；只影响本命令及其子进程。xcodebuild 的 SPM resolve
+    # 同样走 git，前缀一并带上。
+    envfix = "GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_SYSTEM=/dev/null"
+    if mode == "build":
+        steps = [
+            (f"cd ~/{staging} && {envfix} swift build", "swift build"),
+            (
+                f"cd ~/{staging} && ~/tools/xcodegen generate && "
+                f"{envfix} xcodebuild -project LabManagementSystem.xcodeproj "
+                f"-scheme CoreKit -destination 'generic/platform=iOS' "
+                f"CODE_SIGNING_ALLOWED=NO build",
+                "xcodebuild build（generic iOS）",
+            ),
         ]
-    )
-    return result.returncode
+    else:
+        steps = [(f"cd ~/{staging} && {envfix} swift test", "swift test")]
+    for cmd, label in steps:
+        result = subprocess.run(["ssh", "-o", "BatchMode=yes", HOST, cmd])
+        if result.returncode != 0:
+            print(f"远程门禁红在 {label}（home-mac）", file=sys.stderr)
+            return result.returncode
+    return 0
 
 
 if __name__ == "__main__":
