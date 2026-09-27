@@ -24,7 +24,17 @@ let package = Package(
         // CoreKit：纯 Swift 层（模型 / API client / 业务逻辑）。
         // 铁律：本 target 禁止 import SwiftUI / UIKit —— 必须保持任何 Swift 工具链可编译，
         // 远程门禁 swift build/test 直接锁它。
-        .target(name: "CoreKit", dependencies: ["LabSharedGenerated"]),
-        .testTarget(name: "CoreKitTests", dependencies: ["CoreKit"]),
+        // Swift 5 语言模式：bootstrap 要读写生成层的 static var（非并发安全），
+        // 与生成层同模式；生成器 upstream 迁 Swift 6 后一并启严格并发。
+        .target(
+            name: "CoreKit",
+            dependencies: ["LabSharedGenerated"],
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
+        .testTarget(
+            name: "CoreKitTests",
+            dependencies: ["CoreKit"],
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
     ]
 )
