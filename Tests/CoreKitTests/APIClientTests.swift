@@ -16,6 +16,7 @@ final class APIClientTests: XCTestCase {
     // MARK: AC-1/AC-2 列表与三态过滤
 
     func testListRequestCarriesPaginationAndThreeStateFilter() throws {
+        // fn: M03.F01.I01
         let builder = ReceiptsAPI.receiptsListReceiptsWithRequestBuilder(
             page: 1, pageSize: 20, keyword: "CMA", contractId: nil,
             flowStatus: nil, filter: "not_yet"
@@ -27,6 +28,7 @@ final class APIClientTests: XCTestCase {
     }
 
     func testListRequestWithoutFilterOmitsFilterParam() throws {
+        // fn: M03.F01.I01
         let builder = ReceiptsAPI.receiptsListReceiptsWithRequestBuilder(
             page: nil, pageSize: nil, keyword: nil, contractId: nil,
             flowStatus: nil, filter: nil
@@ -37,6 +39,7 @@ final class APIClientTests: XCTestCase {
     // MARK: AC-3/AC-4 创建/更新与 AC-7 act 请求体
 
     func testCreateReceiptBodyEncodesRequiredSet() throws {
+        // fn: M03.F01.I02
         let body = CreateSampleReceiptRequest(
             contractId: "c-1", commissionCode: "WT-2026-001",
             commissionDate: "2026-09-27", commissionRegisterCode: nil,
@@ -62,6 +65,7 @@ final class APIClientTests: XCTestCase {
     }
 
     func testActRequestEncodesThreeActions() throws {
+        // fn: M03.F01.I08
         for (action, expectedRaw) in [
             (FlowAction.submit, "submit"),
             (FlowAction.`return`, "return"),
@@ -84,6 +88,7 @@ final class APIClientTests: XCTestCase {
     // MARK: AC-6 响应解析
 
     func testSampleReceiptFixtureDecodes() throws {
+        // fn: M03.F01.I01
         let json = """
         {
           "id": "r-1", "tenantId": "t-1", "contractId": "c-1",
@@ -101,6 +106,7 @@ final class APIClientTests: XCTestCase {
     }
 
     func testHistoryFixtureDecodes() throws {
+        // fn: M03.F01.I06
         let json = """
         [{
           "action": "submit", "from": "receiving", "to": "task_assignment",

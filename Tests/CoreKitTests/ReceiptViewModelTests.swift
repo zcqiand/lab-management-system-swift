@@ -30,6 +30,7 @@ final class ReceiptViewModelTests: XCTestCase {
     // MARK: filter 三态 → 查询值
 
     func testFilterThreeStatesMapToQueryValues() {
+        // fn: M03.F01.I01
         XCTAssertEqual(ReceiptFilter.all.queryValue, nil)
         XCTAssertEqual(ReceiptFilter.notYet.queryValue, "not_yet")
         XCTAssertEqual(ReceiptFilter.submitted.queryValue, "submitted")
@@ -38,6 +39,7 @@ final class ReceiptViewModelTests: XCTestCase {
     // MARK: 列表加载
 
     func testLoadResetsToPage1AndReplacesItems() async throws {
+        // fn: M03.F01.I01
         var seen: [ReceiptListQuery] = []
         let vm = ReceiptListViewModel(provider: { query in
             seen.append(query)
@@ -55,6 +57,7 @@ final class ReceiptViewModelTests: XCTestCase {
     }
 
     func testLoadNextPageAppendsAndStopsAtShortPage() async throws {
+        // fn: M03.F01.I01
         let page1 = try makeList((1...20).map { ("r-\($0)", .receiving) })
         let page2 = try makeList([("r-21", .receiving)])
         let pages = [page1, page2]
@@ -71,6 +74,7 @@ final class ReceiptViewModelTests: XCTestCase {
     }
 
     func testLoadErrorSurfacesMessageAndResetsLoading() async throws {
+        // fn: M03.F01.I01
         struct Boom: Error {}
         let failing = ReceiptListViewModel(provider: { _ in throw Boom() })
         await failing.load()
@@ -82,6 +86,7 @@ final class ReceiptViewModelTests: XCTestCase {
     // MARK: act 流转（emptySelection fail-fast + 结果回填）
 
     func testActWithEmptySelectionFailsFastWithoutCallingEndpoint() async throws {
+        // fn: M03.F01.I08
         struct NoCall: Error {}
         var called = false
         let vm = ReceivingFlowViewModel(operatorName: "alice") { _, _, _ in
@@ -98,6 +103,7 @@ final class ReceiptViewModelTests: XCTestCase {
     }
 
     func testActSendsOperatorAndAppliesResultStatus() async throws {
+        // fn: M03.F01.I04 M03.F01.I08（SUBMIT 请求 + 结果按 id 回填列表）
         var captured: (action: FlowAction, ids: [String], reason: String?)?
         let vm = ReceivingFlowViewModel(operatorName: "alice") { action, ids, reason in
             captured = (action, ids, reason)
@@ -120,6 +126,7 @@ final class ReceiptViewModelTests: XCTestCase {
     }
 
     func testActFailureResultCarriesMessageNotThrow() async throws {
+        // fn: M03.F01.I08
         let vm = ReceivingFlowViewModel(operatorName: "alice") { _, _, _ in
             [FlowActionResult(id: "r-9", ok: false, message: "状态不允许提交")]
         }

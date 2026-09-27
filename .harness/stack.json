@@ -15,7 +15,7 @@
       "fix": "先让测试变绿，再谈重构。若测试本身有误，改测试前必须先说明理由。"
     }
   },
-  "trace_cmd": [],
+  "trace_cmd": ["python", "scripts/trace_cmd.py"],
   "trace_env": {},
   "source_dirs": ["Sources"],
   "test_dirs": ["Tests"]
