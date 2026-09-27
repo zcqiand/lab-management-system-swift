@@ -1,13 +1,29 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "项目已初始化，等待第一个需求",
-  "done": ["脚手架生成，门禁全绿"],
-  "next": "跑 /req <需求原话> 落第一份需求文档，同时把 docs/functions/function-tree.md 填成真实功能清单",
-  "open_questions": [],
+  "current_task": "REQ-2026-001 M03.F01 接样管理：T-1..T-5 已落地（codegen 链 / APIClient / 生成层测试 / ViewModel / Xcode 工程 + 远程门扩 xcodebuild），T-6 收尾",
+  "done": [
+    "T-1 codegen 链（gen-shared.sh + openapitools.json 7.24.0 + 产物 committed，远程 build 绿）",
+    "T-2 APIClient.bootstrap 显式注入 fail-fast（Q1 结论，零 env 兜底）",
+    "T-3 生成层请求构造/解析测试 10 测（red-first 实证）",
+    "T-4 ReceiptFlow.swift ViewModel（filter 三态/分页/act 选区 fail-fast/结果回填）6 测",
+    "T-5 project.yml（XcodeGen）+ remote_gate.py L2 扩 xcodebuild（generic iOS）；xcodegen 2.46.0 装在 home-mac ~/tools",
+    "suite: check_codegen_idempotent 识别 swift 栈；profiles/codegen.md 候选→已验证收口",
+    "REQ-2026-001 文档 + function-tree I 行拆分 + 状态推进（I01-I04/I06/I08 开发中）"
+  ],
+  "next": [
+    "home-mac iOS platform ~7GB 下载中（xcodebuild -downloadPlatform iOS，caffeinate 挂着）；完成后复跑全门，L2 的 xcodebuild 段预期转绿",
+    "platform 就绪后可选：L4 扩 xcodebuild test（模拟器目标 iOS 18.2，REQ Q2 原话）——当前 L4 仍 swift test",
+    "UI 壳（SwiftUI 列表/表单/详情）与 trace_cmd 挂 ID 留待下一需求",
+    "saas-identity-platform-swift 首需求落地时照抄 gen-shared.sh/remote_gate.py/project.yml（两仓同构）"
+  ],
+  "open_questions": [
+    "模拟器目标 iOS 18.2 的 xcodebuild test 何时切（等 platform 下载完成后人裁节奏）"
+  ],
   "dont": [
     "不要改 .harness/stack.json 让门变松",
-    "不要给 skip 的测试挂功能 ID"
+    "不要给 skip 的测试挂功能 ID",
+    "不要手写 trace.json（trace_cmd 空缺暂缺，挂 ID 留待 UI 层需求）"
   ],
-  "last_gate_passed_at": null
+  "last_gate_passed_at": "2026-09-27T23:52:00+08:00"
 }
