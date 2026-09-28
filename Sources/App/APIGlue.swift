@@ -100,6 +100,72 @@ enum APIGlue {
         }
     }
 
+    /// act（M03.F03.I12）：数据录入阶段流转统一端点（REQ-2026-005）。
+    static func dataEntryAct(
+        _ action: FlowAction, ids: [String], operator name: String, reason: String?
+    ) async throws -> [FlowActionResult] {
+        try await run {
+            ReceiptsAPI.receiptsActFlowDataEntryWithRequestBuilder(
+                flowActionRequest: FlowActionRequest(
+                    ids: ids, action: action, operator: name, reason: reason
+                )
+            )
+        }
+    }
+
+    // MARK: - 数据录入目录（M03.F03.I01，REQ-2026-005；页大小 200 镜像家族）
+
+    /// 按单拉样品（录入 sheet 样品 Picker 数据源）。
+    static let receiptSamples: (String) async throws -> [Sample] = { receiptId in
+        let page = try await run {
+            SamplesAPI.samplesListSamplesWithRequestBuilder(
+                page: 1, pageSize: 200, receiptId: receiptId, keyword: nil
+            )
+        }
+        return page.items
+    }
+
+    /// 参数字典（录入 sheet 参数 Picker 数据源）。
+    static let parameters: () async throws -> [InspectionParameter] = {
+        let page = try await run {
+            InspectionDictionaryAPI.inspectionDictionaryListParametersWithRequestBuilder(
+                page: 1, pageSize: 200, keyword: nil, sourceType: nil
+            )
+        }
+        return page.items
+    }
+
+    /// 逐样品检测记录（录入 sheet 键控索引数据源）。
+    static let testRecords: (String) async throws -> [TestRecord] = { sampleId in
+        let page = try await run {
+            TestRecordsAPI.testRecordsListTestRecordsWithRequestBuilder(
+                page: 1, pageSize: 200, sampleId: sampleId, parameterCode: nil
+            )
+        }
+        return page.items
+    }
+
+    /// 检测记录 persist（I02/I03）：id=nil → create；id+update → update。
+    /// verdict 均随请求体（Q3 裁定，不走专用 setVerdict 端点）。
+    static let persistTestRecord: (
+        _ id: String?, _ create: CreateTestRecordRequest?, _ update: UpdateTestRecordRequest?
+    ) async throws -> TestRecord = { id, create, update in
+        struct BadPersistRequest: Error {}
+        if let id, let update {
+            return try await run {
+                TestRecordsAPI.testRecordsUpdateTestRecordWithRequestBuilder(
+                    id: id, updateTestRecordRequest: update
+                )
+            }
+        }
+        guard let create else { throw BadPersistRequest() }
+        return try await run {
+            TestRecordsAPI.testRecordsCreateTestRecordWithRequestBuilder(
+                createTestRecordRequest: create
+            )
+        }
+    }
+
     /// 安排/取消（M03.F02.I02）：手填姓名+日期（REQ-2026-004 Q2，assigneeId 不传）。
     static let assignTask: (String, AssignTaskRequest) async throws -> SampleReceipt = { id, request in
         try await run {

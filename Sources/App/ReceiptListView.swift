@@ -88,6 +88,12 @@ struct ReceiptListView: View {
             } label: {
                 Image(systemName: "checklist")
             }
+            // REQ-2026-005：数据录入页入口（流程第三环节）。
+            NavigationLink {
+                DataEntryView(session: session)
+            } label: {
+                Image(systemName: "square.and.pencil")
+            }
             Button {
                 showCreate = true
             } label: {

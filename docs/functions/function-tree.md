@@ -55,7 +55,11 @@
 | M03.F02.I01 | 任务分配队列 | 页面：`GET /receipts`（flowStatus=task_assignment）+ keyword；REQ-2026-004 | 开发中 |
 | M03.F02.I02 | 安排/取消检测人员与计划日期 | 按钮：`PUT /receipts/{id}/assign-task`，手填姓名+日期（assigneeId 不传）；REQ-2026-004 | 开发中 |
 | M03.F02.I05 | 任务分配-提交（act 三动作） | 接口：`POST /receipts/assigning/act`，body.action={submit、return、withdraw}；operator=会话身份 | 开发中 |
-| M03.F03 | 数据录入（样品检测数据 + 人工改判） | 检测记录 CRUD + 人工改判 verdict + act 三动作 | 规划 |
+| M03.F03 | 数据录入（样品检测数据 + 人工改判） | 录入页 + 保存检测记录 + 人工改判 verdict + act 三动作；REQ-2026-005 | 开发中 |
+| M03.F03.I01 | 样品 + 检测数据录入页 | 页面：data_entry 队列 + 录入 sheet（样品/参数 Picker + 表单，按 sampleId#parameterCode 判更新或创建）；REQ-2026-005 | 开发中 |
+| M03.F03.I02 | 保存检测记录 | 按钮：POST/PUT `/test-records`（create-vs-update 按同键记录），verdict 随请求体；REQ-2026-005 | 开发中 |
+| M03.F03.I03 | 人工改判 verdict | 按钮：录入 sheet verdict 选择器改值随保存请求体提交（不走专用 setVerdict，家族同款）；REQ-2026-005 | 开发中 |
+| M03.F03.I12 | 数据录入-提交（act 三动作） | 接口：`POST /receipts/data-entry/act`，body.action={submit、return、withdraw}；operator=会话身份 | 开发中 |
 | M03.F05 | 报告审核流程 | review 阶段队列 + act 提交/退回/撤回 | 规划 |
 | M03.F06 | 报告批准流程 | approval 阶段队列 + act 提交/退回/撤回 | 规划 |
 | M03.F07 | 报告发放流程 | issuance 阶段队列 + 发放（生成报告编号） | 规划 |

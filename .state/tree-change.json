@@ -1,30 +1,36 @@
 {
   "schema": 1,
   "approved": true,
-  "base_sha": "a44c8b6d3eaa1d0e",
-  "summary": "REQ-2026-004 任务分配：登记 M03.F02 三个子项（编号镜像家族 vue/react 树已上线面：I01 队列、I02 安排/取消、I05 act 三动作）。I06/I07 在家族已废弃（语义并入 I05，act 端点 body.action 区分，号不回收），本仓直接从 I05 收口不占用 I06/I07。I03 清空分配 / I04 三态过滤家族也是规划态，本期不做、不登记，留后续需求。全部新增行状态=规划。",
+  "base_sha": "d80ae93fc7f561da",
+  "summary": "REQ-2026-005 数据录入：登记 M03.F03 四个子项（编号镜像家族 vue/react 树已上线面：I01 录入页、I02 保存检测记录、I03 人工改判 verdict、I12 act 三动作）。I13/I14 在家族已废弃（语义并入 I12，act 端点 body.action 区分，号不回收），本仓直接从 I12 收口不占用 I13/I14。I04/I06-I09 家族也是规划态、I15 家族开发中，本期不做、不登记，留后续需求。I03 澄清裁定 verdict 随 create/update 请求体（家族两仓实证；专用 setVerdict 端点生成物里有但家族 UI 未用，本仓不用）。全部新增行状态=规划；批准后 F03 行 规划→开发中 + 需求文档/台账同步。",
   "changes": [
     {
-      "id": "M03.F02.I01",
+      "id": "M03.F03.I01",
       "action": "新增",
-      "name": "任务分配队列",
-      "reason": "REQ-2026-004：队列页面，receiptsListReceipts(flowStatus=task_assignment) + keyword，镜像家族 TaskAssignmentList"
+      "name": "样品 + 检测数据录入页",
+      "reason": "REQ-2026-005：数据录入队列（receiptsListReceipts flowStatus=data_entry + keyword）行点「录入结果」弹 sheet：样品 Picker（samplesListSamples receiptId）+ 参数 Picker（inspectionDictionaryListParameters）+ 表单，按 sampleId#parameterCode 判断更新或创建（Q2 裁定家族同款 sheet）"
     },
     {
-      "id": "M03.F02.I02",
+      "id": "M03.F03.I02",
       "action": "新增",
-      "name": "安排/取消检测人员与计划日期",
-      "reason": "REQ-2026-004：手填姓名+日期对话框，receiptsAssignTask（Q2 裁定手填形态，assigneeId 不传）"
+      "name": "保存检测记录",
+      "reason": "REQ-2026-005：testRecordsCreateTestRecord / testRecordsUpdateTestRecord（按同键记录有无），result 必填 fail-fast，verdict 随请求体（Q3 裁定家族同款，不走专用 setVerdict）"
     },
     {
-      "id": "M03.F02.I05",
+      "id": "M03.F03.I03",
       "action": "新增",
-      "name": "任务分配-提交（act 三动作）",
-      "reason": "REQ-2026-004：POST /receipts/assigning/act，body.action={submit、return、withdraw} 三动作统一（家族 I06 退回/I07 撤回已废弃语义并入本行，号不回收）；operator=真会话身份（Q3 裁定）"
+      "name": "人工改判 verdict",
+      "reason": "REQ-2026-005：改判 = 录入 sheet 表单 verdict 选择器改值随保存请求体提交（家族 vue+react 实证一致；生成物 testRecordsSetVerdict 端点家族录入页未用，本仓同样不用）"
+    },
+    {
+      "id": "M03.F03.I12",
+      "action": "新增",
+      "name": "数据录入-提交（act 三动作）",
+      "reason": "REQ-2026-005：POST /receipts/data-entry/act，body.action={submit、return、withdraw} 三动作统一（家族 I13 退回/I14 撤回已废弃语义并入本行，号不回收）；operator=真会话身份（REQ-2026-004 已建立的 ActConfirmSheet 会话注入模式）"
     }
   ],
   "sync_files": [
     "docs/requirements/README.md",
-    "docs/requirements/REQ-2026-004-task-assignment.md"
+    "docs/requirements/REQ-2026-005-data-entry.md"
   ]
 }

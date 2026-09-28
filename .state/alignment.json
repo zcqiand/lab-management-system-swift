@@ -4,7 +4,7 @@
   "functions": {
     "modules": 3,
     "features": 11,
-    "items": 17
+    "items": 21
   },
   "warnings_total": 0,
   "warnings": {},
@@ -41,7 +41,7 @@
         "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testAdoptLoginPersistsSecretsAndReadiesAcrossRebirth",
         "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testExpirePathEqualsLogoutSemanticsOnRebirth",
         "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testSaveBaseURLValidatesFailFastThenNeedsLogin",
-        "output\\lab-management-system-contract-test\\tests\\auth-read.test.ts:3601 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\auth-read.test.ts:4261 (annot)",
         "output\\lab-management-system-contract-test\\tests\\auth-write.test.ts:1336 (annot)",
         "output\\lab-management-system-contract-test\\tests\\calculation-methods-write.test.ts:3147 (annot)",
         "output\\lab-management-system-contract-test\\tests\\contracts.test.ts:8707 (annot)",
@@ -315,6 +315,72 @@
       "tests": [
         "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testActEmbedsSessionOperatorAndPerforms",
         "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testActRejectsMissingOperator"
+      ],
+      "entry": []
+    },
+    "M03.F03.I01": {
+      "name": "样品 + 检测数据录入页",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-005-data-entry.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testEntryLoadAssemblesCatalogAndKeysRecords",
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testQueueQueryPinsDataEntryStage"
+      ],
+      "entry": []
+    },
+    "M03.F03.I02": {
+      "name": "保存检测记录",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-005-data-entry.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testCreateRequestTrimsAndRequiresCoreFields",
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testSaveWithoutRecordCreatesWithVerdictInBody"
+      ],
+      "entry": []
+    },
+    "M03.F03.I03": {
+      "name": "人工改判 verdict",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-005-data-entry.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testVerdictRevisionWithExistingRecordGoesUpdate"
+      ],
+      "entry": []
+    },
+    "M03.F03.I12": {
+      "name": "数据录入-提交（act 三动作）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-005-data-entry.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testActDataEntryEmbedsSessionOperatorAndGuardsSelection"
       ],
       "entry": []
     }

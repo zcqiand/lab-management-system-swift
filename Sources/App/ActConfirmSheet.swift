@@ -8,10 +8,12 @@ import SwiftUI
 // fail-fast（missingOperator）→ alert 呈现。逐单结果 ok=false 以 alert 呈现不崩。
 
 struct ActConfirmSheet: View {
-    /// act 端点档位：接样 receiving / 任务分配 assigning（各阶段端点不同，动作语义同）。
+    /// act 端点档位：接样 receiving / 任务分配 assigning / 数据录入 dataEntry
+    /// （各阶段端点不同，动作语义同）。
     enum ActEndpoint {
         case receiving
         case assigning
+        case dataEntry
     }
 
     let action: FlowAction
@@ -75,6 +77,10 @@ struct ActConfirmSheet: View {
                 try await APIGlue.act(act, ids: actIds, operator: trimmedOperator, reason: actReason)
             case .assigning:
                 try await APIGlue.assigningAct(
+                    act, ids: actIds, operator: trimmedOperator, reason: actReason
+                )
+            case .dataEntry:
+                try await APIGlue.dataEntryAct(
                     act, ids: actIds, operator: trimmedOperator, reason: actReason
                 )
             }
