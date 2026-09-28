@@ -1,30 +1,28 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-003 登录 UI 全部收口（T-0~T-4 + 模拟器实机视觉验证 + 打包缺陷四连修），全门绿已 push（49e357a）",
+  "current_task": "REQ-2026-004 任务分配（M03.F02）T-0~T-3 完成并 push（220b428）：队列/安排取消/act 三动作 + act operator 改真会话身份，全门绿",
   "done": [
-    "模拟器实机验证修出并修复 L2 build 门盲区四层打包缺陷（project.yml，49e357a）：① framework 缺 Info.plist 装不上（两 framework target GENERATE_INFOPLIST_FILE=YES，App NO 防呆）② install name 绝对路径即崩（DYLIB_INSTALL_NAME_BASE @rpath）③ runpath 键名 LD_RUNPATH 链接器不消费（改 LD_RUNPATH_SEARCH_PATHS 数组 + @executable_path/Frameworks）④ 依赖不传递嵌入（App 显式直接依赖 LabSharedGenerated）",
-    "UI 视觉验证达成：iPhone 16 模拟器 install 成功、进程存活无新 .ips；needsSetup=连接配置页、needsLogin=登录页（-corekit.baseURL 启动参数路由）两态截图确认，三态路由可达两态全对",
-    "模拟器 xcodebuild test 机器态自愈后复测 41/41 绿（host swift test 与 xcodebuild 模拟器双链）；是否回填 L4 test 段=人裁未决",
-    "（前段）T-2/T-3 代码 + 红先行 + 41/41 + 功能树 5 行开发中 + 设计映射 +5 行，8d58604/3e1a63d 已 push"
+    "T-0 tree-change 批准：M03.F02 子项登记 I01/I02/I05（镜像家族编号；I06/I07 家族已废弃语义并入 I05；I03/I04 家族也规划态不登记）",
+    "T-1 CoreKit 红先行（旧树红→48/48 绿）：AssignTaskViewModel（安排两字段必填 fail-fast / 全空=取消清空请求，assigneeId 恒不传，Q2 裁定）+ ReceivingFlowViewModel operator 缺席 fail-fast（FlowActionError.missingOperator）；队列复用 ReceiptListViewModel（query.flowStatus=.taskAssignment 预设）",
+    "T-2 App：TaskAssignmentView（队列+AssignSheet 手填对话框+act 菜单）+ 接样列表 checklist 入口；ActConfirmSheet operator 输入框删除改会话身份注入（ADR-0019 临时解退役）+ ActEndpoint 档位（receiving/assigning）；APIGlue +assignTask/assigningAct",
+    "T-3 对齐：trace_cmd 36 测试挂 14 ID（I01/I02/I05 入账）；功能树/设计映射 3 行开发中；全门绿 L2 98s / L4 47s / L5 软告警 0；220b428 已 push"
   ],
   "next": [
-    "REQ-2026-003 剩余仅 M01.F05.I03（SSO 原生形态）= 显式后续需求",
-    "ready 态 UI（收据列表/账户页切租户/登出）需真后端，留人工模拟器跑一次（dev 后端 :5204 + Keychain 无法用启动参数种子化，需手动登录）",
-    "下一需求候选（功能树规划态）：M03.F02 接样单筛选细项 → F03 → F09 → F05-F08；开工先写 REQ + 澄清",
-    "I07 ext 字段补录（REQ-2026-001 Q3 延后）仍欠"
+    "ready 态人工验收（含任务分配页）需真后端 :5204 + 模拟器手动登录（Keychain 无法用启动参数种子化）；通过后功能树 6 行开发中→已上线",
+    "下一需求候选（功能树规划态）：M03.F03 数据录入（检测记录 + 人工改判 verdict + act）或 M03.F09 接样单详情（详情+历史+预览）；开工先写 REQ + 澄清",
+    "M03.F01.I07 ext 字段补录（REQ-2026-001 Q3 延后）仍欠；M03.F02.I03 清空分配/I04 三态过滤家族也是规划态，后续需求"
   ],
   "open_questions": [
-    "模拟器 xcodebuild test 段是否回填 L4（机器态已愈，41/41）待人裁",
-    "L4_DB_INJECT_REPOS 是否纳 shared 仍待人裁（沿用）",
-    "home-mac Tailscale 今晚仍抖（复跑远程门前先探活，别当门红）"
+    "模拟器 xcodebuild test 段是否回填 L4（41/41 机器态已愈）待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
+    "home-mac Tailscale 链路抖动自愈模式仍在——跑远程门前先探活"
   ],
   "dont": [
-    "XcodeGen 八坑全在册（memory xcodegen-xcode16-project-yml-quirks.md）：runpath 键名必须是 LD_RUNPATH_SEARCH_PATHS（写 LD_RUNPATH 静默不生效，showBuildSettings 还骗人）；依赖不传递嵌入，二层框架必须 App 显式直接依赖",
-    "启动即退先看 ~/Library/Logs/DiagnosticReports/<App>-*.ips 的 Library not loaded 行分层定位：绝对路径=install name，@rpath+构建目录 tried=runpath，@rpath+二层框架=没传递嵌入",
-    "trace_cmd 的 // fn: 锚点必须在 func testXxx( 行后函数体内；测试文件 import LabSharedGenerated（生成类型不在 @testable CoreKit 里）",
+    "APIGlue 的闭包属性调用不带标签（APIGlue.assignTask(id, request) 而非 id:request:——extraneous argument labels 实证）",
+    "SwiftUI struct 的 var body 不能 private（protocol witness 访问级实证）；@StateObject 要求 VM conform ObservableObject——CoreKit 侧 ObservableObject + objectWillChange.send() 模式见 ReceiptListViewModel/AssignTaskViewModel",
+    "trace_cmd 锚点在 func testXxx( 函数体内；测试文件 import LabSharedGenerated；XcodeGen 八坑全在册（memory xcodegen-xcode16-project-yml-quirks.md）",
     "bash heredoc 传 CJK 会散点损坏，改中文文件一律用 Edit/Write 工具",
-    "旧坑沿用：tsp 注释禁别端点全 ID 字面 / springboot 匿名端点同批补 permitAll / 5101 归属互斥 / 不要把模拟器 test 段塞回 L4 / 不要业务身份兜底字面量（ADR-0019）"
+    "旧坑沿用：remote_gate.py 在项目 scripts/ 下不是 suite scripts/；tsp 注释禁别端点全 ID 字面；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-28T23:05:00+08:00"
+  "last_gate_passed_at": "2026-09-29T00:30:00+08:00"
 }
