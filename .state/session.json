@@ -1,29 +1,30 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-003 登录 UI：T-0/T-1/T-2/T-3/T-4 全部完成，全门绿已 push（8d58604 代码 + 3e1a63d 对齐文档）",
+  "current_task": "REQ-2026-003 登录 UI 全部收口（T-0~T-4 + 模拟器实机视觉验证 + 打包缺陷四连修），全门绿已 push（49e357a）",
   "done": [
-    "T-2 会话层：TokenStoring 存储缝（App 绑 KeychainTokenStore / 测试绑 InMemoryTokenStore fake，风险 R3）+ SessionStore 三态机（needsSetup/needsLogin/ready）+ saveBaseURL 校验归一 + adoptLogin（密态+快照+Bearer）+ logout 清会话留 baseURL（I02 失效与 I04 登出共用）",
-    "T-3 页面层：LoginView 原生表单→native-login（I06）+ AccountView（M00.F01 用户快照 / M00.F02.I01 切租户 / I04 登出）+ APIGlue 401 统一拦截回调（I02）+ App 三态路由 + ConfigView 瘦身只收 baseURL；切租户/登出回列表整表刷新（sheet onDismiss 重载）",
-    "红先行落证：旧树 home-mac swift test 红（extra argument 'secrets' / no member 'needsLogin'）；实现后 41/41 绿 + xcodebuild BUILD SUCCEEDED；gate -p 本仓全绿（L2 203s / L4 73s / L5 软告警 0）",
-    "T-4 对齐：功能树 5 行规划→开发中（hook 放行纯状态列翻转）+ 设计映射表 +5 行 + REQ T-2/T-3 翻完成；trace_cmd 重产 30 测试挂 11 ID；双 commit 已 push origin"
+    "模拟器实机验证修出并修复 L2 build 门盲区四层打包缺陷（project.yml，49e357a）：① framework 缺 Info.plist 装不上（两 framework target GENERATE_INFOPLIST_FILE=YES，App NO 防呆）② install name 绝对路径即崩（DYLIB_INSTALL_NAME_BASE @rpath）③ runpath 键名 LD_RUNPATH 链接器不消费（改 LD_RUNPATH_SEARCH_PATHS 数组 + @executable_path/Frameworks）④ 依赖不传递嵌入（App 显式直接依赖 LabSharedGenerated）",
+    "UI 视觉验证达成：iPhone 16 模拟器 install 成功、进程存活无新 .ips；needsSetup=连接配置页、needsLogin=登录页（-corekit.baseURL 启动参数路由）两态截图确认，三态路由可达两态全对",
+    "模拟器 xcodebuild test 机器态自愈后复测 41/41 绿（host swift test 与 xcodebuild 模拟器双链）；是否回填 L4 test 段=人裁未决",
+    "（前段）T-2/T-3 代码 + 红先行 + 41/41 + 功能树 5 行开发中 + 设计映射 +5 行，8d58604/3e1a63d 已 push"
   ],
   "next": [
-    "REQ-2026-003 剩余项只有 M01.F05.I03（SSO 原生形态）= 显式后续需求，不在本需求范围",
-    "下一需求候选（见 docs/functions/function-tree.md 规划态行）：M03.F02 接样单筛选细项 → F03 → F09 → F05-F08；开工前照例先写 REQ 文档 + 澄清",
-    "I07 ext 字段补录（REQ-2026-001 Q3 延后）仍是规划态欠账"
+    "REQ-2026-003 剩余仅 M01.F05.I03（SSO 原生形态）= 显式后续需求",
+    "ready 态 UI（收据列表/账户页切租户/登出）需真后端，留人工模拟器跑一次（dev 后端 :5204 + Keychain 无法用启动参数种子化，需手动登录）",
+    "下一需求候选（功能树规划态）：M03.F02 接样单筛选细项 → F03 → F09 → F05-F08；开工先写 REQ + 澄清",
+    "I07 ext 字段补录（REQ-2026-001 Q3 延后）仍欠"
   ],
   "open_questions": [
-    "模拟器 xcodebuild test 机器态仍未修（REQ-2026-001 遗留）：本需求 UI 层验收=L2 编译 + swift test 状态机单测，XCUITest/真机点击流未进——登录页 UI 视觉需人工跑一次模拟器确认",
-    "home-mac Tailscale 链路今晚抖动两次（100% 丢包数分钟后自愈）——下次跑远程门前先探活，别当门红",
-    "shared L4.db PG 五件套是否入 L4_DB_INJECT_REPOS 表仍待人裁（沿用上 session 遗留）"
+    "模拟器 xcodebuild test 段是否回填 L4（机器态已愈，41/41）待人裁",
+    "L4_DB_INJECT_REPOS 是否纳 shared 仍待人裁（沿用）",
+    "home-mac Tailscale 今晚仍抖（复跑远程门前先探活，别当门红）"
   ],
   "dont": [
-    "trace_cmd 的 // fn: 锚点必须写 在 func testXxx( 行之后的函数体内——写在声明上方=锚定失败 exit 1（本次实测）；测试文件别忘 import LabSharedGenerated（生成类型不在 @testable CoreKit 里）",
-    "bash heredoc 传 CJK 会散点损坏（拦截→挡截 实证），改中文文件一律用 Edit/Write 工具",
-    "swift 测试别挂树上不存在的子项号：M00.F01 没有子项，挂功能级 M00.F01 本身合法（ROW_RE 收三级 ID）",
-    "旧坑沿用：tsp 注释禁别端点全 ID 字面 / springboot 匿名端点同批补 permitAll / 5101 归属互斥 / gen 跑时停 dotnet dev / contract-test live 要显式 export+TRACE_MAP",
-    "不要把模拟器 test 段塞回 L4；不要业务身份兜底字面量（ADR-0019）"
+    "XcodeGen 八坑全在册（memory xcodegen-xcode16-project-yml-quirks.md）：runpath 键名必须是 LD_RUNPATH_SEARCH_PATHS（写 LD_RUNPATH 静默不生效，showBuildSettings 还骗人）；依赖不传递嵌入，二层框架必须 App 显式直接依赖",
+    "启动即退先看 ~/Library/Logs/DiagnosticReports/<App>-*.ips 的 Library not loaded 行分层定位：绝对路径=install name，@rpath+构建目录 tried=runpath，@rpath+二层框架=没传递嵌入",
+    "trace_cmd 的 // fn: 锚点必须在 func testXxx( 行后函数体内；测试文件 import LabSharedGenerated（生成类型不在 @testable CoreKit 里）",
+    "bash heredoc 传 CJK 会散点损坏，改中文文件一律用 Edit/Write 工具",
+    "旧坑沿用：tsp 注释禁别端点全 ID 字面 / springboot 匿名端点同批补 permitAll / 5101 归属互斥 / 不要把模拟器 test 段塞回 L4 / 不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-28T20:15:00+08:00"
+  "last_gate_passed_at": "2026-09-28T23:05:00+08:00"
 }
