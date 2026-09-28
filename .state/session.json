@@ -1,33 +1,29 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-003 登录 UI：T-0 shared 契约层 + T-1 家族 codegen 全绿收口（T-2/T-3 swift 实装未开工）",
+  "current_task": "REQ-2026-003 登录 UI：T-0/T-1/T-2/T-3/T-4 全部完成，全门绿已 push（8d58604 代码 + 3e1a63d 对齐文档）",
   "done": [
-    "Q4 人裁 A+B+C 全做后 shared 契约落地：nativeLogin op（M01.F05.I06）+ ssoAuthorize 自定义 scheme 白名单语义 + ssoCallback state 双轨注释（shared 10ab516+9e69993，9e69993 是注释修——op 注释里的全 ID 字面会被 L5.inventory 扫成多挂）",
-    "swift 树扩 18→28 行（M00 租户/M01 认证两模块，I06 原生登录等全 规划态，人裁 token 落笔 5152232）",
-    "swift gen-shared 重跑：AuthAPI 增 authNativeLogin 端点对，产物零手写（56ce9b9）；L2 远程门绿（swift build 322s + xcodebuild BUILD SUCCEEDED，home-mac Xcode 16.2）",
-    "三后端实现 + react/vue/nextjs codegen + contract-test native-login 四方比对（live 467/467、覆盖 119/119）；9 仓 + suite 根 gitlink 全 push",
-    "springboot SecurityFilterChain 补放行 /api/auth/native-login（78d97c9）——controller 落地不等于放行单落地，JWT 过滤器先 401",
-    "shared L4.db 需 PG 五件套显式 export（在册解法，本次实证）；contract-test L5 需 CONTRACT_TARGETS+TRACE_MAP=1 真跑再生 live trace（本次实证）",
-    "收口门：lab 8 仓逐仓全绿 + swift L2 远程绿；gate --all exit 2 仅 saas 段 3 红（saas-ct marker 欠 3 commit / saas-e2e 确定性 75 超时 / 连带 saas-react 5101 归属冲突已隔复绿），均非本段提交所致，按 exit-2 纪律停下交人"
+    "T-2 会话层：TokenStoring 存储缝（App 绑 KeychainTokenStore / 测试绑 InMemoryTokenStore fake，风险 R3）+ SessionStore 三态机（needsSetup/needsLogin/ready）+ saveBaseURL 校验归一 + adoptLogin（密态+快照+Bearer）+ logout 清会话留 baseURL（I02 失效与 I04 登出共用）",
+    "T-3 页面层：LoginView 原生表单→native-login（I06）+ AccountView（M00.F01 用户快照 / M00.F02.I01 切租户 / I04 登出）+ APIGlue 401 统一拦截回调（I02）+ App 三态路由 + ConfigView 瘦身只收 baseURL；切租户/登出回列表整表刷新（sheet onDismiss 重载）",
+    "红先行落证：旧树 home-mac swift test 红（extra argument 'secrets' / no member 'needsLogin'）；实现后 41/41 绿 + xcodebuild BUILD SUCCEEDED；gate -p 本仓全绿（L2 203s / L4 73s / L5 软告警 0）",
+    "T-4 对齐：功能树 5 行规划→开发中（hook 放行纯状态列翻转）+ 设计映射表 +5 行 + REQ T-2/T-3 翻完成；trace_cmd 重产 30 测试挂 11 ID；双 commit 已 push origin"
   ],
   "next": [
-    "T-2 swift 实装开工：SessionStore Keychain 化（红先行的测试缝在 REQ-2026-003 T-2 段），改 Sources/CoreKit/SessionStore.swift + 新 KeychainStore.swift",
-    "T-3 页面：登录页原生表单（AuthAPI.authNativeLogin 已生成）→ 401 拦截跳登录（I02）→ 账户页 + M00.F02.I01 租户切换（switchTenant）→ 登出（I04）→ 配置页瘦身只留 baseURL",
-    "每批收尾跑 python scripts/remote_gate.py build（home-mac 在线）；AC 见 docs/requirements/REQ-2026-003-login-ui.md"
+    "REQ-2026-003 剩余项只有 M01.F05.I03（SSO 原生形态）= 显式后续需求，不在本需求范围",
+    "下一需求候选（见 docs/functions/function-tree.md 规划态行）：M03.F02 接样单筛选细项 → F03 → F09 → F05-F08；开工前照例先写 REQ 文档 + 澄清",
+    "I07 ext 字段补录（REQ-2026-001 Q3 延后）仍是规划态欠账"
   ],
   "open_questions": [
-    "模拟器 xcodebuild test 机器态仍未修（REQ-2026-001 遗留，L4 test 段维持撤出）——登录 UI 的 UI 层验收依旧只有 L2 编译 + swift test，XCUITest 未进",
-    "shared L4.db.idempotent 的 PG 五件套是否把 shared 仓入 L4_DB_INJECT_REPOS 表（改表=改门禁语义，须人裁 + 账本登记；现状态=每次手工 export）"
+    "模拟器 xcodebuild test 机器态仍未修（REQ-2026-001 遗留）：本需求 UI 层验收=L2 编译 + swift test 状态机单测，XCUITest/真机点击流未进——登录页 UI 视觉需人工跑一次模拟器确认",
+    "home-mac Tailscale 链路今晚抖动两次（100% 丢包数分钟后自愈）——下次跑远程门前先探活，别当门红",
+    "shared L4.db PG 五件套是否入 L4_DB_INJECT_REPOS 表仍待人裁（沿用上 session 遗留）"
   ],
   "dont": [
-    "不要在 tsp 注释里写别的端点的 Mxx.Fxx.Ixx 全字面（L5.inventory 多挂，已修过一次 9e69993）",
-    "不要只写 controller 就认为 springboot 匿名端点通了——SecurityConfig requestMatchers 是第二张准入表",
-    "不要在 ASP_GEN/SB_GEN 之类 gen 脚本跑的时候留着 dotnet dev server（exe 锁 → gen build self-check 假红）",
-    "不要给 shared 消费仓手改生成物——marker 落后就在该仓重跑 gen-shared（注释级 tsp 修订不产产物 diff，只刷 marker）",
-    "不要跑 contract-test gate 前忘拉 5201/5204/5205 且显式 CONTRACT_TARGETS+TRACE_MAP=1 真跑 live（否则 trace unit 复用 → L5 exit 2）",
-    "不要占着 5101 跑 saas-react L4 门——其 global-setup 要自灌注入库并自起 5101（先停 5101 再跑）；e2e 则要 5101=saas_dev 常驻，两者互斥必须串行（--all 并行必出假红）",
-    "不要把模拟器 test 段塞回 L4（机器态未修）；不要业务身份兜底字面量（ADR-0019）"
+    "trace_cmd 的 // fn: 锚点必须写 在 func testXxx( 行之后的函数体内——写在声明上方=锚定失败 exit 1（本次实测）；测试文件别忘 import LabSharedGenerated（生成类型不在 @testable CoreKit 里）",
+    "bash heredoc 传 CJK 会散点损坏（拦截→挡截 实证），改中文文件一律用 Edit/Write 工具",
+    "swift 测试别挂树上不存在的子项号：M00.F01 没有子项，挂功能级 M00.F01 本身合法（ROW_RE 收三级 ID）",
+    "旧坑沿用：tsp 注释禁别端点全 ID 字面 / springboot 匿名端点同批补 permitAll / 5101 归属互斥 / gen 跑时停 dotnet dev / contract-test live 要显式 export+TRACE_MAP",
+    "不要把模拟器 test 段塞回 L4；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-28T13:10:00+08:00"
+  "last_gate_passed_at": "2026-09-28T20:15:00+08:00"
 }
