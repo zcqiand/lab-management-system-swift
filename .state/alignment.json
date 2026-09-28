@@ -2,14 +2,87 @@
   "schema": 1,
   "project": "lab-management-system-swift",
   "functions": {
-    "modules": 1,
-    "features": 8,
-    "items": 9
+    "modules": 3,
+    "features": 11,
+    "items": 14
   },
   "warnings_total": 0,
   "warnings": {},
   "unreachable_shipped": [],
   "function_map": {
+    "M00.F02.I01": {
+      "name": "租户切换器",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-003-login-ui.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M01.F05.I02": {
+      "name": "Token 注入与失效跳登录",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-003-login-ui.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [
+        "output\\lab-management-system-contract-test\\tests\\auth-read.test.ts:3601 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\auth-write.test.ts:1336 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\calculation-methods-write.test.ts:3147 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\contracts.test.ts:8707 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\inspection-catalog.test.ts:3496 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\inspection-dictionary.test.ts:2942 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\param-interfaces-write.test.ts:2285 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\report-names-write.test.ts:3932 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\sample-receipts-write.test.ts:3538 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:2964 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\technical-requirements-write.test.ts:3165 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\test-records-write.test.ts:2812 (annot)"
+      ],
+      "entry": []
+    },
+    "M01.F05.I03": {
+      "name": "SSO OAuth 2.0 授权码流（原生形态）",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-003-login-ui.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M01.F05.I04": {
+      "name": "登出",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-003-login-ui.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
+    "M01.F05.I06": {
+      "name": "原生登录（非浏览器表单）",
+      "status": "规划",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-003-login-ui.md"
+      ],
+      "flows": [],
+      "designs": [],
+      "tests": [],
+      "entry": []
+    },
     "M03.F01.I01": {
       "name": "接样单列表（三态过滤）",
       "status": "开发中",
