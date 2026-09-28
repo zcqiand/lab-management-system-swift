@@ -8,10 +8,15 @@
 
 > 前端 only 仓：数据表列恒为 —（不落表，表在家族后端仓）；接口列 = shared TypeSpec SSOT
 > 生成物路径（Generated/Sources/APIs/ReceiptsAPI.swift，主路由 `/api`，无 /v1 前缀）。
-> 权限码 = 功能子项 ID（约定 1）；本仓暂无登录/权限 UI（REQ-2026-001 Q1），按钮级权限判断待登录需求。
+> 权限码 = 功能子项 ID（约定 1）；登录 UI 已落地（REQ-2026-003 T-3），按钮级权限判断仍按按钮归属页面自查。
 
 | 功能子项 ID | 页面/组件 | 接口 | 数据表 | 权限码 | 设计稿 | 状态 |
 |---|---|---|---|---|---|---|
+| M00.F01 | AccountView（当前用户 + 会话恢复） | GET /api/auth/me；登录响应快照持久化 | — | M00.F01 | ../lab-management-system-react 顶栏账户区 | 开发中 |
+| M00.F02.I01 | AccountView 租户切换器 | POST /api/auth/switch-tenant | — | M00.F02.I01 | ../lab-management-system-react 租户切换 | 开发中 |
+| M01.F05.I02 | APIGlue.run 401 拦截 + bootstrap Bearer 注入 | 全部 /api/*（拦截器语义） | — | M01.F05.I02 | — | 开发中 |
+| M01.F05.I04 | AccountView 登出按钮 | POST /api/auth/logout | — | M01.F05.I04 | ../lab-management-system-react 顶栏登出 | 开发中 |
+| M01.F05.I06 | LoginView（用户名+密码原生表单） | POST /api/auth/native-login | — | M01.F05.I06 | ../lab-management-system-react 登录页 | 开发中 |
 | M03.F01.I01 | ReceiptListView（列表：三态过滤/keyword/分页） | GET /api/receipts | — | M03.F01.I01 | ../lab-management-system-react 接样单列表页 | 开发中 |
 | M03.F01.I02 | ReceiptFormView（新建/编辑表单） | POST /api/receipts；PUT /api/receipts/{id} | — | M03.F01.I02 | ../lab-management-system-react 接样单表单页 | 开发中 |
 | M03.F01.I03 | ReceiptListView 删除确认弹窗 | DELETE /api/receipts/{id} | — | M03.F01.I03 | ../lab-management-system-react 接样单列表页 | 开发中 |

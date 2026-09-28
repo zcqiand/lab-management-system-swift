@@ -12,26 +12,35 @@
   "function_map": {
     "M00.F02.I01": {
       "name": "租户切换器",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testSwitchTenantAdoptsNewToken"
+      ],
       "entry": []
     },
     "M01.F05.I02": {
       "name": "Token 注入与失效跳登录",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
       ],
       "flows": [],
-      "designs": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
       "tests": [
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testAdoptLoginPersistsSecretsAndReadiesAcrossRebirth",
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testExpirePathEqualsLogoutSemanticsOnRebirth",
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testSaveBaseURLValidatesFailFastThenNeedsLogin",
         "output\\lab-management-system-contract-test\\tests\\auth-read.test.ts:3601 (annot)",
         "output\\lab-management-system-contract-test\\tests\\auth-write.test.ts:1336 (annot)",
         "output\\lab-management-system-contract-test\\tests\\calculation-methods-write.test.ts:3147 (annot)",
@@ -61,26 +70,37 @@
     },
     "M01.F05.I04": {
       "name": "登出",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testLogoutAlwaysClearsLocallyEvenIfServerCallFails",
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testLogoutClearsSecretsKeepsBaseURLAndSurvivesRebirth"
+      ],
       "entry": []
     },
     "M01.F05.I06": {
       "name": "原生登录（非浏览器表单）",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testLoginSuccessAdoptsSessionIntoStore",
+        "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3229 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3529 (annot)"
+      ],
       "entry": []
     },
     "M03.F01.I01": {

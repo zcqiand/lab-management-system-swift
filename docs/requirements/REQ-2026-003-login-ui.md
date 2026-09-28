@@ -70,8 +70,8 @@
 |---|---|---|---|---|
 | T-0 | shared `auth.tsp` 增补：**C 原生登录端点**（新 op + DTO）+ **A state 双轨**注释/语义 + **B scheme 白名单**注释 + contract-test 同步断言（硬规则 §2 同 commit） | 契约 | shared + saas/lab 后端 | 待开工 |
 | T-1 | shared 门绿 + 全家族消费仓 codegen 重跑幂等 | 契约 | 全家族 | 待 T-0 |
-| T-2 | 本仓重生成；SessionStore Keychain 化（存储缝抽象，red-first）；配置页瘦身 | 实现 | 本仓 | 待 T-1 |
-| T-3 | 登录页（原生 SwiftUI 表单）+ 401 拦截跳登录 + 账户页 + 租户切换 + 登出 | 实现 | 本仓 | 待 T-2 |
+| T-2 | 本仓重生成；SessionStore Keychain 化（存储缝抽象，red-first）；配置页瘦身 | 实现 | 本仓 | 完成 |
+| T-3 | 登录页（原生 SwiftUI 表单）+ 401 拦截跳登录 + 账户页 + 租户切换 + 登出 | 实现 | 本仓 | 完成 |
 | T-4 | 功能树 tree-change 登记（提案已备，待人批准）+ trace 挂 ID + 全门绿 + `/handoff` | 收尾 | 本仓 | 待 T-3 |
 
 ## 4. 功能影响
