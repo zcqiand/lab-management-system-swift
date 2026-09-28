@@ -1,28 +1,28 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-004 任务分配（M03.F02）T-0~T-3 完成并 push（220b428）：队列/安排取消/act 三动作 + act operator 改真会话身份，全门绿",
+  "current_task": "REQ-2026-005 数据录入（M03.F03）T-0~T-3 完成并 push（e5e2b48）：录入页/保存记录/verdict 改判/act 三动作，全门绿",
   "done": [
-    "T-0 tree-change 批准：M03.F02 子项登记 I01/I02/I05（镜像家族编号；I06/I07 家族已废弃语义并入 I05；I03/I04 家族也规划态不登记）",
-    "T-1 CoreKit 红先行（旧树红→48/48 绿）：AssignTaskViewModel（安排两字段必填 fail-fast / 全空=取消清空请求，assigneeId 恒不传，Q2 裁定）+ ReceivingFlowViewModel operator 缺席 fail-fast（FlowActionError.missingOperator）；队列复用 ReceiptListViewModel（query.flowStatus=.taskAssignment 预设）",
-    "T-2 App：TaskAssignmentView（队列+AssignSheet 手填对话框+act 菜单）+ 接样列表 checklist 入口；ActConfirmSheet operator 输入框删除改会话身份注入（ADR-0019 临时解退役）+ ActEndpoint 档位（receiving/assigning）；APIGlue +assignTask/assigningAct",
-    "T-3 对齐：trace_cmd 36 测试挂 14 ID（I01/I02/I05 入账）；功能树/设计映射 3 行开发中；全门绿 L2 98s / L4 47s / L5 软告警 0；220b428 已 push"
+    "T-0 tree-change 批准：M03.F03 子项登记 I01/I02/I03/I12（镜像家族编号；I13/I14 家族已废弃语义并入 I12；I04/I06-I09 家族规划态、I15 家族开发中，均不占）",
+    "T-1 CoreKit 红先行（旧树红 cannot find 'DataEntryViewModel' → 55/55 绿，+7 测试）：DataEntryViewModel——目录装载（样品按单+参数字典+逐样品记录，键 sampleId#parameterCode 家族同款）/ 表单必填集（样品/参数/result/requirement）trim fail-fast / create-vs-update 按同键路由 / verdict 随 body（Q3 裁定，不走专用 setVerdict）；队列复用 ReceiptListViewModel（.dataEntry 预设）、act 复用 ReceivingFlowViewModel",
+    "T-2 App：DataEntryView（队列 + EntrySheet：样品/参数 Picker + 表单，选择即回填既有记录）+ 接样列表入口；ActConfirmSheet +ActEndpoint .dataEntry；APIGlue +receiptSamples/parameters/testRecords/persistTestRecord/dataEntryAct（页大小 200 镜像家族）",
+    "T-3 对齐：trace_cmd 42 测试挂 18 ID（F03 四件入账）；功能树/设计映射 4 行开发中；全门绿（L2 29s / L4 14s / L5 35 条目软告警 0）；e5e2b48 已 push + suite gitlink b1b45e8"
   ],
   "next": [
-    "ready 态人工验收（含任务分配页）需真后端 :5204 + 模拟器手动登录（Keychain 无法用启动参数种子化）；通过后功能树 6 行开发中→已上线",
-    "下一需求候选（功能树规划态）：M03.F03 数据录入（检测记录 + 人工改判 verdict + act）或 M03.F09 接样单详情（详情+历史+预览）；开工先写 REQ + 澄清",
-    "M03.F01.I07 ext 字段补录（REQ-2026-001 Q3 延后）仍欠；M03.F02.I03 清空分配/I04 三态过滤家族也是规划态，后续需求"
+    "ready 态人工验收（接样→分配→录入全链）需真后端 :5204 + 模拟器手动登录；通过后功能树 10 行开发中→已上线",
+    "下一需求候选（功能树规划态）：M03.F09 接样单详情（详情+历史时间线+报告预览）或 M03.F05 报告审核流程（review 队列+act）；开工先写 REQ + 澄清",
+    "M03.F01.I07 ext 字段补录（REQ-2026-001 Q3 延后）仍欠；M03.F02.I03/I04、M03.F03.I04/I06-I09/I15 家族也是规划/开发中态，后续需求"
   ],
   "open_questions": [
     "模拟器 xcodebuild test 段是否回填 L4（41/41 机器态已愈）待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
-    "home-mac Tailscale 链路抖动自愈模式仍在——跑远程门前先探活"
+    "home-mac Tailscale 链路抖动自愈模式仍在——跑远程门前先探活（本 session 两次远程门一次探活通过）"
   ],
   "dont": [
-    "APIGlue 的闭包属性调用不带标签（APIGlue.assignTask(id, request) 而非 id:request:——extraneous argument labels 实证）",
-    "SwiftUI struct 的 var body 不能 private（protocol witness 访问级实证）；@StateObject 要求 VM conform ObservableObject——CoreKit 侧 ObservableObject + objectWillChange.send() 模式见 ReceiptListViewModel/AssignTaskViewModel",
+    "EntrySheet 表单态必须留壳层 @State：CoreKit 公开可变字段不触发 objectWillChange（TextField 自持编辑态可以，Picker 选择回显需要重渲染）；请求组装/校验/路由仍全走 VM",
+    "InspectionParameterSourceType 枚举 case 只有 official/custom（写 .preset 编译错）；FlowStatus.dataEntry='data_entry'",
+    "APIGlue 闭包属性调用不带标签（APIGlue.persistTestRecord(id, create, update)）；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject",
     "trace_cmd 锚点在 func testXxx( 函数体内；测试文件 import LabSharedGenerated；XcodeGen 八坑全在册（memory xcodegen-xcode16-project-yml-quirks.md）",
-    "bash heredoc 传 CJK 会散点损坏，改中文文件一律用 Edit/Write 工具",
-    "旧坑沿用：remote_gate.py 在项目 scripts/ 下不是 suite scripts/；tsp 注释禁别端点全 ID 字面；不要业务身份兜底字面量（ADR-0019）"
+    "bash heredoc 传 CJK 会散点损坏，改中文文件一律用 Edit/Write 工具；旧坑沿用：remote_gate.py 在项目 scripts/ 下；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-29T00:30:00+08:00"
+  "last_gate_passed_at": "2026-09-29T07:50:00+08:00"
 }
