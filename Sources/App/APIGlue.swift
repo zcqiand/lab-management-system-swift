@@ -6,13 +6,54 @@ import LabSharedGenerated
 
 enum APIGlue {
 
+    /// 401 拦截缝（M01.F05.I02）：App 层注入（清会话回登录页）；
+    /// 本层只识别 401，不感知 SwiftUI / SessionStore。
+    static var onUnauthorized: (() -> Void)?
+
     /// RequestBuilder.execute completion → async/await（取 Response.body）。
+    /// 401 统一在这层拦截：先触发回调再原样上抛，调用方照常收到失败。
     static func run<T>(_ build: () -> RequestBuilder<T>) async throws -> T {
-        let builder = build()
-        let response: Response<T> = try await withCheckedThrowingContinuation { continuation in
-            _ = builder.execute { continuation.resume(with: $0) }
+        do {
+            let builder = build()
+            let response: Response<T> = try await withCheckedThrowingContinuation { continuation in
+                _ = builder.execute { continuation.resume(with: $0) }
+            }
+            return response.body
+        } catch let error as ErrorResponse {
+            if case .error(401, _, _, _) = error {
+                onUnauthorized?()
+            }
+            throw error
         }
-        return response.body
+    }
+
+    // MARK: - 会话（REQ-2026-003 T-3）
+
+    /// 原生登录（I06）：用户名+密码换 lab JWT。
+    static let nativeLogin: (String, String) async throws -> LoginResponse = { username, password in
+        try await run {
+            AuthAPI.authNativeLoginWithRequestBuilder(
+                loginRequest: LoginRequest(username: username, password: password)
+            )
+        }
+    }
+
+    /// 租户切换（M00.F02.I01）：后端换发新租户 token（LoginResponse 同形）。
+    static let switchTenant: (String) async throws -> LoginResponse = { tenantId in
+        try await run {
+            AuthAPI.authSwitchTenantWithRequestBuilder(
+                switchTenantRequest: SwitchTenantRequest(tenantId: tenantId)
+            )
+        }
+    }
+
+    /// 登出（I04）：服务端吊销当前 token。
+    static let logout: (String) async throws -> Void = { token in
+        _ = try await run {
+            AuthAPI.authLogoutWithRequestBuilder(
+                authLogoutRequest: AuthLogoutRequest(token: token)
+            )
+        }
     }
 
     /// 列表 provider（I01）：ReceiptListQuery → 生成层 listReceipts。

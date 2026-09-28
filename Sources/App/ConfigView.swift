@@ -1,13 +1,13 @@
 import SwiftUI
 
-// REQ-2026-002 T-3（AC-1，Q1「首启配置页」）：未配置时唯一页面。
-// 输入即用户显式配置，保存经 CoreKit 校验；校验失败原样标错，无任何兜底。
+// REQ-2026-003 T-2（配置页瘦身）：只收后端地址——token 改由登录页换发
+// （M01.F05.I06），不再手工粘贴。输入即用户显式配置，保存经 CoreKit 校验；
+// 校验失败原样标错，无任何兜底。
 
 struct ConfigView: View {
     let session: AppSession
 
     @State private var baseURL = ""
-    @State private var token = ""
     @State private var errorMessage: String?
 
     var body: some View {
@@ -19,22 +19,16 @@ struct ConfigView: View {
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                 }
-                Section("访问令牌") {
-                    SecureField("Bearer token", text: $token)
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
-                }
                 Section {
                     Button("保存并进入") {
                         do {
                             errorMessage = nil
-                            try session.save(baseURL: baseURL, token: token)
+                            try session.saveBaseURL(baseURL)
                         } catch {
                             errorMessage = String(describing: error)
                         }
                     }
-                    .disabled(baseURL.trimmingCharacters(in: .whitespaces).isEmpty
-                        || token.trimmingCharacters(in: .whitespaces).isEmpty)
+                    .disabled(baseURL.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
                 if let errorMessage {
                     Section {

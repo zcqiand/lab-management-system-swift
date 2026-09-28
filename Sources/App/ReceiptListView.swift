@@ -15,6 +15,7 @@ struct ReceiptListView: View {
     @State private var filter: ReceiptFilter = .all
     @State private var keyword = ""
     @State private var showCreate = false
+    @State private var showAccount = false
     @State private var actTarget: ActTargetItem?
     @State private var deleteTarget: SampleReceipt?
     @State private var actErrorMessage: String?
@@ -25,6 +26,12 @@ struct ReceiptListView: View {
         }
         .sheet(isPresented: $showCreate) {
             ReceiptFormView(receipt: nil)
+        }
+        .sheet(isPresented: $showAccount, onDismiss: {
+            // 租户切换/登出回来都整表刷新（M00.F02.I01：切换后列表刷新）。
+            Task { await vm.load() }
+        }) {
+            AccountView(session: session)
         }
         .sheet(item: $actTarget) { target in
             ActConfirmSheet(action: target.action, ids: [target.targetID]) { results, message in
@@ -70,6 +77,11 @@ struct ReceiptListView: View {
             await vm.load()
         }
         .toolbar {
+            Button {
+                showAccount = true
+            } label: {
+                Image(systemName: "person.circle")
+            }
             Button {
                 showCreate = true
             } label: {
