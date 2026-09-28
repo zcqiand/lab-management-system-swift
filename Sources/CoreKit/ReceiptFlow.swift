@@ -118,14 +118,17 @@ public final class ReceiptListViewModel: ObservableObject {
     }
 }
 
-/// act 选区校验错误：空选择 fail-fast，不打端点（§1 禁兜底同源）。
+/// act 选区/身份校验错误：空选择与缺席操作人都 fail-fast，不打端点（§1 禁兜底同源）。
 public enum FlowActionError: Error, Equatable {
     case emptySelection
+    case missingOperator
 }
 
-/// 接样阶段 act 流转 VM（M03.F01.I08，POST /api/receipts/receiving/act 三动作统一）。
+/// 流程阶段 act 流转 VM（M03.F01.I08 接样 / M03.F02.I05 任务分配共用，端点由
+/// UI 壳注入的缝决定）。REQ-2026-004 Q3 起 operator = 真会话身份（登录落地，
+/// ADR-0019 显式输入临时解退役）；身份缺席即 throw，不兜底。
 /// 能否 submit/return/withdraw 的流转语义在后端裁决——本 VM 只管
-/// 选区校验 + 请求体组装 + 结果透传，不发明客户端状态机策略。
+/// 选区/身份校验 + 请求体组装 + 结果透传，不发明客户端状态机策略。
 public final class ReceivingFlowViewModel {
 
     public let operatorName: String
@@ -146,6 +149,9 @@ public final class ReceivingFlowViewModel {
         _ action: FlowAction, ids: [String], reason: String? = nil
     ) async throws -> [FlowActionResult] {
         guard !ids.isEmpty else { throw FlowActionError.emptySelection }
+        guard !operatorName.trimmingCharacters(in: .whitespaces).isEmpty else {
+            throw FlowActionError.missingOperator
+        }
         return try await act(action, ids, reason)
     }
 
@@ -154,6 +160,9 @@ public final class ReceivingFlowViewModel {
         _ action: FlowAction, ids: [String], reason: String? = nil
     ) throws -> FlowActionRequest {
         guard !ids.isEmpty else { throw FlowActionError.emptySelection }
+        guard !operatorName.trimmingCharacters(in: .whitespaces).isEmpty else {
+            throw FlowActionError.missingOperator
+        }
         return FlowActionRequest(ids: ids, action: action, operator: operatorName, reason: reason)
     }
 }

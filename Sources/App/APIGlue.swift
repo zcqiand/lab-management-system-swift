@@ -87,6 +87,26 @@ enum APIGlue {
         }
     }
 
+    /// act（M03.F02.I05）：任务分配阶段流转统一端点（REQ-2026-004）。
+    static func assigningAct(
+        _ action: FlowAction, ids: [String], operator name: String, reason: String?
+    ) async throws -> [FlowActionResult] {
+        try await run {
+            ReceiptsAPI.receiptsActFlowAssigningWithRequestBuilder(
+                flowActionRequest: FlowActionRequest(
+                    ids: ids, action: action, operator: name, reason: reason
+                )
+            )
+        }
+    }
+
+    /// 安排/取消（M03.F02.I02）：手填姓名+日期（REQ-2026-004 Q2，assigneeId 不传）。
+    static let assignTask: (String, AssignTaskRequest) async throws -> SampleReceipt = { id, request in
+        try await run {
+            ReceiptsAPI.receiptsAssignTaskWithRequestBuilder(id: id, assignTaskRequest: request)
+        }
+    }
+
     /// 表单 persist（I02）：id=nil → create；id+update → PUT（PATCH 语义）。
     static let persist: (
         _ id: String?, _ create: CreateSampleReceiptRequest?, _ update: UpdateSampleReceiptRequest?

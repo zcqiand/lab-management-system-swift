@@ -4,7 +4,7 @@
   "functions": {
     "modules": 3,
     "features": 11,
-    "items": 14
+    "items": 17
   },
   "warnings_total": 0,
   "warnings": {},
@@ -174,7 +174,8 @@
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
-        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md",
+        "docs\\requirements\\REQ-2026-004-task-assignment.md"
       ],
       "flows": [],
       "designs": [
@@ -229,7 +230,8 @@
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
-        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md",
+        "docs\\requirements\\REQ-2026-004-task-assignment.md"
       ],
       "flows": [],
       "designs": [
@@ -263,6 +265,57 @@
       "flows": [],
       "designs": [],
       "tests": [],
+      "entry": []
+    },
+    "M03.F02.I01": {
+      "name": "任务分配队列",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-004-task-assignment.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testQueueQueryPinsTaskAssignmentStage"
+      ],
+      "entry": []
+    },
+    "M03.F02.I02": {
+      "name": "安排/取消检测人员与计划日期",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-004-task-assignment.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testAssignRequestTrimsAndRequiresBothFields",
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testAssignSaveReturnsAdoptedReceipt",
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testCancelAssignRequestClearsAllFields"
+      ],
+      "entry": []
+    },
+    "M03.F02.I05": {
+      "name": "任务分配-提交（act 三动作）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-004-task-assignment.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testActEmbedsSessionOperatorAndPerforms",
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testActRejectsMissingOperator"
+      ],
       "entry": []
     }
   }

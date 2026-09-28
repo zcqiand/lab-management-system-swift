@@ -51,7 +51,10 @@
 | M03.F01.I06 | 接样单流程历史 | 接口：`GET /receipts/{id}/history` 渲染时间线 | 开发中 |
 | M03.F01.I07 | 接样单 ext 字段补录 | 接口：`PUT /api/samples/{id}/ext`；延后独立需求（REQ-2026-001 Q3） | 规划 |
 | M03.F01.I08 | 接样-提交（act 三动作） | 接口：`POST /receipts/receiving/act`，body.action={SUBMIT、RETURN、WITHDRAW} | 开发中 |
-| M03.F02 | 任务分配（安排检测人员/计划日期） | 分配队列 + 安排/取消 + act 三动作 | 规划 |
+| M03.F02 | 任务分配（安排检测人员/计划日期） | 分配队列 + 安排/取消 + act 三动作 | 开发中 |
+| M03.F02.I01 | 任务分配队列 | 页面：`GET /receipts`（flowStatus=task_assignment）+ keyword；REQ-2026-004 | 开发中 |
+| M03.F02.I02 | 安排/取消检测人员与计划日期 | 按钮：`PUT /receipts/{id}/assign-task`，手填姓名+日期（assigneeId 不传）；REQ-2026-004 | 开发中 |
+| M03.F02.I05 | 任务分配-提交（act 三动作） | 接口：`POST /receipts/assigning/act`，body.action={submit、return、withdraw}；operator=会话身份 | 开发中 |
 | M03.F03 | 数据录入（样品检测数据 + 人工改判） | 检测记录 CRUD + 人工改判 verdict + act 三动作 | 规划 |
 | M03.F05 | 报告审核流程 | review 阶段队列 + act 提交/退回/撤回 | 规划 |
 | M03.F06 | 报告批准流程 | approval 阶段队列 + act 提交/退回/撤回 | 规划 |

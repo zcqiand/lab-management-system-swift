@@ -67,7 +67,7 @@ struct ReceiptDetailView: View {
         .navigationTitle("接样单详情")
         .task { await vm.load(id: receiptID) }
         .sheet(item: $actTarget) { target in
-            ActConfirmSheet(action: target.action, ids: [target.targetID]) { _, _ in
+            ActConfirmSheet(action: target.action, ids: [target.targetID], operatorName: session.store.user?.username ?? "") { _, _ in
                 actTarget = nil
                 Task { await vm.load(id: receiptID) }
             }

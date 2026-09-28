@@ -23,6 +23,9 @@
 | M03.F01.I04 | ReceiptActView（act 确认 · SUBMIT） | POST /api/receipts/receiving/act | — | M03.F01.I04 | ../lab-management-system-react 接样单详情页 | 开发中 |
 | M03.F01.I06 | ReceiptDetailView（流程历史时间线） | GET /api/receipts/{id}/history | — | M03.F01.I06 | ../lab-management-system-react 接样单详情页 | 开发中 |
 | M03.F01.I08 | ReceiptActView（act 确认 · SUBMIT/RETURN/WITHDRAW） | POST /api/receipts/receiving/act | — | M03.F01.I08 | ../lab-management-system-react 接样单详情页 | 开发中 |
+| M03.F02.I01 | TaskAssignmentView（分配队列，ReceiptListViewModel 复用 + flowStatus 预设） | GET /api/receipts（flowStatus=task_assignment） | — | M03.F02.I01 | ../lab-management-system-react TaskAssignmentPage | 开发中 |
+| M03.F02.I02 | AssignSheet（手填姓名+日期对话框，AssignTaskViewModel） | PUT /api/receipts/{id}/assign-task | — | M03.F02.I02 | ../lab-management-system-react TaskAssignmentList 安排对话框 | 开发中 |
+| M03.F02.I05 | ActConfirmSheet（act 三动作，operator=会话身份） | POST /api/receipts/assigning/act | — | M03.F02.I05 | ../lab-management-system-react FlowStagePage | 开发中 |
 | M03.F01.I07 | （ext 字段补录，REQ-2026-001 Q3 延后） | PUT /api/samples/{id}/ext | — | M03.F01.I07 | — | 规划 |
 
 ## 约定

@@ -34,7 +34,7 @@ struct ReceiptListView: View {
             AccountView(session: session)
         }
         .sheet(item: $actTarget) { target in
-            ActConfirmSheet(action: target.action, ids: [target.targetID]) { results, message in
+            ActConfirmSheet(action: target.action, ids: [target.targetID], operatorName: session.store.user?.username ?? "") { results, message in
                 if results.isEmpty == false {
                     vm.apply(results)
                 }
@@ -81,6 +81,12 @@ struct ReceiptListView: View {
                 showAccount = true
             } label: {
                 Image(systemName: "person.circle")
+            }
+            // REQ-2026-004：任务分配页入口（流程第二环节）。
+            NavigationLink {
+                TaskAssignmentView(session: session)
+            } label: {
+                Image(systemName: "checklist")
             }
             Button {
                 showCreate = true

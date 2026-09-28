@@ -1,72 +1,30 @@
 {
   "schema": 1,
   "approved": true,
-  "base_sha": "b6d79ced19158138",
-  "summary": "REQ-2026-003 登录 UI：扩范围登记 M00 租户管理 / M01 认证管理（编号对齐 react 树，不另起编号）+ 新增原生登录子项 I06（react 树 M01.F05 用到 I05，号不回收）。本仓此前范围裁剪为 M03-only，本次按 Q4 裁定（shared 先增功能：A state 双轨 + B scheme 白名单 + C 原生登录端点）扩入认证功能行，全部新增行状态=规划。",
+  "base_sha": "a44c8b6d3eaa1d0e",
+  "summary": "REQ-2026-004 任务分配：登记 M03.F02 三个子项（编号镜像家族 vue/react 树已上线面：I01 队列、I02 安排/取消、I05 act 三动作）。I06/I07 在家族已废弃（语义并入 I05，act 端点 body.action 区分，号不回收），本仓直接从 I05 收口不占用 I06/I07。I03 清空分配 / I04 三态过滤家族也是规划态，本期不做、不登记，留后续需求。全部新增行状态=规划。",
   "changes": [
     {
-      "id": "M00",
+      "id": "M03.F02.I01",
       "action": "新增",
-      "name": "租户管理",
-      "reason": "REQ-2026-003：模块行，编号/名称对齐 react 树（本仓原范围裁剪 M03-only，登录需求扩入）"
+      "name": "任务分配队列",
+      "reason": "REQ-2026-004：队列页面，receiptsListReceipts(flowStatus=task_assignment) + keyword，镜像家族 TaskAssignmentList"
     },
     {
-      "id": "M01",
+      "id": "M03.F02.I02",
       "action": "新增",
-      "name": "认证管理",
-      "reason": "REQ-2026-003：模块行，编号/名称对齐 react 树"
+      "name": "安排/取消检测人员与计划日期",
+      "reason": "REQ-2026-004：手填姓名+日期对话框，receiptsAssignTask（Q2 裁定手填形态，assigneeId 不传）"
     },
     {
-      "id": "M00.F01",
+      "id": "M03.F02.I05",
       "action": "新增",
-      "name": "当前用户会话",
-      "reason": "REQ-2026-003：账户页 + 会话恢复（T-3）"
-    },
-    {
-      "id": "M00.F02",
-      "action": "新增",
-      "name": "登录选租户",
-      "reason": "REQ-2026-003：多租户账号租户上下文"
-    },
-    {
-      "id": "M00.F02.I01",
-      "action": "新增",
-      "name": "租户切换器（POST /auth/switch-tenant 换发新租户 token）",
-      "reason": "REQ-2026-003：账户页切换入口，切换后列表整表刷新（T-3）"
-    },
-    {
-      "id": "M01.F05",
-      "action": "新增",
-      "name": "认证管理（登录/SSO/JWT）",
-      "reason": "REQ-2026-003：功能行"
-    },
-    {
-      "id": "M01.F05.I02",
-      "action": "新增",
-      "fnRef": "M01.F05.I02",
-      "name": "Token 注入与失效跳登录",
-      "reason": "REQ-2026-003：401 拦截 + Keychain（T-2/T-3）"
-    },
-    {
-      "id": "M01.F05.I03",
-      "action": "新增",
-      "name": "SSO OAuth 2.0 授权码流（原生形态，规划行后续需求消费）",
-      "reason": "REQ-2026-003：A+B 契约支撑落地后的消费位"
-    },
-    {
-      "id": "M01.F05.I04",
-      "action": "新增",
-      "name": "登出",
-      "reason": "REQ-2026-003：登出按钮 + Keychain 清空（T-3）"
-    },
-    {
-      "id": "M01.F05.I06",
-      "action": "新增",
-      "name": "原生登录（非浏览器表单，用户名+密码 → 原生端点换 lab JWT）",
-      "reason": "REQ-2026-003 Q4-C：react 树 M01.F05 用到 I05，号不回收，新子项取 I06"
+      "name": "任务分配-提交（act 三动作）",
+      "reason": "REQ-2026-004：POST /receipts/assigning/act，body.action={submit、return、withdraw} 三动作统一（家族 I06 退回/I07 撤回已废弃语义并入本行，号不回收）；operator=真会话身份（Q3 裁定）"
     }
   ],
   "sync_files": [
-    "docs/requirements/REQ-2026-003-login-ui.md"
+    "docs/requirements/README.md",
+    "docs/requirements/REQ-2026-004-task-assignment.md"
   ]
 }

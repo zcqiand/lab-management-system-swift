@@ -2,17 +2,26 @@ import CoreKit
 import LabSharedGenerated
 import SwiftUI
 
-// REQ-2026-002 T-3：act 确认页（I04 SUBMIT / I08 三动作）。
-// 操作人 = 显式输入（空则禁用确认，禁身份兜底）；流转语义在后端，
-// 逐单结果 ok=false 以 alert 呈现不崩。
+// REQ-2026-002 T-3：act 确认页（I04 SUBMIT / I08 三动作 / REQ-2026-004 I05 分配）。
+// REQ-2026-004 Q3 起：操作人 = 真会话身份（调用方从 SessionStore 注入，输入框
+// 删除，ADR-0019 显式输入临时解退役）；身份缺席由 ReceivingFlowViewModel
+// fail-fast（missingOperator）→ alert 呈现。逐单结果 ok=false 以 alert 呈现不崩。
 
 struct ActConfirmSheet: View {
+    /// act 端点档位：接样 receiving / 任务分配 assigning（各阶段端点不同，动作语义同）。
+    enum ActEndpoint {
+        case receiving
+        case assigning
+    }
+
     let action: FlowAction
     let ids: [String]
+    /// 操作人 = 会话用户名（REQ-2026-004 Q3）；缺席时空串 → 确认禁用 + VM 二次 fail-fast。
+    let operatorName: String
+    var endpoint: ActEndpoint = .receiving
     /// (结果, 失败信息)；结果非空时调用方回填列表。
     let onDone: (_ results: [FlowActionResult], _ message: String?) -> Void
 
-    @State private var operatorName = ""
     @State private var reason = ""
     @State private var isRunning = false
     @Environment(\.dismiss) private var dismiss
@@ -27,10 +36,7 @@ struct ActConfirmSheet: View {
                 Section("操作") {
                     LabeledContent("动作", value: action.label)
                     LabeledContent("单数", value: "\(ids.count)")
-                }
-                Section("操作人（登录未接入，显式输入）") {
-                    TextField("操作人", text: $operatorName)
-                        .autocorrectionDisabled()
+                    LabeledContent("操作人", value: operatorName)
                 }
                 if action == .return {
                     Section("退回理由") {
@@ -60,10 +66,18 @@ struct ActConfirmSheet: View {
         let trimmedReason = action == .return
             ? reason.trimmingCharacters(in: .whitespaces)
             : nil
+        let trimmedOperator = operatorName.trimmingCharacters(in: .whitespaces)
         let flow = ReceivingFlowViewModel(
-            operatorName: operatorName.trimmingCharacters(in: .whitespaces)
+            operatorName: trimmedOperator
         ) { act, actIds, actReason in
-            try await APIGlue.act(act, ids: actIds, operator: operatorName, reason: actReason)
+            switch endpoint {
+            case .receiving:
+                try await APIGlue.act(act, ids: actIds, operator: trimmedOperator, reason: actReason)
+            case .assigning:
+                try await APIGlue.assigningAct(
+                    act, ids: actIds, operator: trimmedOperator, reason: actReason
+                )
+            }
         }
         do {
             let results = try await flow.perform(action, ids: ids, reason: trimmedReason)
