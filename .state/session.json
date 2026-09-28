@@ -1,30 +1,33 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-002 M03.F01 UI 壳：T-1..T-4 全部落地（trace 挂 ID / SessionStore+表单详情删除 VM / App target+SwiftUI 页面全套 / 全门绿收口）",
+  "current_task": "REQ-2026-003 登录 UI：T-0 shared 契约层 + T-1 家族 codegen 全绿收口（T-2/T-3 swift 实装未开工）",
   "done": [
-    "T-1 trace_cmd：扫 Tests/ // fn: 字面 → trace.json（禁手写由全量重写保证）；stack.json trace_cmd 接线；既有测试补挂 ID",
-    "T-2 SessionStore（首启配置页状态机，Q1 人裁）+ ReceiptFormViewModel（必填校验/PATCH diff/save 路由）+ ReceiptDetailViewModel + ReceiptDeleteViewModel（33 测全过）",
-    "T-3 App target + SwiftUI 页面全套：ConfigView/ReceiptListView/ReceiptFormView/ReceiptDetailView/ActConfirmSheet + APIGlue async 桥；L2 切 LabManagement scheme（含 App 编译）",
-    "T-4 全门绿（exit 0）；design-function-map 开发中行补齐",
-    "遗留收口：REQ-2026-001 模拟器 test 段撤出维持不变（机器态未修）"
+    "Q4 人裁 A+B+C 全做后 shared 契约落地：nativeLogin op（M01.F05.I06）+ ssoAuthorize 自定义 scheme 白名单语义 + ssoCallback state 双轨注释（shared 10ab516+9e69993，9e69993 是注释修——op 注释里的全 ID 字面会被 L5.inventory 扫成多挂）",
+    "swift 树扩 18→28 行（M00 租户/M01 认证两模块，I06 原生登录等全 规划态，人裁 token 落笔 5152232）",
+    "swift gen-shared 重跑：AuthAPI 增 authNativeLogin 端点对，产物零手写（56ce9b9）；L2 远程门绿（swift build 322s + xcodebuild BUILD SUCCEEDED，home-mac Xcode 16.2）",
+    "三后端实现 + react/vue/nextjs codegen + contract-test native-login 四方比对（live 467/467、覆盖 119/119）；9 仓 + suite 根 gitlink 全 push",
+    "springboot SecurityFilterChain 补放行 /api/auth/native-login（78d97c9）——controller 落地不等于放行单落地，JWT 过滤器先 401",
+    "shared L4.db 需 PG 五件套显式 export（在册解法，本次实证）；contract-test L5 需 CONTRACT_TARGETS+TRACE_MAP=1 真跑再生 live trace（本次实证）",
+    "收口门：lab 8 仓逐仓全绿 + swift L2 远程绿；gate --all exit 2 仅 saas 段 3 红（saas-ct marker 欠 3 commit / saas-e2e 确定性 75 超时 / 连带 saas-react 5101 归属冲突已隔复绿），均非本段提交所致，按 exit-2 纪律停下交人"
   ],
   "next": [
-    "登录 UI 需求（会话获取从手动配置页升级；act 操作人从显式输入升级为登录身份）",
-    "I07 ext 字段补录（REQ-2026-001 Q3 延后，依赖 inspection-catalog 只读依赖评估）",
-    "saas-identity-platform-swift 首需求照抄：gen-shared.sh/remote_gate.py/project.yml/trace_cmd.py 四件套",
-    "模拟器 xcodebuild test 机器态修复后人裁是否回门禁（手动验证命令在 remote_gate.py 注释）"
+    "T-2 swift 实装开工：SessionStore Keychain 化（红先行的测试缝在 REQ-2026-003 T-2 段），改 Sources/CoreKit/SessionStore.swift + 新 KeychainStore.swift",
+    "T-3 页面：登录页原生表单（AuthAPI.authNativeLogin 已生成）→ 401 拦截跳登录（I02）→ 账户页 + M00.F02.I01 租户切换（switchTenant）→ 登出（I04）→ 配置页瘦身只留 baseURL",
+    "每批收尾跑 python scripts/remote_gate.py build（home-mac 在线）；AC 见 docs/requirements/REQ-2026-003-login-ui.md"
   ],
   "open_questions": [
-    "模拟器 xcodebuild test「Test runner never began executing tests after launching」3 连红未修（REQ-2026-001 遗留），UI 层验收现为 L2 编译 + L4 swift test，XCUITest 未进",
-    "act 操作人当前为用户逐次显式输入（禁兜底），登录需求落地后接真身份"
+    "模拟器 xcodebuild test 机器态仍未修（REQ-2026-001 遗留，L4 test 段维持撤出）——登录 UI 的 UI 层验收依旧只有 L2 编译 + swift test，XCUITest 未进",
+    "shared L4.db.idempotent 的 PG 五件套是否把 shared 仓入 L4_DB_INJECT_REPOS 表（改表=改门禁语义，须人裁 + 账本登记；现状态=每次手工 export）"
   ],
   "dont": [
-    "不要改 .harness/stack.json 让门变松（trace_cmd 接线是收紧）",
-    "不要手写 trace.json（重跑 trace_cmd 即覆盖）",
-    "不要给 skip 的测试挂 // fn: ID（假绿物理禁止）",
-    "不要把模拟器 test 段塞回 L4（机器态未修，一红就是 18 分钟 exit 2）",
-    "不要在 act/表单做业务身份兜底字面量（ADR-0019）"
+    "不要在 tsp 注释里写别的端点的 Mxx.Fxx.Ixx 全字面（L5.inventory 多挂，已修过一次 9e69993）",
+    "不要只写 controller 就认为 springboot 匿名端点通了——SecurityConfig requestMatchers 是第二张准入表",
+    "不要在 ASP_GEN/SB_GEN 之类 gen 脚本跑的时候留着 dotnet dev server（exe 锁 → gen build self-check 假红）",
+    "不要给 shared 消费仓手改生成物——marker 落后就在该仓重跑 gen-shared（注释级 tsp 修订不产产物 diff，只刷 marker）",
+    "不要跑 contract-test gate 前忘拉 5201/5204/5205 且显式 CONTRACT_TARGETS+TRACE_MAP=1 真跑 live（否则 trace unit 复用 → L5 exit 2）",
+    "不要占着 5101 跑 saas-react L4 门——其 global-setup 要自灌注入库并自起 5101（先停 5101 再跑）；e2e 则要 5101=saas_dev 常驻，两者互斥必须串行（--all 并行必出假红）",
+    "不要把模拟器 test 段塞回 L4（机器态未修）；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-28T00:00:00+08:00"
+  "last_gate_passed_at": "2026-09-28T13:10:00+08:00"
 }
