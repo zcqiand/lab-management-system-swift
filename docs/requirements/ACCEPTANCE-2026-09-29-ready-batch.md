@@ -15,6 +15,7 @@
 | P3 | App 配 baseURL | 配置页填后端地址（home-mac 上跨机填 Tailscale IP，如 `http://<win-ip>:5204`）；缺失 fail-fast 不兜底 | ☐ |
 | P4 | 测试账号 | 家族 dev 凭据 `alice / dev123456`（多租户）；seed 含 task_assignment / data_entry / 报告四阶段各态单子 | ☐ |
 | P5 | （仅 SSO 段）saas 白名单 | **✅ 已落地（2026-09-29 人裁批准）**：saas-shared d294477 / saas-nextjs 92af9e4 种子登记 `labman://oauth/callback`，saas_dev 已重灌入库实证——SSO 段可随本批验收 | ☐ |
+| P6 | （仅 SSO 段）链路预验证 | **✅ 已过（2026-09-29 curl 全链）**：lab-nextjs :5201 sso/authorize 透传 labman redirect_uri → saas :5101 白名单放行发码 → lab sso/callback 换得 lab JWT（alice 双租户 LoginResponse 200）。唯一未验跳 = ASWebAuthenticationSession 浏览器 UI + scheme 回跳（即 AC-1 本身）；注意 :5101 需新起进程（旧驻留连错库会假拒白名单） | ☐ |
 
 ## 2. 分 REQ 场景（AC 编号见各 REQ 文档 §2）
 

@@ -9,7 +9,7 @@
     "T-3 收口：trace_cmd 78 测挂 36 ID（I03 九测）；远门 test 91/91（82 存量 + 9 SSO）+ build 绿（App target 含 SSO 接线）；全门绿（L5 50 条目软告警 0）；d1a462f 已 push + suite gitlink 93a8705 已 push"
   ],
   "next": [
-    "ready 态人工验收：清单在 docs/requirements/ACCEPTANCE-2026-09-29-ready-batch.md——人按清单走模拟器；P5 已落地（saas-shared d294477/nextjs 92af9e4 登记 labman://oauth/callback，saas_dev 已重灌），SSO 段可一并验",
+    "ready 态人工验收：清单在 docs/requirements/ACCEPTANCE-2026-09-29-ready-batch.md——人按清单走模拟器；P5 已落地且 P6 curl 全链预验证已过（lab 透传 labman redirect → saas 白名单发码 → lab callback 换 JWT 200）；saas :5101 已由本会话起新进程（旧驻留连错库已杀）",
     "验收通过后：功能树「开发中」→「已上线」（同 commit 改树 + 台账）；发现红走红先行小补丁回路"
   ],
   "open_questions": [
