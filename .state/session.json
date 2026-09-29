@@ -1,27 +1,28 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-009 登录选租户直进（M00.F02）T-0~T-3 完成并 push（b71bb44）：activeTenantId settle 落账 + 记忆/hydrate/清除，全门绿",
+  "current_task": "REQ-2026-010 SSO OAuth 2.0 授权码流原生形态（M01.F05.I03）T-0~T-3 完成并 push（d1a462f）：SsoViewModel 三缝 + state 纯函数 + ASWebAuthenticationSession，全门绿",
   "done": [
-    "T-0 tree-change 人批：M00.F02 父行 规划→开发中（单行翻转，I01 切换器已开发中不动）；REQ-2026-009 需求文档新建（Q1：currentTenantId 是快照契约字段，settle 落账写入；Q2 裁定 logout 清记忆）",
-    "T-1 CoreKit 红先行（真红：no member 'activeTenantId' ×7 + extra argument 'preferredTenantId'，RED_EXIT=1）：SessionStore.adoptLogin(response, preferredTenantId:)——目标 = 显式择定 ∩ tenants ?? 记忆 ?? 单租户 ?? 首位（家族 settleLogin 2026-09-23 裁定同款）；activeTenantId defaults 落账 + activeTenant 计算属性；hydrate 双源恢复；logout/clear 同批清",
-    "T-2 App：AuthViewModel.switchTenant 传 preferredTenantId；AccountView 切换器初值取 store.activeTenantId（替换旧恒取首位兜底）",
-    "T-3 收口：trace_cmd 69 测试挂 35 ID；远门 test 82/82（TenantSettleTests 6/6）+ build 绿；全门绿（L5 50 条目软告警 0）；b71bb44 已 push"
+    "T-0 tree-change 人批（base sha 44f760fcb787cbd0）：M01.F05 父行 + I03 规划→开发中；REQ-2026-010 需求文档新建（Q1：client_id/回调 scheme = ConfigView 显式配置 ADR-0019；Q2：saas redirect 白名单注册 iOS scheme = 跨仓人裁项）",
+    "T-1 CoreKit 红先行（真红：cannot find SsoViewModel ×10 + SessionStore no member saveSsoConfig/ssoClientId/ssoCallbackScheme）：SsoViewModel 三缝（authorize/exchange/openWebSession）+ generateState（32B base64url 43 字符）/redirectUri/parseCallback 纯函数；state 不匹配不打 exchange；SessionStore ssoClientId/ssoCallbackScheme 落账（saveSsoConfig 空值拒存、重启恢复、logout 保留、clear 全清）；成功 adoptLogin settle 直进（REQ-009 复用）",
+    "T-2 App：APIGlue.ssoAuthorize/ssoCallback（生成物 AuthAPI 唯一入口）；WebAuthSession（ASWebAuthenticationSession prefersEphemeral + Holder 静态持有）；LoginView「SSO 登录」；ConfigView SSO 字段；project.yml CFBundleURLTypes 注册 labman",
+    "T-3 收口：trace_cmd 78 测挂 36 ID（I03 九测）；远门 test 91/91（82 存量 + 9 SSO）+ build 绿（App target 含 SSO 接线）；全门绿（L5 50 条目软告警 0）；d1a462f 已 push + suite gitlink 93a8705 已 push"
   ],
   "next": [
-    "ready 态人工验收（登录直进 + 切租户记忆 + 补录门全链）需真后端 :5204 + 模拟器手动登录；通过后功能树开发中行→已上线",
-    "下一需求候选：M01.F05.I03 SSO（明确延后）；无其他 ready 候选——M03.F02.I03/I04、M03.F03.I04/I06-I09/I15 家族规划/开发中态行不拉入"
+    "ready 态人工验收前置：saas oauth_client 白名单登记 iOS 回调（labman://oauth/callback，Q2 人裁）；真后端 :5204 + 模拟器手动 SSO 登录验收（所有 REQ 开发中行同理）",
+    "下一需求候选：M03 剩余行已清（F01~F09 全开发中）；可考虑 M01.F05.I01（家族已废弃号，不回收）外无新 ready 候选——或转入 ready 态人工验收批次"
   ],
   "open_questions": [
+    "saas 端 redirect 白名单注册 iOS scheme（跨仓数据变更）待人裁协调——REQ-2026-010 Q2",
     "模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
-    "home-mac Tailscale 掉线已 2+ 次（含一次 sync 中途断连）——remote_gate 内建重试或换构建机仍待裁"
+    "home-mac Tailscale 掉线频发——remote_gate 内建重试或换构建机仍待裁"
   ],
   "dont": [
-    "符号缺失时编译器不下探参数检查（REQ-008 教训重演验证）：红跑只见 cannot find/no member 不代表 fixture init 无误；红跑外层 exit 0 可能是 ; echo 尾巴——红证据以输出里的 error: 行 + RED_EXIT 为准",
-    "Edit 工具写 CJK 长文件会带出坏行（本 session SessionStore 曾插入 CJK 标识符占位行、REQ 文档重复 AC 节）——写完必须回读核验",
+    "多语句闭包缺 return 会以 error: fatalError 收场（实为 missing return 编译错，SsoTests 真实踩过）——红跑输出抓不全时先远端复跑 grep -B8 error 全文",
+    "符号缺失时编译器不下探参数检查（REQ-008 教训）：红跑只见 cannot find/no member 不代表 fixture init 无误；红跑外层 exit 0 可能是 ; echo 尾巴——红证据以输出 error: 行 + RED_EXIT 为准",
+    "Edit/Write 写 CJK 后必须回读核验；bash heredoc 传 CJK 会散点损坏改用 Write/Edit",
     "InspectionReportName init 全序：code,name,fullName,templatePath,summaryName,extFields,description,sortOrder,createdAt,updatedAt（sortOrder/createdAt/updatedAt 必填）；SampleReceipt init：categoryCode 在 projectName 前且必填",
-    "红跑前若实现已在盘：走补救程序——实现文件 mv 出仓 + git checkout 还原 → 跑红 → 无条件还原；ssh 断连导致的 RED-CONFIRMED 是假红",
-    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；表单态必须留壳层 @State；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/；bash heredoc 传 CJK 会散点损坏改用 Write/Edit；不要业务身份兜底字面量（ADR-0019）"
+    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；表单态必须留壳层 @State；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json、gate.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/（后台命令 cwd 会漂，必须显式 cd）；bash heredoc 传 CJK 会散点损坏改用 Write/Edit；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-29T22:05:00+08:00"
+  "last_gate_passed_at": "2026-09-29T23:25:00+08:00"
 }
