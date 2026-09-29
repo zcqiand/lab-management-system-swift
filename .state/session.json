@@ -9,8 +9,8 @@
     "T-3 收口：trace_cmd 78 测挂 36 ID（I03 九测）；远门 test 91/91（82 存量 + 9 SSO）+ build 绿（App target 含 SSO 接线）；全门绿（L5 50 条目软告警 0）；d1a462f 已 push + suite gitlink 93a8705 已 push"
   ],
   "next": [
-    "ready 态人工验收前置：saas oauth_client 白名单登记 iOS 回调（labman://oauth/callback，Q2 人裁）；真后端 :5204 + 模拟器手动 SSO 登录验收（所有 REQ 开发中行同理）",
-    "下一需求候选：M03 剩余行已清（F01~F09 全开发中）；可考虑 M01.F05.I01（家族已废弃号，不回收）外无新 ready 候选——或转入 ready 态人工验收批次"
+    "ready 态人工验收：清单已落档 docs/requirements/ACCEPTANCE-2026-09-29-ready-batch.md（十个 REQ 全 AC + 环境前置 P1~P5）——人按清单走模拟器；P5（saas 白名单登记 labman://oauth/callback）为人裁前置，不阻塞非 SSO 段",
+    "验收通过后：功能树「开发中」→「已上线」（同 commit 改树 + 台账）；发现红走红先行小补丁回路"
   ],
   "open_questions": [
     "saas 端 redirect 白名单注册 iOS scheme（跨仓数据变更）待人裁协调——REQ-2026-010 Q2",
