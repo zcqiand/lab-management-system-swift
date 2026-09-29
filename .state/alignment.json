@@ -4,7 +4,7 @@
   "functions": {
     "modules": 3,
     "features": 11,
-    "items": 33
+    "items": 36
   },
   "warnings_total": 0,
   "warnings": {},
@@ -193,7 +193,8 @@
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
-        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md"
+        "docs\\requirements\\REQ-2026-002-m03-f01-ui-shell.md",
+        "docs\\requirements\\REQ-2026-007-receipt-detail.md"
       ],
       "flows": [],
       "designs": [
@@ -578,6 +579,56 @@
       ],
       "tests": [
         "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F09.I01": {
+      "name": "接样单详情页（接样信息全字段）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-007-receipt-detail.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailReceiptCarriesFullFieldSet"
+      ],
+      "entry": []
+    },
+    "M03.F09.I02": {
+      "name": "流程历史时间线（按 at 倒序）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-007-receipt-detail.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailHistorySortedByAtDescending"
+      ],
+      "entry": []
+    },
+    "M03.F09.I03": {
+      "name": "报告预览（数据面摘要）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-007-receipt-detail.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testPreviewEmptySamplesYieldsEmptyPreview",
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testPreviewLoadFailureSurfacesMessageAndClearsState",
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testPreviewLoadGroupsRecordsBySample"
       ],
       "entry": []
     }

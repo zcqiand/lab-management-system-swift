@@ -325,7 +325,8 @@ public final class ReceiptDetailViewModel: ObservableObject {
             let (fetchedReceipt, fetchedHistory) = try await fetch(id)
             notify()
             receipt = fetchedReceipt
-            history = fetchedHistory
+            // REQ-2026-007 I02：时间线按 at 倒序（家族 ReceiptDetail 客户端排序同款）。
+            history = fetchedHistory.sorted { $0.at > $1.at }
         } catch {
             notify()
             errorMessage = String(describing: error)

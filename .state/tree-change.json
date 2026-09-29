@@ -1,84 +1,30 @@
 {
   "schema": 1,
   "approved": true,
-  "base_sha": "dfa7cef13a001dc8",
-  "summary": "REQ-2026-006 报告四阶段：登记 M03.F05~F08 各三件（共 12 子项，编号镜像家族 react 树已上线面）。每阶段=队列页 I01 + 操作按钮 I02 + act 三动作行（F05.I07 / F06.I05 / F07.I05 / F08.I05，各阶段退回/撤回废弃号语义并入，号不回收）；各阶段 I04 三态过滤器家族规划态、I03/I06~I09 家族已废弃，本期不做不登记。实现 = ReportPhaseView 单组件参数化（stage+submitLabel，镜像家族 ReportPhasePage）+ 4 入口；契约零改动（生成物四阶段 act 端点 + SampleReceipt.reportCode 全在）；发放的报告编号由后端 act submit 语义生成、UI 只显示（家族实证）。全部新增行状态=规划；批准后 F05~F08 行 规划→开发中。",
+  "base_sha": "5c2fcfcad866d4f9",
+  "summary": "REQ-2026-007 接样单详情：登记 M03.F09 三子项（编号镜像家族 react 已上线面 data-fn 实证）。I01 详情页 = 接样信息全字段表（家族 20+ 字段，生成物 SampleReceipt 全字段在，契约零改动）；I02 流程历史时间线 = 既有 ReceiptDetailView 时间线（F01.I06 同一实现，双挂 ID，零新代码）；I03 报告预览 = 数据面预览（用户裁定：按样品归集检测记录 + 判定/结果/报告编号的报告式摘要，纯 SwiftUI 原生渲染，复用 APIGlue.receiptSamples/testRecords 缝；家族 docx 模板填充/打印/套打为 Web 专属技术栈，声明非范围）。全部新增行状态=规划；批准后 F09 行 规划→开发中。",
   "changes": [
     {
-      "id": "M03.F05.I01",
+      "id": "M03.F09.I01",
       "action": "新增",
-      "name": "审核队列（review 阶段）",
-      "reason": "REQ-2026-006：receiptsListReceipts flowStatus=review + keyword，ReportPhaseView(stage:.review) 复用 ReceiptListViewModel"
+      "name": "接样单详情页（接样信息全字段）",
+      "reason": "REQ-2026-007：GET /receipts/{id} 渲染接样信息全字段表（委托/工程/四单位/见证/送检/取样/类别/流程状态/检测结果/负责人/计划日期/报告编号/报告日期，镜像家族 ReceiptDetail I01 面）；生成物 SampleReceipt 字段全在，契约零改动"
     },
     {
-      "id": "M03.F05.I02",
+      "id": "M03.F09.I02",
       "action": "新增",
-      "name": "审核通过/驳回",
-      "reason": "REQ-2026-006：选中行 submit/return 按钮（审核通过/退回），镜像家族 ReportPhasePage 操作位"
+      "name": "流程历史时间线（按 at 倒序）",
+      "reason": "REQ-2026-007：既有 ReceiptDetailView 时间线（F01.I06 实现，GET /receipts/{id}/history）同一实现双挂 ID，零新代码；家族 ReceiptDetail data-fn=M03.F09.I02 同款语义"
     },
     {
-      "id": "M03.F05.I07",
+      "id": "M03.F09.I03",
       "action": "新增",
-      "name": "报告审核-提交（act 三动作）",
-      "reason": "REQ-2026-006：POST /receipts/review/act，body.action={submit、return、withdraw} 三动作统一（家族 I08 退回/I09 撤回已废弃语义并入本行，号不回收）；operator=会话身份"
-    },
-    {
-      "id": "M03.F06.I01",
-      "action": "新增",
-      "name": "批准队列（approval 阶段）",
-      "reason": "REQ-2026-006：receiptsListReceipts flowStatus=approval，ReportPhaseView(stage:.approval)"
-    },
-    {
-      "id": "M03.F06.I02",
-      "action": "新增",
-      "name": "批准/驳回",
-      "reason": "REQ-2026-006：选中行 submit/return 按钮（批准/驳回）"
-    },
-    {
-      "id": "M03.F06.I05",
-      "action": "新增",
-      "name": "报告批准-提交（act 三动作）",
-      "reason": "REQ-2026-006：POST /receipts/approve/act，body.action={submit、return、withdraw}（家族 I06 退回/I07 撤回已废弃语义并入，号不回收）；operator=会话身份"
-    },
-    {
-      "id": "M03.F07.I01",
-      "action": "新增",
-      "name": "发放队列（issuance 阶段）",
-      "reason": "REQ-2026-006：receiptsListReceipts flowStatus=issuance，ReportPhaseView(stage:.issuance)"
-    },
-    {
-      "id": "M03.F07.I02",
-      "action": "新增",
-      "name": "发放（生成报告编号）",
-      "reason": "REQ-2026-006：发放按钮=本阶段 act submit；报告编号后端 act 语义生成（家族 ReportPhasePage 注释实证「后端 act 语义已含，此处只显示」），Swift 行上呈现 reportCode"
-    },
-    {
-      "id": "M03.F07.I05",
-      "action": "新增",
-      "name": "报告发放-提交（act 三动作）",
-      "reason": "REQ-2026-006：POST /receipts/issuance/act，body.action={submit、return、withdraw}（家族 I06 退回/I07 撤回已废弃语义并入，号不回收）；operator=会话身份"
-    },
-    {
-      "id": "M03.F08.I01",
-      "action": "新增",
-      "name": "归档队列（archived 阶段）",
-      "reason": "REQ-2026-006：receiptsListReceipts flowStatus=archived，ReportPhaseView(stage:.archived)"
-    },
-    {
-      "id": "M03.F08.I02",
-      "action": "新增",
-      "name": "归档完成",
-      "reason": "REQ-2026-006：选中行 submit 按钮（归档完成）"
-    },
-    {
-      "id": "M03.F08.I05",
-      "action": "新增",
-      "name": "报告归档-提交（act 三动作）",
-      "reason": "REQ-2026-006：POST /receipts/archived/act，body.action={submit、return、withdraw}（家族 I06 退回/I07 撤回已废弃语义并入，号不回收）；operator=会话身份"
+      "name": "报告预览（数据面摘要）",
+      "reason": "REQ-2026-007：用户裁定 iOS 形态=数据面预览——按样品归集检测记录（GET /api/samples?receiptId + GET /api/test-records?sampleId，契约 list 无 receiptId 参数故逐样品取，家族同款）渲染报告式摘要（样品/参数/结果/判定/报告编号），纯 SwiftUI；家族 docx 模板填充+打印/套打为 Web 专属，非范围"
     }
   ],
   "sync_files": [
     "docs/requirements/README.md",
-    "docs/requirements/REQ-2026-006-report-phases.md"
+    "docs/requirements/REQ-2026-007-receipt-detail.md"
   ]
 }

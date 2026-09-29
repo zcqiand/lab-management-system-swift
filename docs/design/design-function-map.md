@@ -42,6 +42,9 @@
 | M03.F08.I01 | ReportPhaseView（.archived 档位：队列钉 archived，同一单组件） | GET /api/receipts（flowStatus=archived） | — | M03.F08.I01 | ../lab-management-system-react ReportPhasePage（stage=archived wrapper） | 开发中 |
 | M03.F08.I02 | ReportPhaseView 行操作「归档完成」 | POST /api/receipts/archived/act | — | M03.F08.I02 | ../lab-management-system-react ReportPhasePage 操作按钮区 | 开发中 |
 | M03.F08.I05 | ActConfirmSheet（endpoint=.phase(.archived)，act 三动作，operator=会话身份） | POST /api/receipts/archived/act | — | M03.F08.I05 | ../lab-management-system-react ReportPhasePage STAGE_ACT | 开发中 |
+| M03.F09.I01 | ReceiptDetailView 接样信息 Section 全字段化（家族 20+ 字段面，缺席显示 —） | GET /api/receipts/{id} | — | M03.F09.I01 | ../lab-management-system-react ReceiptDetail 接样信息卡 | 开发中 |
+| M03.F09.I02 | ReceiptDetailView 流程历史时间线（VM 按 at 倒序，F01.I06 同一实现双挂） | GET /api/receipts/{id}/history | — | M03.F09.I02 | ../lab-management-system-react ReceiptDetail 流程历史卡 | 开发中 |
+| M03.F09.I03 | ReportPreviewSheet（数据面预览：按样品归集记录摘要，ReportPreviewViewModel） | GET /api/samples（receiptId）；GET /api/test-records（sampleId） | — | M03.F09.I03 | ../lab-management-system-react ReportPreviewModal（docx 链路 Web 专属非范围，Q1 裁定） | 开发中 |
 | M03.F01.I07 | （ext 字段补录，REQ-2026-001 Q3 延后） | PUT /api/samples/{id}/ext | — | M03.F01.I07 | — | 规划 |
 
 ## 约定

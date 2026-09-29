@@ -13,6 +13,8 @@ struct ReceiptDetailView: View {
         try await APIGlue.detail(id)
     })
     @State private var actTarget: ActTargetItem?
+    /// REQ-2026-007 I03：数据面报告预览 sheet。
+    @State private var showPreview = false
 
     var body: some View {
         List {
@@ -20,11 +22,34 @@ struct ReceiptDetailView: View {
                 Section("接样信息") {
                     labeled("委托编号", receipt.commissionCode)
                     labeled("委托日期", receipt.commissionDate)
-                    labeled("检测类别", receipt.categoryCode)
-                    labeled("接样人", receipt.receivedBy)
+                    // REQ-2026-007 I01：接样信息全字段面（家族 ReceiptDetail 同款，
+                    // 缺席字段显示 —）。
+                    labeled("工程名称", receipt.projectName)
+                    labeled("委托单位", receipt.clientUnit)
+                    labeled("建设单位", receipt.buildingUnit)
+                    labeled("监理单位", receipt.supervisorUnit)
+                    labeled("施工单位", receipt.constructionUnit)
+                    labeled("见证单位", receipt.witnessUnit)
+                    labeled("见证人", receipt.witness)
+                    labeled("送检人", receipt.inspector)
+                    labeled("取样地点", receipt.samplingLocation)
+                    labeled("报告类别", receipt.categoryCode)
                     labeled("样品来源", receipt.sampleSource)
                     labeled("检测性质", receipt.testCategory)
+                    labeled("合同 ID", receipt.contractId)
                     labeled("当前环节", receipt.flowStatus.label)
+                    labeled("检测结果", receipt.result?.label)
+                    labeled("检测负责人", receipt.assigneeName)
+                    labeled("计划检测日期", receipt.plannedTestDate)
+                    labeled("报告编号", receipt.reportCode)
+                    labeled("报告日期", receipt.reportDate)
+                }
+                Section {
+                    Button {
+                        showPreview = true
+                    } label: {
+                        Label("报告预览", systemImage: "doc.text")
+                    }
                 }
             }
             if vm.isLoading {
@@ -66,6 +91,9 @@ struct ReceiptDetailView: View {
         }
         .navigationTitle("接样单详情")
         .task { await vm.load(id: receiptID) }
+        .sheet(isPresented: $showPreview) {
+            ReportPreviewSheet(receiptID: receiptID)
+        }
         .sheet(item: $actTarget) { target in
             ActConfirmSheet(action: target.action, ids: [target.targetID], operatorName: session.store.user?.username ?? "") { _, _ in
                 actTarget = nil
@@ -80,6 +108,22 @@ struct ReceiptDetailView: View {
             Text(title).foregroundStyle(.secondary)
             Spacer()
             Text(value)
+        }
+    }
+
+    /// 可选字段缺席显示 —（REQ-2026-007 AC-2）。
+    @ViewBuilder
+    private func labeled(_ title: String, _ value: String?) -> some View {
+        labeled(title, value ?? "—")
+    }
+}
+
+extension ReceiptResult {
+    var label: String {
+        switch self {
+        case .pass: "合格"
+        case .fail: "不合格"
+        case .empty: "—"
         }
     }
 }
