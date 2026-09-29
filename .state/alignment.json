@@ -210,16 +210,25 @@
     },
     "M03.F01.I07": {
       "name": "接样单 ext 字段补录",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md"
+        "docs\\requirements\\README.md",
+        "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
+        "docs\\requirements\\REQ-2026-008-sample-ext-fields.md"
       ],
       "flows": [],
       "designs": [
         "docs\\design\\design-function-map.md"
       ],
       "tests": [
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testLoadPrefillsExistingExtValues",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testNeedsFormWhenKeyMissing",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testNoFormWhenAllKeysCovered",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testReceiptSourceFieldsExcludedFromForm",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testSaveFailureSurfacesErrorAndKeepsDraft",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testSaveMergesExistingKeysAndNewValues",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testValidateBlocksOnEmptyRequired",
         "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3603 (annot)",
         "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3650 (annot)",
         "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:3849 (annot)"

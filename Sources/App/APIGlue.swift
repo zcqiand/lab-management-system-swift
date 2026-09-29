@@ -231,4 +231,25 @@ enum APIGlue {
     static let deleteReceipt: (String) async throws -> Void = { id in
         _ = try await run { ReceiptsAPI.receiptsDeleteReceiptWithRequestBuilder(id: id) }
     }
+
+    // MARK: - ext 补录（M03.F01.I07，REQ-2026-008；页大小 200 镜像家族）
+
+    /// 类别报告名目录（extFields 定义数据源，Q1 裁定走 live 契约端点）。
+    static let reportNames: (Int) async throws -> [InspectionReportName] = { pageSize in
+        let page = try await run {
+            ReportNamesAPI.reportNamesListReportNamesWithRequestBuilder(
+                page: 1, pageSize: pageSize, keyword: nil
+            )
+        }
+        return page.items
+    }
+
+    /// 样品 ext 落库（合并语义在 CoreKit，端点收合并后全量 ext）。
+    static let updateSampleExt: (String, [String: String]) async throws -> Void = { id, ext in
+        _ = try await run {
+            SamplesAPI.samplesUpdateSampleExtWithRequestBuilder(
+                id: id, updateSampleExtRequest: UpdateSampleExtRequest(ext: ext)
+            )
+        }
+    }
 }

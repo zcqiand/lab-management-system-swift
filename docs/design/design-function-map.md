@@ -45,7 +45,7 @@
 | M03.F09.I01 | ReceiptDetailView 接样信息 Section 全字段化（家族 20+ 字段面，缺席显示 —） | GET /api/receipts/{id} | — | M03.F09.I01 | ../lab-management-system-react ReceiptDetail 接样信息卡 | 开发中 |
 | M03.F09.I02 | ReceiptDetailView 流程历史时间线（VM 按 at 倒序，F01.I06 同一实现双挂） | GET /api/receipts/{id}/history | — | M03.F09.I02 | ../lab-management-system-react ReceiptDetail 流程历史卡 | 开发中 |
 | M03.F09.I03 | ReportPreviewSheet（数据面预览：按样品归集记录摘要，ReportPreviewViewModel） | GET /api/samples（receiptId）；GET /api/test-records（sampleId） | — | M03.F09.I03 | ../lab-management-system-react ReportPreviewModal（docx 链路 Web 专属非范围，Q1 裁定） | 开发中 |
-| M03.F01.I07 | （ext 字段补录，REQ-2026-001 Q3 延后） | PUT /api/samples/{id}/ext | — | M03.F01.I07 | — | 规划 |
+| M03.F01.I07 | SampleExtFormView（补录门装在 ReportPreviewSheet 装载路径：extFields 判定 + 表单态；SampleExtViewModel） | GET /api/report-names（page/pageSize）；PUT /api/samples/{id}/ext | — | M03.F01.I07 | ../lab-management-system-react SampleExtFieldsModal（预览前门槛同款） | 开发中 |
 
 ## 约定
 

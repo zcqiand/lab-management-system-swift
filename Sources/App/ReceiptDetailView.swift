@@ -92,7 +92,10 @@ struct ReceiptDetailView: View {
         .navigationTitle("接样单详情")
         .task { await vm.load(id: receiptID) }
         .sheet(isPresented: $showPreview) {
-            ReportPreviewSheet(receiptID: receiptID)
+            ReportPreviewSheet(
+                receiptID: receiptID,
+                categoryCode: vm.receipt?.categoryCode ?? ""
+            )
         }
         .sheet(item: $actTarget) { target in
             ActConfirmSheet(action: target.action, ids: [target.targetID], operatorName: session.store.user?.username ?? "") { _, _ in
