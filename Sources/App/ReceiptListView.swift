@@ -19,6 +19,8 @@ struct ReceiptListView: View {
     @State private var actTarget: ActTargetItem?
     @State private var deleteTarget: SampleReceipt?
     @State private var actErrorMessage: String?
+    /// 报告四阶段入口目标（REQ-2026-006：报告菜单 → ReportPhaseView）。
+    @State private var phaseTarget: ReportPhaseTargetItem?
 
     var body: some View {
         NavigationStack {
@@ -94,6 +96,16 @@ struct ReceiptListView: View {
             } label: {
                 Image(systemName: "square.and.pencil")
             }
+            // REQ-2026-006：报告四阶段入口（同一流程线后四环节，单组件四档位）。
+            Menu {
+                ForEach(ReportPhase.allCases, id: \.self) { phase in
+                    Button(phase.phaseTitle) {
+                        phaseTarget = ReportPhaseTargetItem(phase: phase)
+                    }
+                }
+            } label: {
+                Image(systemName: "doc.plaintext")
+            }
             Button {
                 showCreate = true
             } label: {
@@ -101,6 +113,9 @@ struct ReceiptListView: View {
             }
         }
         .navigationTitle("接样单")
+        .navigationDestination(item: $phaseTarget) { target in
+            ReportPhaseView(session: session, phase: target.phase)
+        }
         .confirmationDialog(
             deleteTarget.map { "删除接样单 \($0.commissionCode)？" } ?? "",
             isPresented: Binding(

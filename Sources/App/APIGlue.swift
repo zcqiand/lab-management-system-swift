@@ -113,6 +113,42 @@ enum APIGlue {
         }
     }
 
+    /// act（M03.F05~F08.I0x）：报告四阶段流转统一端点（REQ-2026-006），
+    /// 按阶段档位路由到 review/approve/issuance/archived。
+    static func phaseAct(
+        _ phase: ReportPhase, _ action: FlowAction, ids: [String], operator name: String,
+        reason: String?
+    ) async throws -> [FlowActionResult] {
+        try await run {
+            switch phase {
+            case .review:
+                ReceiptsAPI.receiptsActFlowReviewWithRequestBuilder(
+                    flowActionRequest: FlowActionRequest(
+                        ids: ids, action: action, operator: name, reason: reason
+                    )
+                )
+            case .approval:
+                ReceiptsAPI.receiptsActFlowApproveWithRequestBuilder(
+                    flowActionRequest: FlowActionRequest(
+                        ids: ids, action: action, operator: name, reason: reason
+                    )
+                )
+            case .issuance:
+                ReceiptsAPI.receiptsActFlowIssuanceWithRequestBuilder(
+                    flowActionRequest: FlowActionRequest(
+                        ids: ids, action: action, operator: name, reason: reason
+                    )
+                )
+            case .archived:
+                ReceiptsAPI.receiptsActFlowArchivedWithRequestBuilder(
+                    flowActionRequest: FlowActionRequest(
+                        ids: ids, action: action, operator: name, reason: reason
+                    )
+                )
+            }
+        }
+    }
+
     // MARK: - 数据录入目录（M03.F03.I01，REQ-2026-005；页大小 200 镜像家族）
 
     /// 按单拉样品（录入 sheet 样品 Picker 数据源）。

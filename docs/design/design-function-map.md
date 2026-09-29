@@ -30,6 +30,18 @@
 | M03.F03.I02 | EntrySheet 保存（DataEntryViewModel create-vs-update 按同键记录，result 必填 fail-fast） | POST /api/test-records；PUT /api/test-records/{id} | — | M03.F03.I02 | ../lab-management-system-react DataEntryPage 录入对话框 | 开发中 |
 | M03.F03.I03 | EntrySheet verdict 选择器（改判随保存 body，不走专用 setVerdict） | POST /api/test-records；PUT /api/test-records/{id} | — | M03.F03.I03 | ../lab-management-system-react DataEntryPage 录入对话框 | 开发中 |
 | M03.F03.I12 | ActConfirmSheet（act 三动作，endpoint=.dataEntry，operator=会话身份） | POST /api/receipts/data-entry/act | — | M03.F03.I12 | ../lab-management-system-react FlowStagePage | 开发中 |
+| M03.F05.I01 | ReportPhaseView（.review 档位：队列钉 review，ReportPhase 参数化单组件） | GET /api/receipts（flowStatus=review） | — | M03.F05.I01 | ../lab-management-system-react ReportPhasePage（stage=review wrapper） | 开发中 |
+| M03.F05.I02 | ReportPhaseView 行操作「审核通过/退回」（submitLabel 档位文案） | POST /api/receipts/review/act | — | M03.F05.I02 | ../lab-management-system-react ReportPhasePage 操作按钮区 | 开发中 |
+| M03.F05.I07 | ActConfirmSheet（endpoint=.phase(.review)，act 三动作，operator=会话身份） | POST /api/receipts/review/act | — | M03.F05.I07 | ../lab-management-system-react ReportPhasePage STAGE_ACT | 开发中 |
+| M03.F06.I01 | ReportPhaseView（.approval 档位：队列钉 approval，同一单组件） | GET /api/receipts（flowStatus=approval） | — | M03.F06.I01 | ../lab-management-system-react ReportPhasePage（stage=approval wrapper） | 开发中 |
+| M03.F06.I02 | ReportPhaseView 行操作「批准/退回」 | POST /api/receipts/approve/act | — | M03.F06.I02 | ../lab-management-system-react ReportPhasePage 操作按钮区 | 开发中 |
+| M03.F06.I05 | ActConfirmSheet（endpoint=.phase(.approval)，act 三动作，operator=会话身份） | POST /api/receipts/approve/act | — | M03.F06.I05 | ../lab-management-system-react ReportPhasePage STAGE_ACT | 开发中 |
+| M03.F07.I01 | ReportPhaseView（.issuance 档位：队列钉 issuance，同一单组件） | GET /api/receipts（flowStatus=issuance） | — | M03.F07.I01 | ../lab-management-system-react ReportPhasePage（stage=issuance wrapper） | 开发中 |
+| M03.F07.I02 | ReportPhaseView 行操作「发放」+ 行呈 reportCode（编号后端 act 语义生成，UI 只显示） | POST /api/receipts/issuance/act | — | M03.F07.I02 | ../lab-management-system-react ReportPhasePage（报告编号只显示注释实证） | 开发中 |
+| M03.F07.I05 | ActConfirmSheet（endpoint=.phase(.issuance)，act 三动作，operator=会话身份） | POST /api/receipts/issuance/act | — | M03.F07.I05 | ../lab-management-system-react ReportPhasePage STAGE_ACT | 开发中 |
+| M03.F08.I01 | ReportPhaseView（.archived 档位：队列钉 archived，同一单组件） | GET /api/receipts（flowStatus=archived） | — | M03.F08.I01 | ../lab-management-system-react ReportPhasePage（stage=archived wrapper） | 开发中 |
+| M03.F08.I02 | ReportPhaseView 行操作「归档完成」 | POST /api/receipts/archived/act | — | M03.F08.I02 | ../lab-management-system-react ReportPhasePage 操作按钮区 | 开发中 |
+| M03.F08.I05 | ActConfirmSheet（endpoint=.phase(.archived)，act 三动作，operator=会话身份） | POST /api/receipts/archived/act | — | M03.F08.I05 | ../lab-management-system-react ReportPhasePage STAGE_ACT | 开发中 |
 | M03.F01.I07 | （ext 字段补录，REQ-2026-001 Q3 延后） | PUT /api/samples/{id}/ext | — | M03.F01.I07 | — | 规划 |
 
 ## 约定

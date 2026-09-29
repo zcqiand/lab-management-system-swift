@@ -4,7 +4,7 @@
   "functions": {
     "modules": 3,
     "features": 11,
-    "items": 21
+    "items": 33
   },
   "warnings_total": 0,
   "warnings": {},
@@ -61,7 +61,8 @@
       "status": "规划",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-003-login-ui.md"
+        "docs\\requirements\\REQ-2026-003-login-ui.md",
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
       ],
       "flows": [],
       "designs": [],
@@ -381,6 +382,202 @@
       ],
       "tests": [
         "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testActDataEntryEmbedsSessionOperatorAndGuardsSelection"
+      ],
+      "entry": []
+    },
+    "M03.F05.I01": {
+      "name": "审核队列（review 阶段）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testReviewQueuePinsReviewStage"
+      ],
+      "entry": []
+    },
+    "M03.F05.I02": {
+      "name": "审核通过/驳回",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testReviewActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F05.I07": {
+      "name": "报告审核-提交（act 三动作）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testReviewActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F06.I01": {
+      "name": "批准队列（approval 阶段）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testApprovalQueuePinsApprovalStage"
+      ],
+      "entry": []
+    },
+    "M03.F06.I02": {
+      "name": "批准/驳回",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testApprovalActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F06.I05": {
+      "name": "报告批准-提交（act 三动作）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testApprovalActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F07.I01": {
+      "name": "发放队列（issuance 阶段）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testIssuanceQueuePinsIssuanceStage"
+      ],
+      "entry": []
+    },
+    "M03.F07.I02": {
+      "name": "发放（生成报告编号）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testIssuanceActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F07.I05": {
+      "name": "报告发放-提交（act 三动作）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testIssuanceActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F08.I01": {
+      "name": "归档队列（archived 阶段）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedQueuePinsArchivedStage"
+      ],
+      "entry": []
+    },
+    "M03.F08.I02": {
+      "name": "归档完成",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedActEmbedsSessionOperator"
+      ],
+      "entry": []
+    },
+    "M03.F08.I05": {
+      "name": "报告归档-提交（act 三动作）",
+      "status": "开发中",
+      "type": null,
+      "requirements": [
+        "docs\\requirements\\REQ-2026-006-report-phases.md"
+      ],
+      "flows": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedActEmbedsSessionOperator"
       ],
       "entry": []
     }
