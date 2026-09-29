@@ -113,6 +113,11 @@ targets:
           - CFBundleURLName: com.zcqiand.labmanagement.sso
             CFBundleURLSchemes:
               - labman
+        # 家族 dev 后端是明文 http://<LAN/Tailscale IP>:<port>（REQ-2026-003 P3
+        # 口径）；iOS ATS 默认拦一切非本地明文连接 → 不开例外则配置页存的
+        # http baseURL 全部请求被系统掐死（NSURLErrorAppTransportSecurity）。
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
 schemes:
   CoreKit:
     build:
