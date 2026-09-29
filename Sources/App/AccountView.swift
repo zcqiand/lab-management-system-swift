@@ -27,8 +27,8 @@ struct AccountView: View {
                 }
             )
         ))
-        // 登录响应不带 currentTenantId，快照取首位租户作当前项。
-        _selectedTenantId = State(initialValue: store.tenants.first?.tenantId ?? "")
+        // 切换器初值取记忆租户（M00.F02 settle），无记忆回落首位。
+        _selectedTenantId = State(initialValue: store.activeTenantId ?? store.tenants.first?.tenantId ?? "")
     }
 
     var body: some View {

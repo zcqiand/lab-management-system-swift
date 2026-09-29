@@ -15,7 +15,8 @@
       "status": "开发中",
       "type": null,
       "requirements": [
-        "docs\\requirements\\REQ-2026-003-login-ui.md"
+        "docs\\requirements\\REQ-2026-003-login-ui.md",
+        "docs\\requirements\\REQ-2026-009-login-tenant-settle.md"
       ],
       "flows": [],
       "designs": [
@@ -62,7 +63,8 @@
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md",
-        "docs\\requirements\\REQ-2026-006-report-phases.md"
+        "docs\\requirements\\REQ-2026-006-report-phases.md",
+        "docs\\requirements\\REQ-2026-009-login-tenant-settle.md"
       ],
       "flows": [],
       "designs": [],

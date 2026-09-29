@@ -58,13 +58,13 @@ public final class AuthViewModel: ObservableObject {
     }
 
     /// 租户切换（M00.F02.I01）：后端换发新租户 token（LoginResponse 同形），
-    /// 成功覆盖旧会话；失败保持原会话可重试。
+    /// 成功覆盖旧会话；失败保持原会话可重试。择定租户进记忆（M00.F02 settle）。
     @discardableResult
     public func switchTenant(to tenantId: String) async -> Bool {
         phase = .busy
         do {
             let response = try await seams.switchTenant(tenantId)
-            store.adoptLogin(response)
+            store.adoptLogin(response, preferredTenantId: tenantId)
             phase = .idle
             return true
         } catch {

@@ -14,6 +14,7 @@
 | REQ-2026-006 | M03.F05~F08 报告四阶段（四队列 + 操作按钮 + act 三动作 ×4） | P1 | 开发中（T-0~T-3 完成，全门绿，8f64e69 已 push，ready 态待真后端人工验收） | 12 I |
 | REQ-2026-007 | M03.F09 接样单详情（全字段表 + 时间线双挂 + 数据面报告预览） | P1 | 开发中（T-0~T-3 完成，远门 test 69/69 + build 绿，trace 33 ID，ready 态待真后端人工验收） | 3 I |
 | REQ-2026-008 | M03.F01.I07 样品扩展属性补录（预览前补录门 + 四型控件 + PUT ext） | P2 | 开发中（T-0~T-3 完成，远门 test 76/76 + build 绿，trace 34 ID，ready 态待真后端人工验收） | 1 I |
+| REQ-2026-009 | M00.F02 登录选租户直进（activeTenantId settle 落账 + 记忆/hydrate/清除） | P2 | 开发中（T-0~T-3 完成，远门 test 82/82 + build 绿，trace 35 ID，ready 态待真后端人工验收） | 1 F |
 
 ## 方向定死
 

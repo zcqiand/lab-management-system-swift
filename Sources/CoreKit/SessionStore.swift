@@ -18,6 +18,7 @@ public final class SessionStore {
 
     private static let baseURLKey = "corekit.baseURL"
     private static let sessionKey = "corekit.session"
+    private static let activeTenantIdKey = "corekit.activeTenantId"
     static let tokenKey = "corekit.token"
     static let refreshTokenKey = "corekit.refreshToken"
 
@@ -30,6 +31,14 @@ public final class SessionStore {
     public private(set) var refreshToken: String?
     public private(set) var user: CurrentUser?
     public private(set) var tenants: [MyTenant] = []
+    /// 登录 settle 直进的记忆租户（M00.F02）：remembered ?? 单租户 ?? 首位。
+    /// 会话级 UI 态非密态——落 defaults 与快照同源，登出即清。
+    public private(set) var activeTenantId: String?
+
+    /// 记忆租户对象（stale 时自然为 nil，呈现层直接用）。
+    public var activeTenant: MyTenant? {
+        tenants.first { $0.tenantId == activeTenantId }
+    }
 
     public init(defaults: UserDefaults, secrets: TokenStoring) {
         self.defaults = defaults
@@ -43,6 +52,10 @@ public final class SessionStore {
                let snapshot = try? JSONDecoder().decode(CurrentUserSession.self, from: data) {
                 user = snapshot.user
                 tenants = snapshot.tenants
+                // hydrate 记忆租户：defaults 键为主、快照 currentTenantId 为辅，
+                // 都不在本次 tenants 时 activeTenant 计算属性自然为 nil。
+                let remembered = defaults.string(forKey: Self.activeTenantIdKey)
+                activeTenantId = remembered ?? snapshot.currentTenantId
             }
             state = baseURL?.isEmpty == false ? .ready : .needsSetup
         } else {
@@ -51,6 +64,7 @@ public final class SessionStore {
             refreshToken = nil
             user = nil
             tenants = []
+            activeTenantId = nil
             defaults.removeObject(forKey: Self.sessionKey)
             state = baseURL?.isEmpty == false ? .needsLogin : .needsSetup
         }
@@ -74,7 +88,10 @@ public final class SessionStore {
 
     /// 登录/切换租户成功后的入账（switch-tenant 换发的也是 LoginResponse）：
     /// 密态落缝 + 会话快照落 defaults + Bearer 注入，状态进 ready。
-    public func adoptLogin(_ response: LoginResponse) {
+    /// M00.F02 settle 直进：目标租户 = 显式择定（preferredTenantId，切租户
+    /// 路径）∩ 本次 tenants ?? 记忆 ?? 单租户 ?? 首位（家族 settleLogin
+    /// 2026-09-23 裁定同款）；快照 currentTenantId 同步写 settled 值。
+    public func adoptLogin(_ response: LoginResponse, preferredTenantId: String? = nil) {
         secrets.save(Self.tokenKey, response.token)
         token = response.token
         if let refresh = response.refreshToken, refresh.isEmpty == false {
@@ -84,14 +101,20 @@ public final class SessionStore {
             secrets.delete(Self.refreshTokenKey)
             refreshToken = nil
         }
+        user = response.user
+        tenants = response.tenants
+        let remembered = tenants.first { $0.tenantId == preferredTenantId }
+            ?? tenants.first { $0.tenantId == activeTenantId }
+        let single = tenants.count == 1 ? tenants[0] : nil
+        let target = remembered ?? single ?? tenants.first
+        activeTenantId = target?.tenantId
+        defaults.set(activeTenantId, forKey: Self.activeTenantIdKey)
         let snapshot = CurrentUserSession(
-            user: response.user, tenants: response.tenants, currentTenantId: nil
+            user: response.user, tenants: response.tenants, currentTenantId: activeTenantId
         )
         if let data = try? JSONEncoder().encode(snapshot) {
             defaults.set(data, forKey: Self.sessionKey)
         }
-        user = response.user
-        tenants = response.tenants
         if let baseURL {
             // baseURL 已过校验，这里只为重注 basePath + Bearer（失败不掩盖登录成功）。
             _ = try? APIClient.bootstrap(baseURL: baseURL, token: response.token)
@@ -100,14 +123,17 @@ public final class SessionStore {
     }
 
     /// 登出/401 失效共用（I02/I04）：清密态 + 快照，留 baseURL 直接回登录页。
+    /// activeTenantId 是会话级状态，同批清（REQ-2026-009 Q2 裁定）。
     public func logout() {
         secrets.delete(Self.tokenKey)
         secrets.delete(Self.refreshTokenKey)
         token = nil
         refreshToken = nil
         defaults.removeObject(forKey: Self.sessionKey)
+        defaults.removeObject(forKey: Self.activeTenantIdKey)
         user = nil
         tenants = []
+        activeTenantId = nil
         state = .needsLogin
         OpenAPIClientAPI.customHeaders.removeValue(forKey: "Authorization")
     }

@@ -1,18 +1,14 @@
 {
   "schema": 1,
   "approved": true,
-  "base_sha": "567db71c69580313",
-  "summary": "REQ-2026-008 样品扩展属性补录：既有行 M03.F01.I07（REQ-2026-001 Q3 延后至此）规划→开发中，单行状态翻转，无新增/废弃。家族 react SampleExtFieldsModal 已上线实证：预览前门槛——类别 extFields 非空且首样品缺 key 时先补录，提交合并 ext 走 PUT /api/samples/{id}/ext。Swift 侧生成物全在（UpdateSampleExtRequest / samplesUpdateSampleExt / ExtFieldDef / InspectionReportName.extFields / reportNamesListReportNames），契约零改动。source==receipt 的字段家族亦未接入（只写 sample.ext），本需求同款声明非范围。",
+  "base_sha": "9c6059b0d0f0b367",
+  "summary": "REQ-2026-009 登录选租户直进（M00.F02）：既有行 规划→开发中，单行状态翻转，无新增/废弃。家族 react settleLogin 已上线实证（2026-09-23 用户裁定，修 SSO 回调冻结）：登录成功后目标租户 = remembered(activeTenantId 持久记忆 ∩ 本次 tenants) ?? 单租户 ?? 首位，直进 authenticated 不设选租户阻塞页；awaiting_tenant 仅剩空租户列表可达（声明非范围）。iOS 现状缺口：SessionStore.adoptLogin 快照 currentTenantId 恒置 nil、无 activeTenantId 持久化、hydrate 无记忆、AccountView 切换器只取首位兜底。Swift 侧生成物全在（LoginResponse.token/user/tenants、CurrentUserSession.currentTenantId、switch-tenant 换发同形），契约零改动；activeTenantId 属会话 UI 态（非密），落 UserDefaults 与快照同源。",
   "changes": [
     {
-      "id": "M03.F01.I07",
+      "id": "M00.F02",
       "action": "变更",
-      "name": "接样单 ext 字段补录（状态 规划→开发中）",
-      "reason": "REQ-2026-008：ReportPreviewSheet 装载路径设补录门——GET /api/report-names 按 categoryCode 取 InspectionReportName.extFields，缺 key 先出补录表单（label + text/number/date/select 控件 + 必填校验），提交合并 ext 走 PUT /api/samples/{id}/ext 后继续预览装载；家族 SampleExtFieldsModal+ReportPreviewModal 同款语义。extFields 定义取 live 契约端点（家族的静态种子 JSON 是 Web 资产非契约）。行本身 REQ-2026-001 已登记，本次仅状态翻转"
+      "name": "登录选租户",
+      "reason": "REQ-2026-009：登录成功 settle 直进——SessionStore.adoptLogin 增加 activeTenantId 落账（remembered ?? single ?? first，家族 2026-09-23 裁定同款）；hydrate 恢复记忆租户；switchTenant 显式择定的租户进记忆（M00.F02.I01 既有路径收尾）；logout/clear 同步清除。子项 I01（切换器）已开发中不动，父行 规划→开发中"
     }
-  ],
-  "sync_files": [
-    "docs/requirements/README.md",
-    "docs/requirements/REQ-2026-008-sample-ext-fields.md"
   ]
 }

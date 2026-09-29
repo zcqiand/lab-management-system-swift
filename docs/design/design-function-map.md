@@ -13,6 +13,7 @@
 | 功能子项 ID | 页面/组件 | 接口 | 数据表 | 权限码 | 设计稿 | 状态 |
 |---|---|---|---|---|---|---|
 | M00.F01 | AccountView（当前用户 + 会话恢复） | GET /api/auth/me；登录响应快照持久化 | — | M00.F01 | ../lab-management-system-react 顶栏账户区 | 开发中 |
+| M00.F02 | SessionStore 登录 settle 直进（activeTenantId 落账：remembered ?? 单租户 ?? 首位；hydrate 恢复记忆；快照 currentTenantId 同步） | POST /api/auth/native-login（响应落账）；POST /api/auth/switch-tenant | — | M00.F02 | ../lab-management-system-react auth-context settleLogin（2026-09-23 裁定同款） | 开发中 |
 | M00.F02.I01 | AccountView 租户切换器 | POST /api/auth/switch-tenant | — | M00.F02.I01 | ../lab-management-system-react 租户切换 | 开发中 |
 | M01.F05.I02 | APIGlue.run 401 拦截 + bootstrap Bearer 注入 | 全部 /api/*（拦截器语义） | — | M01.F05.I02 | — | 开发中 |
 | M01.F05.I04 | AccountView 登出按钮 | POST /api/auth/logout | — | M01.F05.I04 | ../lab-management-system-react 顶栏登出 | 开发中 |
