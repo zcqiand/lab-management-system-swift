@@ -1,28 +1,28 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-005 数据录入（M03.F03）T-0~T-3 完成并 push（e5e2b48）：录入页/保存记录/verdict 改判/act 三动作，全门绿",
+  "current_task": "REQ-2026-006 报告四阶段（M03.F05~F08）T-0~T-3 完成并 push（8f64e69）：单组件四档位/act 四端点/reportCode 呈现，全门绿",
   "done": [
-    "T-0 tree-change 批准：M03.F03 子项登记 I01/I02/I03/I12（镜像家族编号；I13/I14 家族已废弃语义并入 I12；I04/I06-I09 家族规划态、I15 家族开发中，均不占）",
-    "T-1 CoreKit 红先行（旧树红 cannot find 'DataEntryViewModel' → 55/55 绿，+7 测试）：DataEntryViewModel——目录装载（样品按单+参数字典+逐样品记录，键 sampleId#parameterCode 家族同款）/ 表单必填集（样品/参数/result/requirement）trim fail-fast / create-vs-update 按同键路由 / verdict 随 body（Q3 裁定，不走专用 setVerdict）；队列复用 ReceiptListViewModel（.dataEntry 预设）、act 复用 ReceivingFlowViewModel",
-    "T-2 App：DataEntryView（队列 + EntrySheet：样品/参数 Picker + 表单，选择即回填既有记录）+ 接样列表入口；ActConfirmSheet +ActEndpoint .dataEntry；APIGlue +receiptSamples/parameters/testRecords/persistTestRecord/dataEntryAct（页大小 200 镜像家族）",
-    "T-3 对齐：trace_cmd 42 测试挂 18 ID（F03 四件入账）；功能树/设计映射 4 行开发中；全门绿（L2 29s / L4 14s / L5 35 条目软告警 0）；e5e2b48 已 push + suite gitlink b1b45e8"
+    "T-0 tree-change 批准：四阶段 12 子项登记（F05.I01/I02/I07、F06.I01/I02/I05、F07.I01/I02/I05、F08.I01/I02/I05；各阶段废弃号 I03/I06~I09 并入 act 行不复用）；用户裁定四阶段与接样→分配→录入一体一个 REQ，不拆分",
+    "T-1 CoreKit 红先行（红证据 cannot find 'ReportPhase' in scope，staging 为实现落盘前快照 → 64/64 绿，+9 测试）：ReportPhase 枚举（flowStatus 钉态/phaseTitle/submitLabel 映射）；队列复用 ReceiptListViewModel、act 复用 ReceivingFlowViewModel，operator=会话身份断言 ×4；四阶段 flowStatus 去重防串档",
+    "T-2 App：ReportPhaseView 单组件参数化（镜像家族 ReportPhasePage，AC-6）+ ReceiptListView 报告菜单 navigationDestination 四入口；ActConfirmSheet +.phase(ReportPhase) 档位；APIGlue.phaseAct 路由 receiptsActFlowReview/Approve/Issuance/Archived；行呈 reportCode（编号后端 act 语义生成，UI 只显示，Q2 裁定）",
+    "T-3 对齐：trace_cmd 51 测试挂 30 ID（F05~F08 12/12 挂钩）；设计映射 12 行开发中；全门绿（L5 47 条目软告警 0）；8f64e69 已 push"
   ],
   "next": [
-    "ready 态人工验收（接样→分配→录入全链）需真后端 :5204 + 模拟器手动登录；通过后功能树 10 行开发中→已上线",
-    "下一需求候选（功能树规划态）：M03.F09 接样单详情（详情+历史时间线+报告预览）或 M03.F05 报告审核流程（review 队列+act）；开工先写 REQ + 澄清",
-    "M03.F01.I07 ext 字段补录（REQ-2026-001 Q3 延后）仍欠；M03.F02.I03/I04、M03.F03.I04/I06-I09/I15 家族也是规划/开发中态，后续需求"
+    "ready 态人工验收（接样→分配→录入→审核→批准→发放→归档全链）需真后端 :5204 + 模拟器手动登录；通过后功能树开发中行→已上线",
+    "下一需求候选：M03.F09 接样单详情（详情+流程历史+报告预览，契约就绪）；M03.F01.I07 ext 补录（samplesUpdateSampleExt 在）；M01.F05.I03 SSO（明确延后）；M00.F02 直进",
+    "M03.F02.I03/I04、M03.F03.I04/I06-I09/I15 家族规划/开发中态行不拉入"
   ],
   "open_questions": [
     "模拟器 xcodebuild test 段是否回填 L4（41/41 机器态已愈）待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
-    "home-mac Tailscale 链路抖动自愈模式仍在——跑远程门前先探活（本 session 两次远程门一次探活通过）"
+    "home-mac Tailscale 本 session 掉线 2 次（红跑挺过 1 次、全门挺过 1 次自愈完成）——远程门前探活纪律已入册，若频发考虑 remote_gate 内建重试或换构建机"
   ],
   "dont": [
+    "navigationDestination(item:) 的 item 必须 Hashable（本 session 被 build 门拦一次，补 conform 才绿）",
     "EntrySheet 表单态必须留壳层 @State：CoreKit 公开可变字段不触发 objectWillChange（TextField 自持编辑态可以，Picker 选择回显需要重渲染）；请求组装/校验/路由仍全走 VM",
-    "InspectionParameterSourceType 枚举 case 只有 official/custom（写 .preset 编译错）；FlowStatus.dataEntry='data_entry'",
-    "APIGlue 闭包属性调用不带标签（APIGlue.persistTestRecord(id, create, update)）；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject",
-    "trace_cmd 锚点在 func testXxx( 函数体内；测试文件 import LabSharedGenerated；XcodeGen 八坑全在册（memory xcodegen-xcode16-project-yml-quirks.md）",
-    "bash heredoc 传 CJK 会散点损坏，改中文文件一律用 Edit/Write 工具；旧坑沿用：remote_gate.py 在项目 scripts/ 下；不要业务身份兜底字面量（ADR-0019）"
+    "InspectionParameterSourceType 枚举 case 只有 official/custom（写 .preset 编译错）；FlowStatus.dataEntry='data_entry'；ReportPhase 四 case 与 FlowStatus.review/approval/issuance/archived 同名不同型",
+    "APIGlue 闭包属性调用不带标签；func 参数名 operator 是关键字上下文（生成物已处理，手写调用处带标签 operator: 即可）；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject",
+    "trace_cmd 锚点在 func testXxx( 函数体内；测试文件 import LabSharedGenerated；bash heredoc 传 CJK 会散点损坏改用 Write/Edit；remote_gate.py 在项目 scripts/ 下；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-29T07:50:00+08:00"
+  "last_gate_passed_at": "2026-09-29T11:20:00+08:00"
 }
