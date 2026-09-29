@@ -14,7 +14,7 @@
 | P2 | 模拟器装 App | home-mac：`xcodegen generate && xcodebuild ... -scheme LabManagement build` 产物装 iPhone 模拟器（模拟器 xcodebuild **test** 不稳是已知机器态，手动跑 App 不受影响） | ☐ |
 | P3 | App 配 baseURL | 配置页填后端地址（home-mac 上跨机填 Tailscale IP，如 `http://<win-ip>:5204`）；缺失 fail-fast 不兜底 | ☐ |
 | P4 | 测试账号 | 家族 dev 凭据 `alice / dev123456`（多租户）；seed 含 task_assignment / data_entry / 报告四阶段各态单子 | ☐ |
-| P5 | （仅 SSO 段）saas 白名单 | **人裁前置**：saas oauth_client 登记 iOS 回调 `labman://oauth/callback`（REQ-2026-010 Q2 跨仓数据变更）。未登记前 SSO 段跳过，不阻塞其余验收 | ☐ |
+| P5 | （仅 SSO 段）saas 白名单 | **✅ 已落地（2026-09-29 人裁批准）**：saas-shared d294477 / saas-nextjs 92af9e4 种子登记 `labman://oauth/callback`，saas_dev 已重灌入库实证——SSO 段可随本批验收 | ☐ |
 
 ## 2. 分 REQ 场景（AC 编号见各 REQ 文档 §2）
 

@@ -69,7 +69,7 @@
 | 疑问 | 澄清结论 | 澄清人 | 日期 |
 |---|---|---|---|
 | Q1 client_id 来源：家族 env 注入 vs iOS 端配置 | **ConfigView 用户显式配置**（SessionStore 落账，ADR-0019 口径）：iOS 无构建期 env 注入惯例，家族注释亦证后端权威持有、前端值被忽略——客户端只须传库值 'lab-management' 形态的字符串 | 自裁（ADR-0019 既定口径推演，非语义分歧） | 2026-09-29 |
-| Q2 iOS 回调 redirect_uri 如何过 saas 白名单 | **本期人裁协调项**：saas oauth_client 表需注册 iOS 自定义 scheme（如 labman://oauth/callback），跨仓数据变更不单方面动（ADR-0029）；真后端联调前须注册，本需求按 ready 态交付 | 自裁（列人裁） | 2026-09-29 |
+| Q2 iOS 回调 redirect_uri 如何过 saas 白名单 | **已批并落地（2026-09-29 人裁「协调 saas 仓注册」）**：saas-shared d294477 + saas-nextjs 92af9e4 种子登记 `labman://oauth/callback`，saas_dev 已重灌入库实证；契约零动（redirectUris 是数据字段） | 人裁（zcqiand 批准跨仓数据变更） | 2026-09-29 |
 
 ## 6. 附注
 

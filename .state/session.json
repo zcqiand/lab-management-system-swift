@@ -9,8 +9,13 @@
     "T-3 收口：trace_cmd 78 测挂 36 ID（I03 九测）；远门 test 91/91（82 存量 + 9 SSO）+ build 绿（App target 含 SSO 接线）；全门绿（L5 50 条目软告警 0）；d1a462f 已 push + suite gitlink 93a8705 已 push"
   ],
   "next": [
-    "ready 态人工验收：清单已落档 docs/requirements/ACCEPTANCE-2026-09-29-ready-batch.md（十个 REQ 全 AC + 环境前置 P1~P5）——人按清单走模拟器；P5（saas 白名单登记 labman://oauth/callback）为人裁前置，不阻塞非 SSO 段",
+    "ready 态人工验收：清单在 docs/requirements/ACCEPTANCE-2026-09-29-ready-batch.md——人按清单走模拟器；P5 已落地（saas-shared d294477/nextjs 92af9e4 登记 labman://oauth/callback，saas_dev 已重灌），SSO 段可一并验",
     "验收通过后：功能树「开发中」→「已上线」（同 commit 改树 + 台账）；发现红走红先行小补丁回路"
+  ],
+  "open_questions": [
+    "saas 种子存量漂移待人裁：saas-console redirectUris shared 有 3 条 lab 登录 URL、nextjs 镜像为空（本次对齐 lab-management 时发现，未动）",
+    "模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
+    "home-mac Tailscale 掉线频发——remote_gate 内建重试或换构建机仍待裁"
   ],
   "open_questions": [
     "saas 端 redirect 白名单注册 iOS scheme（跨仓数据变更）待人裁协调——REQ-2026-010 Q2",
