@@ -11,8 +11,8 @@
 | # | 前置 | 说明 | ✓ |
 |---|---|---|---|
 | P1 | 真后端起来 | 任选一家族 lab 后端（aspnetcore `:5204` / springboot / nextjs，同契约异实现）；探针 `curl http://localhost:<port>/api/...` 业务通 | ☐ |
-| P2 | 模拟器装 App | home-mac：`xcodegen generate && xcodebuild ... -scheme LabManagement build` 产物装 iPhone 模拟器（模拟器 xcodebuild **test** 不稳是已知机器态，手动跑 App 不受影响） | ☐ |
-| P3 | App 配 baseURL | 配置页填后端地址（home-mac 上跨机填 Tailscale IP，如 `http://<win-ip>:5204`）；缺失 fail-fast 不兜底 | ☐ |
+| P2 | 模拟器装 App | **✅ 已备好（2026-09-30）**：home-mac iPhone 16（2C939AD9）已装含 SSO+ATS 的 9870abc 构建并启动，冷启动配置页截图实证（模拟器 xcodebuild **test** 不稳是已知机器态，手动跑 App 不受影响） | ☐ |
+| P3 | App 配 baseURL | 配置页后端地址填 **`http://100.127.95.66:5201`**（本机 Windows Tailscale IP + lab-nextjs，SSO 透传跳；从 home-mac 探活 401=鉴权前置正常应答）；缺失 fail-fast 不兜底。ATS 例外已随 9870abc 进 Info.plist（明文 http 不再被系统拦） | ☐ |
 | P4 | 测试账号 | 家族 dev 凭据 `alice / dev123456`（多租户）；seed 含 task_assignment / data_entry / 报告四阶段各态单子 | ☐ |
 | P5 | （仅 SSO 段）saas 白名单 | **✅ 已落地（2026-09-29 人裁批准）**：saas-shared d294477 / saas-nextjs 92af9e4 种子登记 `labman://oauth/callback`，saas_dev 已重灌入库实证——SSO 段可随本批验收 | ☐ |
 | P6 | （仅 SSO 段）链路预验证 | **✅ 已过（2026-09-29 curl 全链）**：lab-nextjs :5201 sso/authorize 透传 labman redirect_uri → saas :5101 白名单放行发码 → lab sso/callback 换得 lab JWT（alice 双租户 LoginResponse 200）。唯一未验跳 = ASWebAuthenticationSession 浏览器 UI + scheme 回跳（即 AC-1 本身）；注意 :5101 需新起进程（旧驻留连错库会假拒白名单） | ☐ |
