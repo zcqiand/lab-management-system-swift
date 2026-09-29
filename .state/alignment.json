@@ -59,16 +59,30 @@
     },
     "M01.F05.I03": {
       "name": "SSO OAuth 2.0 授权码流（原生形态）",
-      "status": "规划",
+      "status": "开发中",
       "type": null,
       "requirements": [
+        "docs\\requirements\\README.md",
         "docs\\requirements\\REQ-2026-003-login-ui.md",
         "docs\\requirements\\REQ-2026-006-report-phases.md",
-        "docs\\requirements\\REQ-2026-009-login-tenant-settle.md"
+        "docs\\requirements\\REQ-2026-009-login-tenant-settle.md",
+        "docs\\requirements\\REQ-2026-010-sso-native.md"
       ],
       "flows": [],
-      "designs": [],
-      "tests": [],
+      "designs": [
+        "docs\\design\\design-function-map.md"
+      ],
+      "tests": [
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testClearWipesSsoConfigBackToNeedsSetup",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testExchangeFailureSurfacesErrorAndStaysOut",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testGenerateStateIsBase64urlAndUnpredictable",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testLoginHappyPathExchangesAndAdopts",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testLoginMissingConfigFailsFastBeforeAuthorize",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testLoginStateMismatchBlocksExchange",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testParseCallbackExtractsCodeAndState",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testRedirectUriUsesSchemeWithFixedPath",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testSaveSsoConfigFailsFastAndSurvivesRebirth"
+      ],
       "entry": []
     },
     "M01.F05.I04": {

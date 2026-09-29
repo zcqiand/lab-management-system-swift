@@ -19,6 +19,8 @@ public final class SessionStore {
     private static let baseURLKey = "corekit.baseURL"
     private static let sessionKey = "corekit.session"
     private static let activeTenantIdKey = "corekit.activeTenantId"
+    private static let ssoClientIdKey = "corekit.ssoClientId"
+    private static let ssoCallbackSchemeKey = "corekit.ssoCallbackScheme"
     static let tokenKey = "corekit.token"
     static let refreshTokenKey = "corekit.refreshToken"
 
@@ -40,10 +42,18 @@ public final class SessionStore {
         tenants.first { $0.tenantId == activeTenantId }
     }
 
+    /// SSO 显式配置（M01.F05.I03，非密态落 defaults）：用户在配置页显式填写，
+    /// 缺失由 SsoViewModel fail-fast，不兜底字面量（ADR-0019）。
+    /// 生命周期同 baseURL：logout 保留，clear 全清。
+    public private(set) var ssoClientId: String?
+    public private(set) var ssoCallbackScheme: String?
+
     public init(defaults: UserDefaults, secrets: TokenStoring) {
         self.defaults = defaults
         self.secrets = secrets
         baseURL = defaults.string(forKey: Self.baseURLKey)
+        ssoClientId = defaults.string(forKey: Self.ssoClientIdKey)
+        ssoCallbackScheme = defaults.string(forKey: Self.ssoCallbackSchemeKey)
         token = secrets.read(Self.tokenKey)
         refreshToken = secrets.read(Self.refreshTokenKey)
 
@@ -122,6 +132,22 @@ public final class SessionStore {
         state = .ready
     }
 
+    /// SSO 配置落账（M01.F05.I03）：任一空值拒存（fail-fast 不留半配置态）。
+    public func saveSsoConfig(clientId: String, callbackScheme: String) throws {
+        let trimmedClient = clientId.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedScheme = callbackScheme.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmedClient.isEmpty == false else {
+            throw SessionStoreError.emptyField("client_id 不能为空")
+        }
+        guard trimmedScheme.isEmpty == false else {
+            throw SessionStoreError.emptyField("回调 scheme 不能为空")
+        }
+        defaults.set(trimmedClient, forKey: Self.ssoClientIdKey)
+        defaults.set(trimmedScheme, forKey: Self.ssoCallbackSchemeKey)
+        ssoClientId = trimmedClient
+        ssoCallbackScheme = trimmedScheme
+    }
+
     /// 登出/401 失效共用（I02/I04）：清密态 + 快照，留 baseURL 直接回登录页。
     /// activeTenantId 是会话级状态，同批清（REQ-2026-009 Q2 裁定）。
     public func logout() {
@@ -143,6 +169,18 @@ public final class SessionStore {
         logout()
         defaults.removeObject(forKey: Self.baseURLKey)
         baseURL = nil
+        defaults.removeObject(forKey: Self.ssoClientIdKey)
+        defaults.removeObject(forKey: Self.ssoCallbackSchemeKey)
+        ssoClientId = nil
+        ssoCallbackScheme = nil
         state = .needsSetup
     }
+}
+
+/// SessionStore 校验失败（fail-fast，不兜底）。
+public struct SessionStoreError: LocalizedError {
+    public let message: String
+    public var errorDescription: String? { message }
+    public init(_ message: String) { self.message = message }
+    public static func emptyField(_ message: String) -> SessionStoreError { SessionStoreError(message) }
 }

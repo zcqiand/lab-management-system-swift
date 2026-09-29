@@ -17,6 +17,7 @@
 | M00.F02.I01 | AccountView 租户切换器 | POST /api/auth/switch-tenant | — | M00.F02.I01 | ../lab-management-system-react 租户切换 | 开发中 |
 | M01.F05.I02 | APIGlue.run 401 拦截 + bootstrap Bearer 注入 | 全部 /api/*（拦截器语义） | — | M01.F05.I02 | — | 开发中 |
 | M01.F05.I04 | AccountView 登出按钮 | POST /api/auth/logout | — | M01.F05.I04 | ../lab-management-system-react 顶栏登出 | 开发中 |
+| M01.F05.I03 | SsoViewModel（state 生成/一次性校验纯函数 + authorize/exchange/webSession 三缝）+ LoginView「SSO 登录」+ ASWebAuthenticationSession + ConfigView SSO 配置字段 | GET /api/auth/sso/authorize；POST /api/auth/sso/callback | — | M01.F05.I03 | ../lab-management-system-react LoginPage（RFC 6749 §4.1 两阶段同款） | 开发中 |
 | M01.F05.I06 | LoginView（用户名+密码原生表单） | POST /api/auth/native-login | — | M01.F05.I06 | ../lab-management-system-react 登录页 | 开发中 |
 | M03.F01.I01 | ReceiptListView（列表：三态过滤/keyword/分页） | GET /api/receipts | — | M03.F01.I01 | ../lab-management-system-react 接样单列表页 | 开发中 |
 | M03.F01.I02 | ReceiptFormView（新建/编辑表单） | POST /api/receipts；PUT /api/receipts/{id} | — | M03.F01.I02 | ../lab-management-system-react 接样单表单页 | 开发中 |

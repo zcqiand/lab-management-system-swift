@@ -15,6 +15,7 @@
 | REQ-2026-007 | M03.F09 接样单详情（全字段表 + 时间线双挂 + 数据面报告预览） | P1 | 开发中（T-0~T-3 完成，远门 test 69/69 + build 绿，trace 33 ID，ready 态待真后端人工验收） | 3 I |
 | REQ-2026-008 | M03.F01.I07 样品扩展属性补录（预览前补录门 + 四型控件 + PUT ext） | P2 | 开发中（T-0~T-3 完成，远门 test 76/76 + build 绿，trace 34 ID，ready 态待真后端人工验收） | 1 I |
 | REQ-2026-009 | M00.F02 登录选租户直进（activeTenantId settle 落账 + 记忆/hydrate/清除） | P2 | 开发中（T-0~T-3 完成，远门 test 82/82 + build 绿，trace 35 ID，ready 态待真后端人工验收） | 1 F |
+| REQ-2026-010 | M01.F05.I03 SSO OAuth 2.0 授权码流原生形态（ASWebAuthenticationSession + state 防 CSRF） | P2 | 开发中（T-0~T-3 完成，远门 test 91/91 + build 绿，trace 36 ID，ready 态待 saas 白名单注册 + 真后端人工验收） | 1 I |
 
 ## 方向定死
 

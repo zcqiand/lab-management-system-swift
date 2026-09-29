@@ -56,6 +56,29 @@ enum APIGlue {
         }
     }
 
+    // MARK: - SSO（M01.F05.I03，REQ-2026-010；RFC 6749 §4.1 两阶段）
+
+    /// 阶段 2 authorize：后端校验 client_id/redirect_uri 白名单，拼 IdP 跳转
+    /// URL 回 SsoRedirect（state 由客户端生成传入，后端原样带回）。
+    static let ssoAuthorize: (
+        OAuthResponseType, String, String, String
+    ) async throws -> SsoRedirect = { responseType, clientId, redirectUri, state in
+        try await run {
+            AuthAPI.authSsoAuthorizeWithRequestBuilder(
+                responseType: responseType, clientId: clientId,
+                redirectUri: redirectUri, state: state
+            )
+        }
+    }
+
+    /// 阶段 1 callback：授权码换 lab 自家 JWT（client_secret 仅后端持有，
+    /// saas token 不出 lab 后端）。
+    static let ssoCallback: (SsoCallbackRequest) async throws -> LoginResponse = { request in
+        try await run {
+            AuthAPI.authSsoCallbackWithRequestBuilder(ssoCallbackRequest: request)
+        }
+    }
+
     /// 列表 provider（I01）：ReceiptListQuery → 生成层 listReceipts。
     static let list: (ReceiptListQuery) async throws -> [SampleReceipt] = { query in
         let page = try await run {

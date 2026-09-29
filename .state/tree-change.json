@@ -1,14 +1,20 @@
 {
   "schema": 1,
   "approved": true,
-  "base_sha": "9c6059b0d0f0b367",
-  "summary": "REQ-2026-009 登录选租户直进（M00.F02）：既有行 规划→开发中，单行状态翻转，无新增/废弃。家族 react settleLogin 已上线实证（2026-09-23 用户裁定，修 SSO 回调冻结）：登录成功后目标租户 = remembered(activeTenantId 持久记忆 ∩ 本次 tenants) ?? 单租户 ?? 首位，直进 authenticated 不设选租户阻塞页；awaiting_tenant 仅剩空租户列表可达（声明非范围）。iOS 现状缺口：SessionStore.adoptLogin 快照 currentTenantId 恒置 nil、无 activeTenantId 持久化、hydrate 无记忆、AccountView 切换器只取首位兜底。Swift 侧生成物全在（LoginResponse.token/user/tenants、CurrentUserSession.currentTenantId、switch-tenant 换发同形），契约零改动；activeTenantId 属会话 UI 态（非密），落 UserDefaults 与快照同源。",
+  "base_sha": "44f760fcb787cbd0",
+  "summary": "REQ-2026-010 SSO OAuth 2.0 授权码流原生形态（M01.F05 + I03）：两行 规划→开发中，无新增/废弃。家族 react LoginPage 已上线实证（RFC 6749 §4.1 两阶段）：authorize（response_type=code + client_id + redirect_uri + state 防 CSRF）→ SsoRedirect.authorizeUrl 跳 IdP → 回跳验 state 一次性 → sso/callback（grant_type=authorization_code 四字段）换 lab 自家 JWT → LoginResponse → settle（REQ-2026-009 activeTenantId 直进直接复用）。iOS 原生形态（树行既定）：ASWebAuthenticationSession 消费 authorizeUrl，回跳自定义 scheme 回调；契约生成物全在（AuthAPI.authSsoAuthorize/authSsoCallback、SsoRedirect、SsoCallbackRequest、OAuthResponseType.code、OAuthGrantType.authorizationCode、BackendFeatures.sso），契约零改动。ADR-0019 口径：client_id 与回调 scheme 属用户显式配置（ConfigView 扩字段），缺失 fail-fast 不兜底字面量。",
   "changes": [
     {
-      "id": "M00.F02",
+      "id": "M01.F05",
       "action": "变更",
-      "name": "登录选租户",
-      "reason": "REQ-2026-009：登录成功 settle 直进——SessionStore.adoptLogin 增加 activeTenantId 落账（remembered ?? single ?? first，家族 2026-09-23 裁定同款）；hydrate 恢复记忆租户；switchTenant 显式择定的租户进记忆（M00.F02.I01 既有路径收尾）；logout/clear 同步清除。子项 I01（切换器）已开发中不动，父行 规划→开发中"
+      "name": "认证管理（登录/SSO/JWT）",
+      "reason": "REQ-2026-010：SSO 授权码流落地后父行收口（I02/I04/I06 原生登录与 token 生命周期已开发中在册，本需求补齐 SSO 一角），父行 规划→开发中"
+    },
+    {
+      "id": "M01.F05.I03",
+      "action": "变更",
+      "name": "SSO OAuth 2.0 授权码流（原生形态）",
+      "reason": "REQ-2026-010：树行既定「后续需求」入队——CoreKit SsoViewModel（authorize/exchange 双缝 + state 生成与一次性校验纯函数）；App LoginView「SSO 登录」+ ASWebAuthenticationSession（AuthenticationServices）+ Info.plist URL scheme + ConfigView SSO 配置字段（client_id/回调 scheme，缺失 fail-fast）；成功 LoginResponse 走 adoptLogin settle 直进。非范围：saas 端 redirect 白名单注册 iOS scheme（跨仓数据变更，人裁协调）；refresh token 自动续期；saas 端 single logout"
     }
   ]
 }

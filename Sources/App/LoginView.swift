@@ -9,6 +9,7 @@ struct LoginView: View {
     let session: AppSession
 
     @StateObject private var vm: AuthViewModel
+    @StateObject private var ssoVM: SsoViewModel
     @State private var username = ""
     @State private var password = ""
 
@@ -26,6 +27,16 @@ struct LoginView: View {
                         try await APIGlue.logout(token)
                     }
                 }
+            )
+        ))
+        // SSO（M01.F05.I03）：三缝注入——网络两缝走生成物，浏览器会话缝绑
+        // ASWebAuthenticationSession。配置缺失由 VM fail-fast（ADR-0019）。
+        _ssoVM = StateObject(wrappedValue: SsoViewModel(
+            store: store,
+            seams: .init(
+                authorize: APIGlue.ssoAuthorize,
+                exchange: APIGlue.ssoCallback,
+                openWebSession: WebAuthSession.open
             )
         ))
     }
@@ -57,6 +68,28 @@ struct LoginView: View {
                     )
                 }
                 if case .failed(let message) = vm.phase {
+                    Section {
+                        Text(message)
+                            .foregroundStyle(.red)
+                            .font(.footnote)
+                    }
+                }
+                // SSO 登录（M01.F05.I03）：授权码流走系统浏览器会话，成功
+                // 同样 adoptLogin → ready 直进（settle 复用 REQ-2026-009）。
+                // 配置缺失点按后 fail-fast 报引导文案，不兜底。
+                Section {
+                    Button("SSO 登录") {
+                        Task {
+                            if await ssoVM.login(
+                                clientId: session.store.ssoClientId ?? "",
+                                callbackScheme: session.store.ssoCallbackScheme ?? ""
+                            ) {
+                                session.refresh()
+                            }
+                        }
+                    }
+                }
+                if case .failed(let message) = ssoVM.phase {
                     Section {
                         Text(message)
                             .foregroundStyle(.red)

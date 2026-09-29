@@ -105,6 +105,14 @@ targets:
         CFBundleDisplayName: 实验室管理
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        # SSO 回跳（M01.F05.I03，REQ-2026-010）：ASWebAuthenticationSession
+        # 完成后系统按此 scheme 劫持回 App。ConfigView 的 SSO 回调 scheme
+        # 配置须与之一致；saas oauth_client 白名单登记同款 redirect_uri 为
+        # 跨仓人裁项（Q2）。
+        CFBundleURLTypes:
+          - CFBundleURLName: com.zcqiand.labmanagement.sso
+            CFBundleURLSchemes:
+              - labman
 schemes:
   CoreKit:
     build:
