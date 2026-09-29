@@ -1,28 +1,27 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-007 接样单详情（M03.F09 三子项）T-0~T-3 完成并 push（af39c90）：详情全字段/时间线倒序/数据面报告预览，全门绿",
+  "current_task": "REQ-2026-008 样品 ext 补录（M03.F01.I07）T-0~T-3 完成并 push（d43e7f9）：预览前补录门 + 四型控件 + PUT ext，全门绿",
   "done": [
-    "T-0 tree-change 批准：F09.I01/I02/I03 登记，F09 规划→开发中；REQ-2026-007 需求文档新建（Q1 澄清：I03 预览 iOS 形态=数据面预览，docx/打印/套打 Web 专属非范围）",
-    "T-1 CoreKit 红先行（真红补救实证：实现隐藏后 staging 报 cannot find 'ReportPreviewViewModel' in scope ×3，RED_EXIT=1；此前一次红跑因 Tailscale 断连得假红 b6nkyftba 已作废）：ReportPreviewViewModel（samplesLoad 一次 + 逐样品 recordsLoad 归集 recordsBySample，任一失败清态报错）；ReceiptDetailViewModel.load 时间线 at 倒序（I02，家族 ReceiptDetail 同款）",
-    "T-2 App：ReceiptDetailView 接样信息全字段化（家族 20+ 字段面，缺席显示 —）+ 报告预览按钮；ReportPreviewSheet 按样品分组摘要（verdict 缺席 —）；测试 ReportPreviewTests 5 例；远门 test 69/69 + iOS build SUCCEEDED",
-    "T-3 对齐与收口：trace_cmd 56 测试挂 33 ID（F09 I01/I02/I03 落账）；设计映射 3 行；全门绿（L2 209s / L4 105s / L5 50 条目软告警 0）；af39c90 已 push + suite gitlink 6f3fd2c 已推"
+    "T-0 tree-change 人批：既有行 M03.F01.I07 规划→开发中（REQ-2026-001 Q3 延后项），REQ-2026-008 需求文档新建（Q1 自裁：extFields 定义走 live 端点 GET /api/report-names，家族静态种子 JSON 是 Web 构建资产非契约面）",
+    "T-1 CoreKit 红先行（真红：cannot find 'SampleExtViewModel' in scope ×7，RED_EXIT=1）：SampleExtViewModel——load 按 categoryCode 匹配 extFields 滤 source=receipt；formFields=缺 key 子集；needsForm=首样品存在∧缺 key 非空；draft 现有值预填缺失键空串；validate 必填 trim 空标「必填」不过不打端点；save=现有 key 全保留+非空 trim 覆盖→persist，失败 errorMessage+草稿保留",
+    "T-2 App：APIGlue reportNames/updateSampleExt 两缝；SampleExtFormView（text/number/date→TextField，select→Picker(options)，必填逐项标错，草稿留壳层 @State）；ReportPreviewSheet 装补录门（预览装载后判 needsForm，保存成功重载预览）；ReceiptDetailView 传 categoryCode",
+    "T-3 收口：trace_cmd 63 测试挂 34 ID；fixture 与生成物 InspectionReportName init 全序对齐后远门 test 76/76（SampleExtTests 7/7）+ build 绿；全门绿（L2 834s / L4 72s / L5 50 条目软告警 0）；d43e7f9 已 push"
   ],
   "next": [
-    "ready 态人工验收（接样→分配→录入→审核→批准→发放→归档→详情/预览全链）需真后端 :5204 + 模拟器手动登录；通过后功能树开发中行→已上线",
-    "下一需求候选：M03.F01.I07 ext 补录（samplesUpdateSampleExt 在）；M01.F05.I03 SSO（明确延后）；M00.F02 直进",
-    "M03.F02.I03/I04、M03.F03.I04/I06-I09/I15 家族规划/开发中态行不拉入"
+    "ready 态人工验收（接样→分配→录入→审核→批准→发放→归档→详情/预览/补录门全链）需真后端 :5204 + 模拟器手动登录；通过后功能树开发中行→已上线",
+    "下一需求候选：M01.F05.I03 SSO（明确延后）；M00.F02 直进；M03.F02.I03/I04、M03.F03.I04/I06-I09/I15 家族规划/开发中态行不拉入"
   ],
   "open_questions": [
-    "模拟器 xcodebuild test 段是否回填 L4（41/41 机器态已愈）待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
-    "home-mac Tailscale 本 session 累计掉线 3+ 次（一次杀死红跑造成假红，已用补救程序重证真红）——远程门前探活纪律已入册，若频发建议 remote_gate 内建重试或换构建机（人裁）"
+    "模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
+    "home-mac Tailscale 本 session 掉线 2 次（一次打断 sync 致 push 前重跑；GitHub push 首拍 500 重试即愈）——remote_gate 内建重试或换构建机仍待裁"
   ],
   "dont": [
-    "红跑前若实现已在盘：走补救程序——实现文件 mv 出仓 + git checkout 还原被改 tracked 文件 → 跑红 → 分号串联无条件还原；ssh 断连导致的 RED-CONFIRMED 是假红（grep 不到 error: 行，只有 ssh timeout）",
-    "SampleReceipt 生成层 init 参数顺序：categoryCode 在 projectName 前（且必填不默认）、samplingLocation 在 witness 前——手写 fixture 漏/错序会被 swift test 门拦（本 session 被拦两次）",
-    "navigationDestination(item:) 的 item 必须 Hashable；EntrySheet 表单态必须留壳层 @State（CoreKit 公开可变字段不触发 objectWillChange）",
-    "InspectionParameterSourceType 枚举 case 只有 official/custom；FlowStatus.dataEntry='data_entry'；ReportPhase 四 case 与 FlowStatus.review/approval/issuance/archived 同名不同型",
-    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json 被 gitignore 不进 commit；remote_gate.py 在项目 scripts/ 下、gate.py 在 suite 根 scripts/；bash heredoc 传 CJK 会散点损坏改用 Write/Edit；不要业务身份兜底字面量（ADR-0019）"
+    "InspectionReportName 生成层 init 全序：code,name,fullName,templatePath,summaryName,extFields,description,sortOrder,createdAt,updatedAt——sortOrder/createdAt/updatedAt 必填且 createdAt 在 sortOrder 后；短形 code:name:createdAt:updatedAt:extFields:sortOrder: 会被拦（首轮绿跑被拦 7 处，错序还会连带 cannot-infer-key-path 级联错）",
+    "符号缺失时编译器不下探参数检查：红跑只见 cannot find X in scope 不代表 fixture init 无误，绿跑才暴露；fixture 写完先对照生成物 init 签名",
+    "红跑前若实现已在盘：走补救程序——实现文件 mv 出仓 + git checkout 还原被改 tracked 文件 → 跑红 → 分号串联无条件还原；ssh 断连导致的 RED-CONFIRMED 是假红",
+    "SampleReceipt init：categoryCode 在 projectName 前且必填、samplingLocation 在 witness 前；navigationDestination(item:) 的 item 必须 Hashable；EntrySheet/SampleExtFormView 表单态必须留壳层 @State",
+    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/；bash heredoc 传 CJK 会散点损坏改用 Write/Edit；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-29T19:10:00+08:00"
+  "last_gate_passed_at": "2026-09-29T21:20:00+08:00"
 }
