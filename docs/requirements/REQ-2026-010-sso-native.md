@@ -5,7 +5,7 @@
 | 提出人 | zcqiand |
 | 提出日期 | 2026-09-29 |
 | 优先级 | P2 |
-| 状态 | **开发中**（T-0 完成 2026-09-29；tree-change 已批，sha 44f760fcb787cbd0） |
+| 状态 | **已上线**（2026-09-30 人工验收通过，ACCEPTANCE-2026-09-29-ready-batch；Q2 白名单 d294477/92af9e4、P6 curl 预验证 3a4d90c） |
 | 关联 ADR | ADR-0019（client_id/回调 scheme 用户显式配置，缺失 fail-fast 不兜底字面量） |
 | 上游 | REQ-2026-003（登录 UI）、REQ-2026-009（settle 直进复用）；树行既定「后续需求」入队 |
 
@@ -55,7 +55,7 @@
 | T-0 | tree-change 提案：M01.F05 父行 + I03 规划→开发中；REQ 台账行 | 完成（2026-09-29 批准） |
 | T-1 | CoreKit 红先行：SsoViewModel（三缝 + state 纯函数 + fail-fast）+ SessionStore.saveSsoConfig | 完成（远端 test 91/91 绿，真红实证 cannot find SsoViewModel ×10 + no member saveSsoConfig） |
 | T-2 | App：LoginView SSO 按钮 + ASWebAuthenticationSession + Info.plist scheme + ConfigView 字段 | 完成（WebAuthSession.swift prefersEphemeral；CFBundleURLTypes 注册 labman） |
-| T-3 | trace_cmd 挂 I03 + 设计映射行 + 全门绿 + push + gitlink | 进行中 |
+| T-3 | trace_cmd 挂 I03 + 设计映射行 + 全门绿 + push + gitlink | 完成（2026-09-30 全批人工验收通过收口） |
 
 ## 4. 功能影响
 
