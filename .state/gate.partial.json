@@ -8,15 +8,15 @@
   "ran": [
     "L5"
   ],
-  "checked_at": "2026-09-29T00:12:56+0800",
+  "checked_at": "2026-09-29T23:27:39+0800",
   "gates": [
     {
       "level": "L5",
       "name": "引用完整性",
       "passed": true,
       "returncode": 0,
-      "duration_s": 0.25,
-      "output": "31 个功能条目，引用完整。软告警 0 条（见 .state/alignment.json）"
+      "duration_s": 0.109,
+      "output": "50 个功能条目，引用完整。软告警 0 条（见 .state/alignment.json）"
     }
   ]
 }

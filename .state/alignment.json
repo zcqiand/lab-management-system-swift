@@ -6,13 +6,50 @@
     "features": 11,
     "items": 36
   },
-  "warnings_total": 0,
-  "warnings": {},
+  "warnings_total": 34,
+  "warnings": {
+    "已上线但不在任何流程且非孤儿白名单": [
+      "M00.F02.I01",
+      "M01.F05.I02",
+      "M01.F05.I03",
+      "M01.F05.I04",
+      "M01.F05.I06",
+      "M03.F01.I01",
+      "M03.F01.I02",
+      "M03.F01.I03",
+      "M03.F01.I04",
+      "M03.F01.I06",
+      "M03.F01.I07",
+      "M03.F01.I08",
+      "M03.F02.I01",
+      "M03.F02.I02",
+      "M03.F02.I05",
+      "M03.F03.I01",
+      "M03.F03.I02",
+      "M03.F03.I03",
+      "M03.F03.I12",
+      "M03.F05.I01",
+      "M03.F05.I02",
+      "M03.F05.I07",
+      "M03.F06.I01",
+      "M03.F06.I02",
+      "M03.F06.I05",
+      "M03.F07.I01",
+      "M03.F07.I02",
+      "M03.F07.I05",
+      "M03.F08.I01",
+      "M03.F08.I02",
+      "M03.F08.I05",
+      "M03.F09.I01",
+      "M03.F09.I02",
+      "M03.F09.I03"
+    ]
+  },
   "unreachable_shipped": [],
   "function_map": {
     "M00.F02.I01": {
       "name": "租户切换器",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md",
@@ -29,7 +66,7 @@
     },
     "M01.F05.I02": {
       "name": "Token 注入与失效跳登录",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
@@ -59,7 +96,7 @@
     },
     "M01.F05.I03": {
       "name": "SSO OAuth 2.0 授权码流（原生形态）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\README.md",
@@ -87,7 +124,7 @@
     },
     "M01.F05.I04": {
       "name": "登出",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
@@ -104,7 +141,7 @@
     },
     "M01.F05.I06": {
       "name": "原生登录（非浏览器表单）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-003-login-ui.md"
@@ -122,7 +159,7 @@
     },
     "M03.F01.I01": {
       "name": "接样单列表（三态过滤）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
@@ -147,7 +184,7 @@
     },
     "M03.F01.I02": {
       "name": "新建/编辑接样单",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
@@ -169,7 +206,7 @@
     },
     "M03.F01.I03": {
       "name": "删除接样单",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
@@ -187,7 +224,7 @@
     },
     "M03.F01.I04": {
       "name": "提交接样单（receiving → task_assignment）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
@@ -205,7 +242,7 @@
     },
     "M03.F01.I06": {
       "name": "接样单流程历史",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
@@ -226,7 +263,7 @@
     },
     "M03.F01.I07": {
       "name": "接样单 ext 字段补录",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\README.md",
@@ -253,7 +290,7 @@
     },
     "M03.F01.I08": {
       "name": "接样-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-001-m03-f01-sample-receipt.md",
@@ -296,7 +333,7 @@
     },
     "M03.F02.I01": {
       "name": "任务分配队列",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-004-task-assignment.md"
@@ -312,7 +349,7 @@
     },
     "M03.F02.I02": {
       "name": "安排/取消检测人员与计划日期",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-004-task-assignment.md"
@@ -330,7 +367,7 @@
     },
     "M03.F02.I05": {
       "name": "任务分配-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-004-task-assignment.md"
@@ -347,7 +384,7 @@
     },
     "M03.F03.I01": {
       "name": "样品 + 检测数据录入页",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-005-data-entry.md"
@@ -364,7 +401,7 @@
     },
     "M03.F03.I02": {
       "name": "保存检测记录",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-005-data-entry.md"
@@ -381,7 +418,7 @@
     },
     "M03.F03.I03": {
       "name": "人工改判 verdict",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-005-data-entry.md"
@@ -397,7 +434,7 @@
     },
     "M03.F03.I12": {
       "name": "数据录入-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-005-data-entry.md"
@@ -413,7 +450,7 @@
     },
     "M03.F05.I01": {
       "name": "审核队列（review 阶段）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -430,7 +467,7 @@
     },
     "M03.F05.I02": {
       "name": "审核通过/驳回",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -446,7 +483,7 @@
     },
     "M03.F05.I07": {
       "name": "报告审核-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -462,7 +499,7 @@
     },
     "M03.F06.I01": {
       "name": "批准队列（approval 阶段）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -479,7 +516,7 @@
     },
     "M03.F06.I02": {
       "name": "批准/驳回",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -495,7 +532,7 @@
     },
     "M03.F06.I05": {
       "name": "报告批准-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -511,7 +548,7 @@
     },
     "M03.F07.I01": {
       "name": "发放队列（issuance 阶段）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -528,7 +565,7 @@
     },
     "M03.F07.I02": {
       "name": "发放（生成报告编号）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -544,7 +581,7 @@
     },
     "M03.F07.I05": {
       "name": "报告发放-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -560,7 +597,7 @@
     },
     "M03.F08.I01": {
       "name": "归档队列（archived 阶段）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -577,7 +614,7 @@
     },
     "M03.F08.I02": {
       "name": "归档完成",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -593,7 +630,7 @@
     },
     "M03.F08.I05": {
       "name": "报告归档-提交（act 三动作）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-006-report-phases.md"
@@ -609,7 +646,7 @@
     },
     "M03.F09.I01": {
       "name": "接样单详情页（接样信息全字段）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-007-receipt-detail.md"
@@ -625,7 +662,7 @@
     },
     "M03.F09.I02": {
       "name": "流程历史时间线（按 at 倒序）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-007-receipt-detail.md"
@@ -641,7 +678,7 @@
     },
     "M03.F09.I03": {
       "name": "报告预览（数据面摘要）",
-      "status": "开发中",
+      "status": "已上线",
       "type": null,
       "requirements": [
         "docs\\requirements\\REQ-2026-007-receipt-detail.md"

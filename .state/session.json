@@ -1,33 +1,28 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "REQ-2026-010 SSO OAuth 2.0 授权码流原生形态（M01.F05.I03）T-0~T-3 完成并 push（d1a462f）：SsoViewModel 三缝 + state 纯函数 + ASWebAuthenticationSession，全门绿",
+  "current_task": "首冻结交付：门禁重跑全绿后打 tag v0.1.0-20261003 + export_handoff（书稿事实底）",
   "done": [
-    "T-0 tree-change 人批（base sha 44f760fcb787cbd0）：M01.F05 父行 + I03 规划→开发中；REQ-2026-010 需求文档新建（Q1：client_id/回调 scheme = ConfigView 显式配置 ADR-0019；Q2：saas redirect 白名单注册 iOS scheme = 跨仓人裁项）",
-    "T-1 CoreKit 红先行（真红：cannot find SsoViewModel ×10 + SessionStore no member saveSsoConfig/ssoClientId/ssoCallbackScheme）：SsoViewModel 三缝（authorize/exchange/openWebSession）+ generateState（32B base64url 43 字符）/redirectUri/parseCallback 纯函数；state 不匹配不打 exchange；SessionStore ssoClientId/ssoCallbackScheme 落账（saveSsoConfig 空值拒存、重启恢复、logout 保留、clear 全清）；成功 adoptLogin settle 直进（REQ-009 复用）",
-    "T-2 App：APIGlue.ssoAuthorize/ssoCallback（生成物 AuthAPI 唯一入口）；WebAuthSession（ASWebAuthenticationSession prefersEphemeral + Holder 静态持有）；LoginView「SSO 登录」；ConfigView SSO 字段；project.yml CFBundleURLTypes 注册 labman",
-    "T-3 收口：trace_cmd 78 测挂 36 ID（I03 九测）；远门 test 91/91（82 存量 + 9 SSO）+ build 绿（App target 含 SSO 接线）；全门绿（L5 50 条目软告警 0）；d1a462f 已 push + suite gitlink 93a8705 已 push"
+    "REQ-2026-001~010 除 002（已评审）外全部已上线：功能树 45 行 + 设计映射 36 行 + 台账 README 7 行 + REQ-004~010 文档状态行（004/005 文档此前滞留「已评审」一并校正）+ REQ-010 T-3 收口",
+    "验收前置三项落地：ATS 例外（9870abc）、清单 P2/P3 实证值（95cd8d2）、模拟器已装构建（iPhone 16 2C939AD9，SSO 配置段截图实证）",
+    "P5 saas 白名单跨仓数据变更（saas-shared d294477 / saas-nextjs 92af9e4，saas_dev 重灌实证）+ P6 curl 全链预验证（3a4d90c）",
+    "门：suite 全门绿（L2 build + L4 test 91/91 远端复跑；L5 50 条目引用完整）",
+    "2026-10-03 冻结：门禁重跑 EXIT=0 全绿（L2 build 29.8s + L4 test 12.2s 远程；L5 50 条目引用完整，34 软告警维持待人裁），代码自 9372764 零改动，打首 tag v0.1.0-20261003 并导出 handoff.json"
   ],
-  "next": [
-    "ready 态人工验收：清单在 docs/requirements/ACCEPTANCE-2026-09-29-ready-batch.md——人按清单走模拟器；P5 已落地且 P6 curl 全链预验证已过（lab 透传 labman redirect → saas 白名单发码 → lab callback 换 JWT 200）；saas :5101 已由本会话起新进程（旧驻留连错库已杀）",
-    "验收通过后：功能树「开发中」→「已上线」（同 commit 改树 + 台账）；发现红走红先行小补丁回路"
-  ],
+  "next": "tag 已冻结、handoff 已导出。34 条「已上线但不在任何流程」软告警待人裁；新需求来了走 alignment 流程",
   "open_questions": [
-    "saas 种子存量漂移待人裁：saas-console redirectUris shared 有 3 条 lab 登录 URL、nextjs 镜像为空（本次对齐 lab-management 时发现，未动）",
-    "模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
-    "home-mac Tailscale 掉线频发——remote_gate 内建重试或换构建机仍待裁"
-  ],
-  "open_questions": [
-    "saas 端 redirect 白名单注册 iOS scheme（跨仓数据变更）待人裁协调——REQ-2026-010 Q2",
-    "模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁（沿用）",
+    "34 条「已上线但不在任何流程」软告警是否补流程文档待人裁",
+    "saas-console redirectUris 种子漂移待人裁；模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁",
     "home-mac Tailscale 掉线频发——remote_gate 内建重试或换构建机仍待裁"
   ],
   "dont": [
-    "多语句闭包缺 return 会以 error: fatalError 收场（实为 missing return 编译错，SsoTests 真实踩过）——红跑输出抓不全时先远端复跑 grep -B8 error 全文",
-    "符号缺失时编译器不下探参数检查（REQ-008 教训）：红跑只见 cannot find/no member 不代表 fixture init 无误；红跑外层 exit 0 可能是 ; echo 尾巴——红证据以输出 error: 行 + RED_EXIT 为准",
+    "iOS 打明文 http 后端必须有 NSAppTransportSecurity 例外（9870abc）：CFBundleURLTypes 在 ≠ ATS 例外在，装上后所有请求 NSURLErrorAppTransportSecurity 即败",
+    "多语句闭包缺 return 会以 error: fatalError 收场（实为 missing return 编译错）——红跑输出抓不全时先远端复跑 grep -B8 error 全文",
+    "符号缺失时编译器不下探参数检查（REQ-008 教训）：红跑只见 cannot find/no member 不代表 fixture init 无误；红证据以输出 error: 行 + RED_EXIT 为准",
+    "后台 Bash cwd 会漂：gate.py 用绝对路径 python D:/.../xr-code-suite/scripts/gate.py，remote_gate.py/trace_cmd.py 在项目 scripts/（本会话连丢三次 cd 前缀实证）",
     "Edit/Write 写 CJK 后必须回读核验；bash heredoc 传 CJK 会散点损坏改用 Write/Edit",
     "InspectionReportName init 全序：code,name,fullName,templatePath,summaryName,extFields,description,sortOrder,createdAt,updatedAt（sortOrder/createdAt/updatedAt 必填）；SampleReceipt init：categoryCode 在 projectName 前且必填",
-    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；表单态必须留壳层 @State；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json、gate.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/（后台命令 cwd 会漂，必须显式 cd）；bash heredoc 传 CJK 会散点损坏改用 Write/Edit；不要业务身份兜底字面量（ADR-0019）"
+    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；表单态必须留壳层 @State；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json、gate.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/；不要业务身份兜底字面量（ADR-0019）"
   ],
-  "last_gate_passed_at": "2026-09-29T23:25:00+08:00"
+  "last_gate_passed_at": "2026-10-03T23:12:40+0800 (L0-L5 全绿：home-mac 远程 L2 build + L4 test)"
 }
