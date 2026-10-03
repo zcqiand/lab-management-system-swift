@@ -79,6 +79,7 @@ enum APIGlue {
         }
     }
 
+    // @impl M03.F01.I01 — 接样单列表（三态过滤/keyword/分页）
     /// 列表 provider（I01）：ReceiptListQuery → 生成层 listReceipts。
     static let list: (ReceiptListQuery) async throws -> [SampleReceipt] = { query in
         let page = try await run {
@@ -90,6 +91,7 @@ enum APIGlue {
         return page.items
     }
 
+    // @impl M03.F01.I06 — 接样单流程历史（并发取详情+历史）
     /// 详情 fetch（I06）：async let 并发取接样信息与流程历史。
     static let detail: (String) async throws -> (SampleReceipt, [FlowHistoryEntry]) = { id in
         async let receipt = run { ReceiptsAPI.receiptsGetReceiptWithRequestBuilder(id: id) }
@@ -97,6 +99,7 @@ enum APIGlue {
         return try await (receipt, history)
     }
 
+    // @impl M03.F01.I04 — 提交接样单（receiving → task_assignment）
     /// act（I04/I08）：接样阶段流转统一端点。
     static func act(
         _ action: FlowAction, ids: [String], operator name: String, reason: String?
@@ -250,6 +253,7 @@ enum APIGlue {
         }
     }
 
+    // @impl M03.F01.I03 — 删除接样单（confirmed id 直传端点）
     /// 删除（I03）。
     static let deleteReceipt: (String) async throws -> Void = { id in
         _ = try await run { ReceiptsAPI.receiptsDeleteReceiptWithRequestBuilder(id: id) }

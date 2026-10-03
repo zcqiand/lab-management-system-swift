@@ -5,6 +5,7 @@ import SwiftUI
 // REQ-2026-002 T-3：新建/编辑接样单表单（I02，AC-3/AC-4）。
 // 必填集校验与请求构造全在 ReceiptFormViewModel；本层只做绑定与标错。
 
+// @entry M03.F01.I02 — 新建/编辑接样单表单（nil = 新建，非 nil = 编辑）
 struct ReceiptFormView: View {
     /// nil = 新建；非 nil = 编辑（表单预填）。
     let receipt: SampleReceipt?

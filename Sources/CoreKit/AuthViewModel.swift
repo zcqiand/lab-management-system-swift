@@ -73,6 +73,7 @@ public final class AuthViewModel: ObservableObject {
         }
     }
 
+    // @impl M01.F05.I04 — 登出（服务端尽力通知，本地清空必达）
     /// 登出（I04）：服务端通知尽力而为，本地清空必达（回登录页不等网络）。
     public func logout() async {
         phase = .busy

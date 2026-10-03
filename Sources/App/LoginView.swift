@@ -5,6 +5,7 @@ import SwiftUI
 // lab JWT，不再手工粘贴 token。网络缝走 APIGlue（生成物唯一入口），
 // 状态机在 CoreKit.AuthViewModel；成功经 session.refresh() 进业务页。
 
+// @entry M01.F05.I06 — 原生登录页（非浏览器表单本体）
 struct LoginView: View {
     let session: AppSession
 

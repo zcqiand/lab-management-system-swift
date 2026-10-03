@@ -5,6 +5,8 @@ import SwiftUI
 // REQ-2026-002 T-3：接样单详情（I06 时间线）+ act 三动作入口（I04/I08）。
 // act 的操作人 = 用户显式输入（登录 UI 未落地，禁身份兜底 ADR-0019）。
 
+// @entry M03.F09.I01 — 接样单详情页（接样信息全字段）
+// @entry M03.F09.I02 — 流程历史时间线（vm.history 按 at 倒序渲染）
 struct ReceiptDetailView: View {
     let receiptID: String
     let session: AppSession

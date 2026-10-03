@@ -36,6 +36,7 @@ public enum APIClient {
         return normalized
     }
 
+    // @impl M01.F05.I02 — Token 注入（Bearer 会话头）
     /// 校验并注入 baseURL + Bearer 会话。任何缺失/非法立即 throw，不兜底。
     @discardableResult
     public static func bootstrap(baseURL: String, token: String) throws -> SessionConfig {
