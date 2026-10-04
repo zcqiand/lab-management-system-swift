@@ -1,0 +1,563 @@
+{
+  "_schema": "code-suite-handoff v1",
+  "_note": "写书的事实底，非逐字引用源。book 引用该 tag 的终态文件(带 source=)；此清单供作者对账建造顺序。",
+  "project": "lab-management-system-swift",
+  "tag": "v0.1.1-20261004",
+  "stack": "swift",
+  "gate_proof": {
+    "tag": "v0.1.1-20261004",
+    "checked_at": "2026-10-03T18:51:04+00:00",
+    "verified": true,
+    "all_green": true,
+    "method": "gate.py --all",
+    "gate_command": "D:\\qiand-life\\1-projects\\xr-code-suite\\scripts\\gate.py -p lab-management-system-swift"
+  },
+  "function_tree": [
+    {
+      "fn_id": "M00.F02.I01",
+      "name": "租户切换器",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M01.F05.I02",
+      "name": "Token 注入与失效跳登录",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M01.F05.I03",
+      "name": "SSO OAuth 2.0 授权码流（原生形态）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M01.F05.I04",
+      "name": "登出",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M01.F05.I06",
+      "name": "原生登录（非浏览器表单）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I01",
+      "name": "接样单列表（三态过滤）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I02",
+      "name": "新建/编辑接样单",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I03",
+      "name": "删除接样单",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I04",
+      "name": "提交接样单（receiving → task_assignment）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I06",
+      "name": "接样单流程历史",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I07",
+      "name": "接样单 ext 字段补录",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I08",
+      "name": "接样-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F01.I09",
+      "name": "接样-退回",
+      "type": null,
+      "status": "已废弃"
+    },
+    {
+      "fn_id": "M03.F01.I10",
+      "name": "接样-撤回",
+      "type": null,
+      "status": "已废弃"
+    },
+    {
+      "fn_id": "M03.F02.I01",
+      "name": "任务分配队列",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F02.I02",
+      "name": "安排/取消检测人员与计划日期",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F02.I05",
+      "name": "任务分配-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F03.I01",
+      "name": "样品 + 检测数据录入页",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F03.I02",
+      "name": "保存检测记录",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F03.I03",
+      "name": "人工改判 verdict",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F03.I12",
+      "name": "数据录入-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F05.I01",
+      "name": "审核队列（review 阶段）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F05.I02",
+      "name": "审核通过/驳回",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F05.I07",
+      "name": "报告审核-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F06.I01",
+      "name": "批准队列（approval 阶段）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F06.I02",
+      "name": "批准/驳回",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F06.I05",
+      "name": "报告批准-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F07.I01",
+      "name": "发放队列（issuance 阶段）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F07.I02",
+      "name": "发放（生成报告编号）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F07.I05",
+      "name": "报告发放-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F08.I01",
+      "name": "归档队列（archived 阶段）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F08.I02",
+      "name": "归档完成",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F08.I05",
+      "name": "报告归档-提交（act 三动作）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F09.I01",
+      "name": "接样单详情页（接样信息全字段）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F09.I02",
+      "name": "流程历史时间线（按 at 倒序）",
+      "type": null,
+      "status": "已上线"
+    },
+    {
+      "fn_id": "M03.F09.I03",
+      "name": "报告预览（数据面摘要）",
+      "type": null,
+      "status": "已上线"
+    }
+  ],
+  "trace": [
+    {
+      "fn_id": "M00.F01",
+      "tests": [
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testAdoptLoginSnapshotRoundTripSurvivesRebirth"
+      ]
+    },
+    {
+      "fn_id": "M00.F02",
+      "tests": [
+        "Tests/CoreKitTests/TenantSettleTests.swift::TenantSettleTests.testAdoptLoginDirectEntersFirstTenantWhenNoMemory",
+        "Tests/CoreKitTests/TenantSettleTests.swift::TenantSettleTests.testAdoptLoginDirectEntersSingleTenant",
+        "Tests/CoreKitTests/TenantSettleTests.swift::TenantSettleTests.testAdoptLoginRemembersPreviousChoiceOverFirst",
+        "Tests/CoreKitTests/TenantSettleTests.swift::TenantSettleTests.testRememberedStaleTenantFallsToFirst",
+        "Tests/CoreKitTests/TenantSettleTests.swift::TenantSettleTests.testPreferredTenantExplicitChoiceWinsAndSurvivesRebirth",
+        "Tests/CoreKitTests/TenantSettleTests.swift::TenantSettleTests.testLogoutClearsActiveTenantMemory"
+      ]
+    },
+    {
+      "fn_id": "M00.F02.I01",
+      "tests": [
+        "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testSwitchTenantAdoptsNewToken"
+      ]
+    },
+    {
+      "fn_id": "M01.F05.I02",
+      "tests": [
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testSaveBaseURLValidatesFailFastThenNeedsLogin",
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testAdoptLoginPersistsSecretsAndReadiesAcrossRebirth",
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testExpirePathEqualsLogoutSemanticsOnRebirth"
+      ]
+    },
+    {
+      "fn_id": "M01.F05.I03",
+      "tests": [
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testGenerateStateIsBase64urlAndUnpredictable",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testRedirectUriUsesSchemeWithFixedPath",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testParseCallbackExtractsCodeAndState",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testLoginHappyPathExchangesAndAdopts",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testLoginStateMismatchBlocksExchange",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testLoginMissingConfigFailsFastBeforeAuthorize",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testExchangeFailureSurfacesErrorAndStaysOut",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testSaveSsoConfigFailsFastAndSurvivesRebirth",
+        "Tests/CoreKitTests/SsoTests.swift::SsoTests.testClearWipesSsoConfigBackToNeedsSetup"
+      ]
+    },
+    {
+      "fn_id": "M01.F05.I04",
+      "tests": [
+        "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testLogoutAlwaysClearsLocallyEvenIfServerCallFails",
+        "Tests/CoreKitTests/SessionStoreTests.swift::SessionStoreTests.testLogoutClearsSecretsKeepsBaseURLAndSurvivesRebirth"
+      ]
+    },
+    {
+      "fn_id": "M01.F05.I06",
+      "tests": [
+        "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testLoginSuccessAdoptsSessionIntoStore"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I01",
+      "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testListRequestCarriesPaginationAndThreeStateFilter",
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testListRequestWithoutFilterOmitsFilterParam",
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testSampleReceiptFixtureDecodes",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testFilterThreeStatesMapToQueryValues",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testLoadResetsToPage1AndReplacesItems",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testLoadNextPageAppendsAndStopsAtShortPage",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testLoadErrorSurfacesMessageAndResetsLoading"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I02",
+      "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testCreateReceiptBodyEncodesRequiredSet",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testValidationRequiresFullRequiredSet",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testMakeCreateRequestCarriesRequiredSet",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testMakeUpdateRequestCarriesOnlyChangedFields",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testUpdateWithClearedRequiredFieldFailsValidation",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testSaveRoutesCreateOrUpdateByPresenceOfID"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I03",
+      "tests": [
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDeleteCallsEndpointWithConfirmedID",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDeleteFailureSurfacesMessageWithoutThrow"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I04",
+      "tests": [
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActSendsOperatorAndAppliesResultStatus"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I06",
+      "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testHistoryFixtureDecodes",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDetailLoadFetchesReceiptAndHistory",
+        "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testDetailLoadErrorSurfacesMessage"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I07",
+      "tests": [
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testNeedsFormWhenKeyMissing",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testNoFormWhenAllKeysCovered",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testReceiptSourceFieldsExcludedFromForm",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testLoadPrefillsExistingExtValues",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testValidateBlocksOnEmptyRequired",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testSaveMergesExistingKeysAndNewValues",
+        "Tests/CoreKitTests/SampleExtTests.swift::SampleExtTests.testSaveFailureSurfacesErrorAndKeepsDraft"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I08",
+      "tests": [
+        "Tests/CoreKitTests/APIClientTests.swift::APIClientTests.testActRequestEncodesThreeActions",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActWithEmptySelectionFailsFastWithoutCallingEndpoint",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActSendsOperatorAndAppliesResultStatus",
+        "Tests/CoreKitTests/ReceiptViewModelTests.swift::ReceiptViewModelTests.testActFailureResultCarriesMessageNotThrow"
+      ]
+    },
+    {
+      "fn_id": "M03.F02.I01",
+      "tests": [
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testQueueQueryPinsTaskAssignmentStage"
+      ]
+    },
+    {
+      "fn_id": "M03.F02.I02",
+      "tests": [
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testAssignRequestTrimsAndRequiresBothFields",
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testCancelAssignRequestClearsAllFields",
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testAssignSaveReturnsAdoptedReceipt"
+      ]
+    },
+    {
+      "fn_id": "M03.F02.I05",
+      "tests": [
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testActEmbedsSessionOperatorAndPerforms",
+        "Tests/CoreKitTests/TaskAssignmentTests.swift::TaskAssignmentTests.testActRejectsMissingOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F03.I01",
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testQueueQueryPinsDataEntryStage",
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testEntryLoadAssemblesCatalogAndKeysRecords"
+      ]
+    },
+    {
+      "fn_id": "M03.F03.I02",
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testCreateRequestTrimsAndRequiresCoreFields",
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testSaveWithoutRecordCreatesWithVerdictInBody"
+      ]
+    },
+    {
+      "fn_id": "M03.F03.I03",
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testVerdictRevisionWithExistingRecordGoesUpdate"
+      ]
+    },
+    {
+      "fn_id": "M03.F03.I12",
+      "tests": [
+        "Tests/CoreKitTests/DataEntryTests.swift::DataEntryTests.testActDataEntryEmbedsSessionOperatorAndGuardsSelection"
+      ]
+    },
+    {
+      "fn_id": "M03.F05.I01",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testReviewQueuePinsReviewStage",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses"
+      ]
+    },
+    {
+      "fn_id": "M03.F05.I02",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testReviewActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F05.I07",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testReviewActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F06.I01",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testApprovalQueuePinsApprovalStage",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses"
+      ]
+    },
+    {
+      "fn_id": "M03.F06.I02",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testApprovalActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F06.I05",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testApprovalActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F07.I01",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testIssuanceQueuePinsIssuanceStage",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses"
+      ]
+    },
+    {
+      "fn_id": "M03.F07.I02",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testIssuanceActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F07.I05",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testIssuanceActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F08.I01",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedQueuePinsArchivedStage",
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testAllFourPhasesMapToDistinctFlowStatuses"
+      ]
+    },
+    {
+      "fn_id": "M03.F08.I02",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F08.I05",
+      "tests": [
+        "Tests/CoreKitTests/ReportPhaseTests.swift::ReportPhaseTests.testArchivedActEmbedsSessionOperator"
+      ]
+    },
+    {
+      "fn_id": "M03.F09.I01",
+      "tests": [
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailReceiptCarriesFullFieldSet"
+      ]
+    },
+    {
+      "fn_id": "M03.F09.I02",
+      "tests": [
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailHistorySortedByAtDescending"
+      ]
+    },
+    {
+      "fn_id": "M03.F09.I03",
+      "tests": [
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testPreviewLoadGroupsRecordsBySample",
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testPreviewEmptySamplesYieldsEmptyPreview",
+        "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testPreviewLoadFailureSurfacesMessageAndClearsState"
+      ]
+    }
+  ],
+  "source_index": [
+    {
+      "fn_id": "M01.F05.I02",
+      "source_paths": [
+        "Sources\\CoreKit\\APIClient.swift"
+      ]
+    },
+    {
+      "fn_id": "M01.F05.I04",
+      "source_paths": [
+        "Sources\\CoreKit\\AuthViewModel.swift"
+      ]
+    },
+    {
+      "fn_id": "M01.F05.I06",
+      "source_paths": [
+        "Sources\\App\\LoginView.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I01",
+      "source_paths": [
+        "Sources\\App\\APIGlue.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I02",
+      "source_paths": [
+        "Sources\\App\\ReceiptFormView.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I03",
+      "source_paths": [
+        "Sources\\App\\APIGlue.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I04",
+      "source_paths": [
+        "Sources\\App\\APIGlue.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F01.I06",
+      "source_paths": [
+        "Sources\\App\\APIGlue.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F09.I01",
+      "source_paths": [
+        "Sources\\App\\ReceiptDetailView.swift"
+      ]
+    },
+    {
+      "fn_id": "M03.F09.I02",
+      "source_paths": [
+        "Sources\\App\\ReceiptDetailView.swift"
+      ]
+    }
+  ]
+}
