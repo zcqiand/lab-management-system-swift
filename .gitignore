@@ -16,3 +16,10 @@ Package.resolved
 
 # python 包装脚本运行残渣
 scripts/__pycache__/
+.state/msg-*.txt
+
+# 2026-10-04 补齐：env 泄漏纪律三件套 + .state 运行态日志
+.env
+.env.local
+.env.*.local
+.state/*.log
