@@ -155,7 +155,9 @@
         "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3229 (annot)",
         "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3529 (annot)"
       ],
-      "entry": []
+      "entry": [
+        "Sources\\App\\LoginView.swift"
+      ]
     },
     "M03.F01.I01": {
       "name": "接样单列表（三态过滤）",
@@ -202,7 +204,9 @@
         "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testUpdateWithClearedRequiredFieldFailsValidation",
         "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testValidationRequiresFullRequiredSet"
       ],
-      "entry": []
+      "entry": [
+        "Sources\\App\\ReceiptFormView.swift"
+      ]
     },
     "M03.F01.I03": {
       "name": "删除接样单",
@@ -658,7 +662,9 @@
       "tests": [
         "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailReceiptCarriesFullFieldSet"
       ],
-      "entry": []
+      "entry": [
+        "Sources\\App\\ReceiptDetailView.swift"
+      ]
     },
     "M03.F09.I02": {
       "name": "流程历史时间线（按 at 倒序）",
@@ -674,7 +680,9 @@
       "tests": [
         "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailHistorySortedByAtDescending"
       ],
-      "entry": []
+      "entry": [
+        "Sources\\App\\ReceiptDetailView.swift"
+      ]
     },
     "M03.F09.I03": {
       "name": "报告预览（数据面摘要）",

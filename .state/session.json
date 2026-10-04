@@ -1,19 +1,22 @@
 {
   "schema": 1,
   "project": "lab-management-system-swift",
-  "current_task": "首冻结交付：门禁重跑全绿后打 tag v0.1.0-20261003 + export_handoff（书稿事实底）",
+  "current_task": "xr-know-013 植锚：10 个 fn-ID 挂 @impl/@entry → 冻结 v0.1.1-20261004 + 重导 handoff（source_index 10/10、all_green=true）",
   "done": [
     "REQ-2026-001~010 除 002（已评审）外全部已上线：功能树 45 行 + 设计映射 36 行 + 台账 README 7 行 + REQ-004~010 文档状态行（004/005 文档此前滞留「已评审」一并校正）+ REQ-010 T-3 收口",
     "验收前置三项落地：ATS 例外（9870abc）、清单 P2/P3 实证值（95cd8d2）、模拟器已装构建（iPhone 16 2C939AD9，SSO 配置段截图实证）",
     "P5 saas 白名单跨仓数据变更（saas-shared d294477 / saas-nextjs 92af9e4，saas_dev 重灌实证）+ P6 curl 全链预验证（3a4d90c）",
     "门：suite 全门绿（L2 build + L4 test 91/91 远端复跑；L5 50 条目引用完整）",
-    "2026-10-03 冻结：门禁重跑 EXIT=0 全绿（L2 build 29.8s + L4 test 12.2s 远程；L5 50 条目引用完整，34 软告警维持待人裁），代码自 9372764 零改动，打首 tag v0.1.0-20261003 并导出 handoff.json"
+    "2026-10-03 冻结：门禁重跑 EXIT=0 全绿（L2 build 29.8s + L4 test 12.2s 远程；L5 50 条目引用完整，34 软告警维持待人裁），代码自 9372764 零改动，打首 tag v0.1.0-20261003 并导出 handoff.json",
+    "2026-10-04 xr-know-013 植锚：10 个 fn-ID 挂 @impl/@entry（f622083，纯注释 +10/-0，6 文件 = APIGlue×4 / ReceiptDetailView×2 / ReceiptFormView / LoginView / APIClient / AuthViewModel）→ tag v0.1.1-20261004（v0.1.0 未动）→ export_handoff 重导 source_index 10/10、all_green=true（verified=true；gate 实跑两次全绿：L2 72.8s + L4 22.5s 远程）→ suite gitlink 9f5237e；书侧回执 xr-know-013/case-anchor-delivery-swift.md",
+    "2026-10-04 恢复轮补证：home-mac 归来后单仓 gate EXIT=0（scratch/gate-lab-swift-recovery.log）+ 终局 gate.py --all 内本仓全绿（L2 70.2s + L4 118.3s 远程）——植锚收口零欠账；--all 剩 6 红全在套件/他仓 pre-existing 债（见 next）"
   ],
-  "next": "tag 已冻结、handoff 已导出。34 条「已上线但不在任何流程」软告警待人裁；新需求来了走 alignment 流程",
+  "next": "本仓零欠账。套件级剩债待人裁（均非本仓改动面）：_suite ruff 格式翻转（文件自 8b6ea93 零改动，疑 ruff PATH/版本漂移）、lab-CT SSOT marker 落后 shared HEAD 2 commit、双 rails bundle/rubocop 不在 PATH、lab-nextjs Drizzle PG env 缺、saas-e2e 是否同 lab-e2e 裁 SKIP(excluded-from-all)",
   "open_questions": [
     "34 条「已上线但不在任何流程」软告警是否补流程文档待人裁",
     "saas-console redirectUris 种子漂移待人裁；模拟器 xcodebuild test 段是否回填 L4 待人裁；L4_DB_INJECT_REPOS 是否纳 shared 待人裁",
-    "home-mac Tailscale 掉线频发——remote_gate 内建重试或换构建机仍待裁"
+    "home-mac Tailscale 掉线频发——remote_gate 内建重试或换构建机仍待裁",
+    "saas-e2e 是否同 lab-e2e 裁 SKIP(excluded-from-all)（5.30 裁定只盖了 lab 侧，--all 期 saas-e2e 必红）；_suite ruff L1 翻转成因（文件零改动）"
   ],
   "dont": [
     "iOS 打明文 http 后端必须有 NSAppTransportSecurity 例外（9870abc）：CFBundleURLTypes 在 ≠ ATS 例外在，装上后所有请求 NSURLErrorAppTransportSecurity 即败",
@@ -22,7 +25,9 @@
     "后台 Bash cwd 会漂：gate.py 用绝对路径 python D:/.../xr-code-suite/scripts/gate.py，remote_gate.py/trace_cmd.py 在项目 scripts/（本会话连丢三次 cd 前缀实证）",
     "Edit/Write 写 CJK 后必须回读核验；bash heredoc 传 CJK 会散点损坏改用 Write/Edit",
     "InspectionReportName init 全序：code,name,fullName,templatePath,summaryName,extFields,description,sortOrder,createdAt,updatedAt（sortOrder/createdAt/updatedAt 必填）；SampleReceipt init：categoryCode 在 projectName 前且必填",
-    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；表单态必须留壳层 @State；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json、gate.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/；不要业务身份兜底字面量（ADR-0019）"
+    "APIGlue 闭包属性调用不带标签；SwiftUI var body 不能 private；@StateObject 要求 ObservableObject；表单态必须留壳层 @State；trace_cmd 锚点在 func testXxx( 函数体内；.state/trace.json、gate.json gitignore 不进 commit；remote_gate.py 在项目 scripts/、gate.py 在 suite 根 scripts/；不要业务身份兜底字面量（ADR-0019）",
+    "--all 并行轮双 swift 同时 ssh home-mac；Mac 掉线指纹 = remote_gate _sync 的 ssh mkdir exit 255（连 mkdir 都进不去，非编译错）→ 单仓重跑甄别，勿当代码红（2026-10-04 实证：单仓两次全绿后 --all 内 L2 红，ping 100% 丢包）",
+    "'bundle' 不是内部或外部命令的 L1 红仓=rails（rubocop），勿误归 nextjs（1004 恢复轮指纹纠偏）；L1 ruff 翻转先 stat mtime + git status 排除文件改动再定性工具漂移（check_align.py 实证：字节未变判定翻转）"
   ],
-  "last_gate_passed_at": "2026-10-03T23:12:40+0800 (L0-L5 全绿：home-mac 远程 L2 build + L4 test)"
+  "last_gate_passed_at": "2026-10-04 恢复轮：单仓 + 终局 --all 双证全绿（home-mac 远程 L2 70.2s + L4 118.3s）"
 }
