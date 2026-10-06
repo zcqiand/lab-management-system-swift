@@ -156,7 +156,7 @@
         "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3529 (annot)"
       ],
       "entry": [
-        "Sources\\App\\LoginView.swift"
+        "Sources/App/LoginView.swift"
       ]
     },
     "M03.F01.I01": {
@@ -205,7 +205,7 @@
         "Tests/CoreKitTests/ReceiptFormDetailTests.swift::ReceiptFormDetailTests.testValidationRequiresFullRequiredSet"
       ],
       "entry": [
-        "Sources\\App\\ReceiptFormView.swift"
+        "Sources/App/ReceiptFormView.swift"
       ]
     },
     "M03.F01.I03": {
@@ -663,7 +663,7 @@
         "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailReceiptCarriesFullFieldSet"
       ],
       "entry": [
-        "Sources\\App\\ReceiptDetailView.swift"
+        "Sources/App/ReceiptDetailView.swift"
       ]
     },
     "M03.F09.I02": {
@@ -681,7 +681,7 @@
         "Tests/CoreKitTests/ReportPreviewTests.swift::ReportPreviewTests.testDetailHistorySortedByAtDescending"
       ],
       "entry": [
-        "Sources\\App\\ReceiptDetailView.swift"
+        "Sources/App/ReceiptDetailView.swift"
       ]
     },
     "M03.F09.I03": {
