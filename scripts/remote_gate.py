@@ -32,6 +32,11 @@ from pathlib import Path
 HOST = "home-mac"  # ~/.ssh/config 免密别名；与 version-lock.json 的 build_host 同源
 STAGING_ROOT = "swift-builds"  # 构建机上的 staging 根目录：~/swift-builds/<仓名>
 EXCLUDE_PREFIXES = ("./.git", "./.build")
+XCODEPROJ = "LabManagementSystem.xcodeproj"
+APP_SCHEME = "LabManagement"  # App target（连带 CoreKit/LabSharedGenerated 全量编译）
+# 模拟器安装冒烟设备（L4 附加段，2026-10-12 人裁回填）。xcodebuild test runner 有
+# 机器态 3 连红前科，冒烟只做 build→install→launch，不碰 test runner。
+SMOKE_DEVICE = "iPhone 16"
 
 
 def _sync(root: Path, staging: str) -> None:
@@ -42,9 +47,7 @@ def _sync(root: Path, staging: str) -> None:
             tar.add(
                 root,
                 arcname=".",
-                filter=lambda ti: None
-                if ti.name.startswith(EXCLUDE_PREFIXES)
-                else ti,
+                filter=lambda ti: None if ti.name.startswith(EXCLUDE_PREFIXES) else ti,
             )
         subprocess.run(
             ["ssh", "-o", "BatchMode=yes", HOST, f"mkdir -p ~/{staging}"],
@@ -80,8 +83,8 @@ def main() -> int:
             # LabManagement scheme = App target（连带 CoreKit/LabSharedGenerated 全量编译）。
             (
                 f"cd ~/{staging} && ~/tools/xcodegen generate && "
-                f"{envfix} xcodebuild -project LabManagementSystem.xcodeproj "
-                f"-scheme LabManagement -destination 'generic/platform=iOS' "
+                f"{envfix} xcodebuild -project {XCODEPROJ} "
+                f"-scheme {APP_SCHEME} -destination 'generic/platform=iOS' "
                 f"CODE_SIGNING_ALLOWED=NO build",
                 "xcodebuild build（generic iOS，含 App target）",
             ),
@@ -93,10 +96,31 @@ def main() -> int:
         # 重建，随后 3 连红「Test runner never began executing tests after
         # launching」，erase 设备/重启服务无效——机器态问题，exit 2 停下问人。
         # 恢复前手动验证命令（在 home-mac 仓目录）：
-        #   ~/tools/xcodegen generate && xcodebuild -project LabManagementSystem.xcodeproj \
+        #   ~/tools/xcodegen generate && xcodebuild -project {XCODEPROJ} \
         #     -scheme CoreKit -destination 'platform=iOS Simulator,name=iPhone 16' \
         #     CODE_SIGNING_ALLOWED=NO test
         steps = [(f"cd ~/{staging} && {envfix} swift test", "swift test")]
+        # 安装冒烟段（2026-10-12 人裁回填）：残废产物（缺 Info.plist / 绝对 install
+        # name / 错 runpath / 二层框架没嵌，XcodeGen 坑 5-8）在 swift build 甚至
+        # generic xcodebuild 里全绿，只有装进模拟器启动才炸——此处收口。
+        # 只验可装可启，不跑 test runner；红在本段多为构建机模拟器态问题，
+        # 按 exit 2 语义停下问人，勿盲改代码。
+        steps.append(
+            (
+                f"cd ~/{staging} && ~/tools/xcodegen generate && "
+                f"{envfix} xcodebuild -project {XCODEPROJ} -scheme {APP_SCHEME} "
+                f"-destination 'platform=iOS Simulator,name={SMOKE_DEVICE}' "
+                f"CODE_SIGNING_ALLOWED=NO -derivedDataPath .dd-sim build && "
+                f"SIM_APP=$(ls .dd-sim/Build/Products/Debug-iphonesimulator/*.app | head -1) && "
+                f'BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" '
+                f'"$SIM_APP/Info.plist") && '
+                f"xcrun simctl bootstatus -b {SMOKE_DEVICE} && "
+                f'xcrun simctl install {SMOKE_DEVICE} "$SIM_APP" && '
+                f'xcrun simctl launch {SMOKE_DEVICE} "$BUNDLE_ID" && '
+                f'xcrun simctl terminate {SMOKE_DEVICE} "$BUNDLE_ID"',
+                "模拟器安装冒烟（build→install→launch，XcodeGen 坑 5-8 收口）",
+            )
+        )
     for cmd, label in steps:
         result = subprocess.run(["ssh", "-o", "BatchMode=yes", HOST, cmd])
         if result.returncode != 0:
