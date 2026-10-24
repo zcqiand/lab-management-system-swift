@@ -35,6 +35,24 @@ git push && ssh home-mac "git -C <仓路径> pull && swift build && swift test"
 - 范围：仅 M03 实验过程管理 8 F；M/F 编号沿用 react 仓功能树（同 shared BASE 双账本），便于跨仓对照。
 - UI/交互参照：`../lab-management-system-react`（参照实现，非基线）。
 
+## 配套书籍及章节映射
+
+> 同一案例仓后续接入其他书籍时，在此节下新增书籍小节。
+
+### 书一《Swift从入门到项目实践》（第二部分）
+
+- 书稿定位：xr-know-013，第 24、25、28、29、30、31 章正文代码块挂本仓 `source=` 锚点
+- 配套版本：`v0.1.1-20261004`（registry 冻结 tag，代码以此为准）
+
+| 章 | 章题 | 对应源文件 |
+| :--- | :--- | :--- |
+| 24 | 列表与导航：接样单列表、详情页与流程时间线 | `Sources/App/ReceiptDetailView.swift` |
+| 25 | 表单与校验：新建、编辑与删除接样单 | `Sources/App/ReceiptFormView.swift` + `Sources/App/APIGlue.swift` |
+| 28 | 网络请求：URLSession 与 REST API | `Sources/App/APIGlue.swift` |
+| 29 | JSON 解析与 Codable 模型 | `Sources/App/APIGlue.swift` |
+| 30 | 异步与并发实战 | `Sources/App/APIGlue.swift` |
+| 31 | 登录与会话：原生登录、令牌注入与登出 | `Sources/App/LoginView.swift` + `Sources/CoreKit/APIClient.swift` + `Sources/CoreKit/AuthViewModel.swift` |
+
 ## 快速链接
 
 - [CLAUDE.md](CLAUDE.md) — 开发约定与编码规范
