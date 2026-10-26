@@ -6,17 +6,17 @@
   "passed": true,
   "partial": true,
   "ran": [
-    "L5"
+    "L0"
   ],
-  "checked_at": "2026-09-29T23:27:39+0800",
+  "checked_at": "2026-10-26T18:06:19+0800",
   "gates": [
     {
-      "level": "L5",
-      "name": "引用完整性",
+      "level": "L0",
+      "name": "结构完整性",
       "passed": true,
       "returncode": 0,
-      "duration_s": 0.109,
-      "output": "50 个功能条目，引用完整。软告警 0 条（见 .state/alignment.json）"
+      "duration_s": 0.11,
+      "output": ""
     }
   ]
 }
