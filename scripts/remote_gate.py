@@ -34,6 +34,8 @@ STAGING_ROOT = "swift-builds"  # 构建机上的 staging 根目录：~/swift-bui
 EXCLUDE_PREFIXES = ("./.git", "./.build")
 XCODEPROJ = "LabManagementSystem.xcodeproj"
 APP_SCHEME = "LabManagement"  # App target（连带 CoreKit/LabSharedGenerated 全量编译）
+# 模拟器安装冒烟设备（L4 附加段，2026-10-27 复装，与 saas 同款）。
+SMOKE_DEVICE = "iPhone 16"
 
 
 def _sync(root: Path, staging: str) -> None:
@@ -97,19 +99,31 @@ def main() -> int:
         #     -scheme CoreKit -destination 'platform=iOS Simulator,name=iPhone 16' \
         #     CODE_SIGNING_ALLOWED=NO test
         steps = [(f"cd ~/{staging} && {envfix} swift test", "swift test")]
-        # 模拟器安装冒烟段已按 2026-10-24 人裁摘除（原 2026-10-12 人裁回填，
-        # 收口 XcodeGen 坑 5-8 残废产物：缺 Info.plist / 绝对 install name /
-        # 错 runpath / 二层框架没嵌——这些在 swift build 甚至 generic xcodebuild
-        # 里全绿，只有装进模拟器启动才炸）。摘除原因：home-mac 机器态连红
-        # （CFBundleIdentifier Does Not Exist，同型前科为重启自愈），门稳定供
-        # 不上产线信噪比。需要装机验证时在 home-mac 仓目录手动跑：
-        #   ~/tools/xcodegen generate && xcodebuild -project {XCODEPROJ} \
-        #     -scheme {APP_SCHEME} -destination 'platform=iOS Simulator,name=iPhone 16' \
-        #     CODE_SIGNING_ALLOWED=NO -derivedDataPath .dd-sim build && \
-        #   SIM_APP=$(ls .dd-sim/Build/Products/Debug-iphonesimulator/*.app | head -1) && \
-        #   BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$SIM_APP/Info.plist") && \
-        #   xcrun simctl bootstatus -b "iPhone 16" && xcrun simctl install "iPhone 16" "$SIM_APP" && \
-        #   xcrun simctl launch "iPhone 16" "$BUNDLE_ID"
+        # 安装冒烟段（2026-10-27 人裁复装，照 saas 修后链同款）：残废产物（缺
+        # Info.plist / 绝对 install name / 错 runpath / 二层框架没嵌，XcodeGen
+        # 坑 5-8）在 swift build 甚至 generic xcodebuild 里全绿，只有装进模拟器
+        # 启动才炸——此处收口。只验可装可启，不跑 test runner。
+        # 历史：2026-10-12 首回填，2026-10-24 人裁摘除（理由「home-mac 机器态
+        # 连红」），2026-10-27 翻案复装——摘除时的红是假现场（冒烟链 ls 不带
+        # -d 拿到 Frameworks → PlistBuddy 报 CFBundleIdentifier 缺失）叠加
+        # launchd_sim 系统态坏（2026-09-27 macOS 15.8 升级起，重启 Mac 治愈，
+        # 见 suite 总账 5.114 / saas remote_gate.py 注释三指纹）。
+        steps.append(
+            (
+                f"cd ~/{staging} && ~/tools/xcodegen generate && "
+                f"{envfix} xcodebuild -project {XCODEPROJ} -scheme {APP_SCHEME} "
+                f"-destination 'platform=iOS Simulator,name={SMOKE_DEVICE}' "
+                f"CODE_SIGNING_ALLOWED=NO -derivedDataPath .dd-sim build && "
+                f"SIM_APP=$(ls -d .dd-sim/Build/Products/Debug-iphonesimulator/*.app | head -1) && "
+                f'BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" '
+                f'"$SIM_APP/Info.plist") && '
+                f"xcrun simctl bootstatus '{SMOKE_DEVICE}' -b && "
+                f"xcrun simctl install '{SMOKE_DEVICE}' \"$SIM_APP\" && "
+                f"xcrun simctl launch '{SMOKE_DEVICE}' \"$BUNDLE_ID\" && "
+                f"xcrun simctl terminate '{SMOKE_DEVICE}' \"$BUNDLE_ID\"",
+                "模拟器安装冒烟（build→install→launch，XcodeGen 坑 5-8 收口）",
+            )
+        )
     for cmd, label in steps:
         result = subprocess.run(["ssh", "-o", "BatchMode=yes", HOST, cmd])
         if result.returncode != 0:
