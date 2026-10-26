@@ -6,17 +6,17 @@
   "passed": true,
   "partial": true,
   "ran": [
-    "L0"
+    "L2"
   ],
-  "checked_at": "2026-10-26T18:06:19+0800",
+  "checked_at": "2026-10-27T01:52:44+0800",
   "gates": [
     {
-      "level": "L0",
-      "name": "结构完整性",
+      "level": "L2",
+      "name": "构建（home-mac 远程）",
       "passed": true,
       "returncode": 0,
-      "duration_s": 0.11,
-      "output": ""
+      "duration_s": 215.203,
+      "output": "[0/1] Planning build\nBuilding for debugging...\n[0/1] Write swift-version--58304C5D6DBC2206.txt\nBuild complete! (28.20s)\n⚙️  Generating plists...\n⚙️  Generating project...\n⚙️  Writing project...\nCreated project at /Users/qiandao/swift-builds/lab-management-system-swift/LabManagementSystem.xcodeproj\nNo \"base\" settings found\nNo \"debug config\" settings found\nNo \"release config\" settings found\nNo \"iOS\" settings found\nCommand line invocation:\n    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LabManagementSystem.xcodeproj -scheme LabManagement -destination generic/platform=iOS CODE_SIGNING_ALLOWED=NO build\n\nUser defaults from command line:\n    IDEPackageSupportUseBuiltinSCM = YES\n\nBuild settings from command line:\n    CODE_SIGNING_ALLOWED = NO\n\nResolve Package Graph\n\n\nResolved source packages:\n  AnyCodable: https://github.com/Flight-School/AnyCodable @ 0.6.7\n\nPrepare packages\n\nComputeTargetDependencyGraph\nnote: Building targets in dependency order\nnote: Target dependency graph (5 targets)\n    Target 'LabManagement' in project 'LabManagementSystem'\n        ➜ Explicit dependency on target 'CoreKit' in project 'LabManagementSystem'\n        ➜ Explicit dependency on target 'LabSharedGenerated' in project 'LabManagementSystem'\n    Target 'CoreKit' in project 'LabManagementSystem'\n        ➜ Explicit dependency on target 'LabSharedGenerated' in project 'LabManagementSystem'\n        ➜ Explicit dependency on target 'AnyCodable' in project 'AnyCodable'\n    Target 'LabSharedGenerated' in project 'LabManagementSystem'\n        ➜ Explicit dependency on target 'AnyCodable' in project 'AnyCodable'\n    Target 'AnyCodable' in project 'AnyCodable'\n        ➜ Explicit dependency on target 'AnyCodable' in project 'AnyCodable'\n    Target 'AnyCodable' in project 'AnyCodable' (no dependencies)\n\nGatherProvisioningInputs\n\nCreateBuildDescription\n\nExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version\n\nExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk -x c -c /dev/null\n\nExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details\n\nBuild description signature: cbe7844da3318c67668f71fd4cd77e0c\nBuild description path: /Users/qiandao/Library/Developer/Xcode/DerivedData/LabManagementSystem-bvgwepbiwnhqyedfycsgwklbnmwh/Build/Intermediates.noindex/XCBuildData/cbe7844da3318c67668f71fd4cd77e0c.xcbuilddata\nClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk /Users/qiandao/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.2-22C146-d5b9239ec3bf5b3adbecdf21472871e3.sdkstatcache\n    cd /Users/qiandao/swift-builds/lab-management-system-swift/LabManagementSystem.xcodeproj\n    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk -o /Users/qiandao/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.2-22C146-d5b9239ec3bf5b3adbecdf21472871e3.sdkstatcache\n\nProcessInfoPlistFile /Users/qiandao/Library/Developer/Xcode/DerivedData/LabManagementSystem-bvgwepbiwnhqyedfycsgwklbnmwh/Build/Products/Debug-iphoneos/PackageFrameworks/AnyCodable_629B3B587F4B7FDC_PackageProduct.framework/Info.plist /Users/qiandao/Library/Developer/Xcode/DerivedData/LabManagementSystem-bvgwepbiwnhqyedfycsgwklbnmwh/Build/Intermediates.noindex/AnyCodable.build/Debug-iphoneos/AnyCodable\\ product.build/empty-AnyCodable_629B3B587F4B7FDC_PackageProduct.plist (in target 'AnyCodable' from project 'AnyCodable')\n    cd /Users/qianda"
     }
   ]
 }

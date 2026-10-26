@@ -86,7 +86,7 @@
         "output\\lab-management-system-contract-test\\tests\\inspection-catalog.test.ts:3496 (annot)",
         "output\\lab-management-system-contract-test\\tests\\inspection-dictionary.test.ts:2942 (annot)",
         "output\\lab-management-system-contract-test\\tests\\param-interfaces-write.test.ts:2285 (annot)",
-        "output\\lab-management-system-contract-test\\tests\\report-names-write.test.ts:3932 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\report-names-write.test.ts:4374 (annot)",
         "output\\lab-management-system-contract-test\\tests\\sample-receipts-write.test.ts:3538 (annot)",
         "output\\lab-management-system-contract-test\\tests\\samples-write.test.ts:2964 (annot)",
         "output\\lab-management-system-contract-test\\tests\\technical-requirements-write.test.ts:3165 (annot)",
@@ -152,8 +152,8 @@
       ],
       "tests": [
         "Tests/CoreKitTests/AuthViewModelTests.swift::AuthViewModelTests.testLoginSuccessAdoptsSessionIntoStore",
-        "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3229 (annot)",
-        "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3529 (annot)"
+        "output\\lab-management-system-contract-test\\tests\\auth.test.ts:3903 (annot)",
+        "output\\lab-management-system-contract-test\\tests\\auth.test.ts:4203 (annot)"
       ],
       "entry": [
         "Sources/App/LoginView.swift"
