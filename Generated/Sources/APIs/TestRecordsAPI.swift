@@ -164,6 +164,7 @@ open class TestRecordsAPI {
 
     /**
      - GET /api/test-records
+     - 分页：当前实现仅回显不切片，参照实现返回全量，无分页语义（pageSize 同）。
      - parameter page: (query)  (optional)
      - parameter pageSize: (query)  (optional)
      - parameter sampleId: (query)  (optional)

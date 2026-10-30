@@ -13,7 +13,9 @@ import AnyCodable
 public struct ReceiptsListReceipts200Response: Codable, JSONEncodable, Hashable {
 
     public var items: [SampleReceipt]
+    /** 当前实现仅回显，不切片：参照实现返回全量，无分页语义。 */
     public var page: Int
+    /** 当前实现仅回显，不切片。 */
     public var pageSize: Int
     public var total: Int64
 
