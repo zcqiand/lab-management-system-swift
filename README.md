@@ -1,6 +1,6 @@
-# 实验室管理系统 · SwiftUI iOS 前端
+# 建筑工程实验室管理系统 · SwiftUI iOS 前端
 
-实验室管理系统的 SwiftUI iOS 前端 —— **仅 M03 实验过程管理**。需求与 API 基线 = `lab-management-system-shared` TypeSpec SSOT；react 仓仅为 UI/交互参照实现。
+建筑工程实验室管理系统的 SwiftUI iOS 前端 —— **仅 M03 实验过程管理**。需求与 API 基线 = `lab-management-system-shared` TypeSpec SSOT；react 仓仅为 UI/交互参照实现。
 
 本仓**不绑书稿**：技术栈基线（Xcode 16.2 + Swift 6.0 + iOS 18 SDK，受构建机 Intel Air / macOS 14.5 天花板约束）。API 面只认 `lab-management-system-shared` TypeSpec 生成物（openapi.yaml → Swift client），后端可在 nextjs / springboot / aspnetcore 之间切换。
 
